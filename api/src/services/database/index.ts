@@ -1,5 +1,4 @@
 import { ContainerModule, interfaces, decorate, injectable } from 'inversify';
-import * as pgPromise from 'pg-promise';
 import { AppDatabase, db } from './database';
 
 export const databaseModule = new ContainerModule((
