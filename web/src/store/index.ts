@@ -1,6 +1,6 @@
 import { applyMiddleware, createStore, Store } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { RootState, createRootReducer } from './modules';
+import { RootState, createRootReducer, rootSaga } from './modules';
 import { createBrowserHistory } from 'history';
 
 import createSagaMiddleware from 'redux-saga';
@@ -14,6 +14,8 @@ export const configureStore = function(initialState?: RootState): Store<RootStat
     const composedEnhancers = composeEnhancers(middlewareEnhancer);
     const rootReducer = createRootReducer(history);
     const store = createStore(rootReducer, initialState, composedEnhancers) as Store<RootState>;
+
+    sagaMiddleware.run(rootSaga);
 
     return store;
 }

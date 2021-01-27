@@ -1,16 +1,17 @@
 import { combineReducers } from "redux";
 import { History } from 'history';
-import { connectRouter } from "connected-react-router";
+import { connectRouter, RouterState } from "connected-react-router";
 import { all } from 'redux-saga/effects';
-import { reducer as authReducer, saga as authSaga } from 'app/services/auth';
+import { reducer as authReducer, saga as authSaga, AuthState } from '../../services/auth';
 
 export interface RootState {
-
+    router: RouterState,
+    auth: AuthState,
 }
 
 export const createRootReducer = (history: History) => combineReducers({
     router: connectRouter(history),
-    user: authReducer,
+    auth: authReducer,
 });
 
 export function* rootSaga() {

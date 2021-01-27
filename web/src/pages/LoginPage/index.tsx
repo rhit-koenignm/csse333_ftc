@@ -2,8 +2,8 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch, Action } from 'redux';
 
-import { actions as authActions } from 'app/services/auth';
-import { RootState } from 'app/store/modules';
+import { actions as authActions } from '../../services/auth';
+import { RootState } from '../../store/modules';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -13,18 +13,28 @@ import Button from 'react-bootstrap/Button';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Form from 'react-bootstrap/Form';
 
-interface LoginPageProps {
+interface DispatchProps {
     onLogin: (email: string, password: string) => boolean;
 }
 
-interface LoginPageState {
+interface StateProps {
+    token?: string,
+}
+
+interface ComponentProps {
+
+}
+
+type Props = ComponentProps & DispatchProps & StateProps;
+
+interface State {
     email: string,
     password: string,
 }
 
-class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
+class LoginPage extends React.Component<Props, State> {
 
-    constructor(props: LoginPageProps) {
+    constructor(props: Props) {
         super(props);
         this.state = {
             email: '',
@@ -86,7 +96,7 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
 }
 
 const mapStateToProps = (state: RootState) => ({
-
+    token: state.auth.token,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
@@ -99,4 +109,4 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export default connect<StateProps, DispatchProps, ComponentProps, RootState>(mapStateToProps, mapDispatchToProps)(LoginPage);

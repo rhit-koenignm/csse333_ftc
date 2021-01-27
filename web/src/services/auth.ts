@@ -1,12 +1,14 @@
 import { Action, Reducer } from "redux";
-import { takeLatest, call } from "redux-saga/effects";
+import { takeLatest, call, put } from "redux-saga/effects";
 
 export const ACTION_AUTH_LOGIN_REQUEST = 'auth/LOGIN_REQUEST';
 export const ACTION_AUTH_LOGIN_SUCCESS = 'auth/LOGIN_SUCCESS';
 export const ACTION_AUTH_LOGIN_FAILURE = 'auth/LOGIN_FAILURE';
 
-export interface AuthState {
+export const ACTION_SET_AUTH_TOKEN = 'auth/SET_TOKEN';
 
+export interface AuthState {
+    token?: string;
 }
 
 export interface LoginData {
@@ -19,15 +21,26 @@ interface LoginRequestAction extends Action {
     payload: LoginData
 }
 
+interface SetAuthTokenAction extends Action {
+    type: typeof ACTION_SET_AUTH_TOKEN,
+    payload: { token: string }
+}
+
 export const actions = {
     login: (data: LoginData): LoginRequestAction => ({
         type: ACTION_AUTH_LOGIN_REQUEST,
         payload: data,
     }),
+    setAuthToken: (token: string): SetAuthTokenAction => ({
+        type: ACTION_SET_AUTH_TOKEN,
+        payload: { token },
+    }),
 }
 
-export const reducer: Reducer<AuthState> = (state = {}, action) => {
+export const reducer: Reducer<AuthState> = (state = {}, action): AuthState => {
     switch(action.type) {
+        case ACTION_SET_AUTH_TOKEN:
+            return {...state, token: action.payload.token }
         default:
             return state;
     }
@@ -43,6 +56,7 @@ export class AuthService {
 function* login(action: LoginRequestAction) {
     const token = yield call(AuthService.login, action.payload);
     console.log(`Got token ${token}`);
+    yield put(actions.setAuthToken(token));
     return;
 }
 
