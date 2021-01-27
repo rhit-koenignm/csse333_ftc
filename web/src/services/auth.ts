@@ -48,7 +48,7 @@ export const reducer: Reducer<AuthState> = (state = {}, action): AuthState => {
 
 export class AuthService {
     static async login(data: LoginData): Promise<string> {
-
+        // Do API call here
         return 'token123';
     }
 }
