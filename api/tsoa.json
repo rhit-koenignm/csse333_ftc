@@ -5,6 +5,7 @@
   "routes": {
       "entryFile":"./src/controllers/controllers.ts",
       "routesDir": "./src/controllers/routes",
-      "middleware": "express"
+      "middleware": "express",
+      "iocModule": "./src/container.ts"
   }
 }

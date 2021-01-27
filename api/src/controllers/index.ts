@@ -4,7 +4,6 @@ import { Controller } from 'tsoa';
 import { RegisterRoutes } from './routes/routes';
 
 const bootstrapTsoa = (app: express.Application, container: Container) => {
-    decorate(injectable(), Controller);
     RegisterRoutes(app);
 }
 

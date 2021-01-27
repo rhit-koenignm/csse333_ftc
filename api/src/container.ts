@@ -1,27 +1,22 @@
-import { Container, inject, interfaces } from 'inversify';
+import { Container, inject, interfaces, injectable, decorate } from 'inversify';
 import {
-    buildProviderModule, fluentProvide
+    makeProvideDecorator, makeFluentProvideDecorator
 } from 'inversify-binding-decorators';
+import { Controller } from 'tsoa';
 
 import { serviceModules } from './services';
 
 const container = new Container();
 
-container.load(buildProviderModule());
+decorate(injectable(), Controller);
+
+const Provide = makeProvideDecorator(container);
+const FluentProvider = makeFluentProvideDecorator(container);
+
 container.load(...serviceModules);
 
 export const iocContainer = container;
 
 export default container;
 
-export const ProvideSingleton = function<T>(
-    identifier: interfaces.ServiceIdentifier<T>
-) {
-    return fluentProvide(identifier).inSingletonScope().done();
-}
-
-export const ProvideTransient = function<T>(
-    identifier: interfaces.ServiceIdentifier<T>
-) {
-    return fluentProvide(identifier).inTransientScope().done();
-}
+export { Provide, FluentProvider }

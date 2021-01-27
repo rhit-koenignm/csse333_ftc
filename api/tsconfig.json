@@ -1,8 +1,6 @@
 {
     "compilerOptions": {
-      "strict": true,
       "composite": true,
-
       "outDir": "./dist/",
       "sourceMap": true,
       "noImplicitAny": true,
