@@ -4,19 +4,18 @@ import {
 } from 'inversify-binding-decorators';
 import { Controller } from 'tsoa';
 
-import { serviceModules } from './services';
 
 const container = new Container();
 
 decorate(injectable(), Controller);
 
-const Provide = makeProvideDecorator(container);
-const FluentProvider = makeFluentProvideDecorator(container);
+export const Provide = makeProvideDecorator(container);
+export const FluentProvider = makeFluentProvideDecorator(container);
+
+import { serviceModules } from './services';
 
 container.load(...serviceModules);
 
 export const iocContainer = container;
 
 export default container;
-
-export { Provide, FluentProvider }
