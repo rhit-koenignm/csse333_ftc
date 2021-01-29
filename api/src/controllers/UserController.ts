@@ -5,9 +5,9 @@ import {
     Route,
 } from 'tsoa';
 
-import { UserService } from '../../services/user/UserService';
+import { UserService } from '../services/user/UserService';
 
-import { ProvideTransient } from '../../decorators';
+import { ProvideTransient } from '../decorators';
 import { inject } from 'inversify';
 
 @Route("user")
