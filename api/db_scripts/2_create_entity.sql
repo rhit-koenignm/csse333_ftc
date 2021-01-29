@@ -5,21 +5,18 @@
  * Written by: Natalie Koenig
  */
 
-create or replace procedure createNewEntity{
-	entity_id inout uuid
-}
+create or replace function create_new_entity ()
+returns uuid
 language 'plpgsql'
 as $$
+declare
+	entity_id uuid;
 begin 
-	--We'll make a temp variable to store the id in so we can return it--
-	entity_id = uuid_generate_v4()
-	
-	insert into entity (id) VALUES (@entity_id)
-end;
 
+entity_id := uuid_generate_v4();
+insert into entity (id) values (entity_id);
 
-call createNewEntity(:entity_id);
-select version()
-	
-select * 
-from entity
+return entity_id;
+
+end
+$$;
