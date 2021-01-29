@@ -12,5 +12,17 @@
             "webRoot": "${workspaceFolder}/PPOTFS/wwwroot",
             "breakOnLoad": true
         },
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "Launch Program",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/api/dist/src/index.js",
+            "outFiles": [
+                "${workspaceFolder}/**/*.js"
+            ]
+        }
     ]
 }
