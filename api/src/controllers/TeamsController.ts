@@ -45,10 +45,8 @@ export class TeamsController extends Controller {
     public async updateTeam(
         @Path() teamId: string,
         @Body() body: any,
-    ): Promise<number> {
-        console.log(teamId);
+    ): Promise<{ status: number }> {
         let result = await this._db.teams.update(teamId, body);
-        console.log(result);
-        return result;
+        return { status: result };
     }
 }
