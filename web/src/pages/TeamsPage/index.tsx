@@ -14,6 +14,7 @@ interface TeamsPageProps {
 
 interface TeamsPageState {
     show: boolean;
+    teamNumber?: string;
 }
 
 
@@ -21,12 +22,60 @@ class TeamsPage extends React.Component<TeamsPageProps, TeamsPageState> {
 
     public constructor(props: TeamsPageProps) {
         super(props);
-        this.state = {show: false};
+        this.state = {
+            show: false,
+        };
+    }
+
+    showModal = () => {
+        this.setState({ show: true });
+    }
+
+    hideModal = () => {
+        this.setState({ show: false });
     }
 
     public render() {
         return (
             <Container>
+                <Modal show={this.state.show} onHide={this.hideModal}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Add New Team</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form>
+                            <Form.Group controlId="formBasicEmail">
+                                <Form.Label>Team Number</Form.Label>
+                                <Form.Control type="number" placeholder="Team Number" value={this.state.teamNumber} onChange={(e) => this.setState({ teamNumber: e.target.value})} />
+                                <Form.Text className="text-muted">
+                                    Please enter FTC Team Number! 
+                                </Form.Text>
+                            </Form.Group>
+    
+                            <Form.Group controlId="formBasicPassword">
+                                <Form.Label>Team Name</Form.Label>
+                                <Form.Control type="text" placeholder="Team Name" />
+                                <Form.Text className="text-muted">
+                                    Please enter FTC Team Name! 
+                                </Form.Text>
+                            </Form.Group>
+                            <Form.Group controlId="formBasicCheckbox">
+                                <Form.Check type="checkbox" label="Check me out" />
+                            </Form.Group>
+                            <Button variant="primary" type="submit">
+                                Submit
+                            </Button>
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={this.hideModal}>
+                            Close
+                    </Button>
+                        <Button variant="primary" onClick={this.hideModal}>
+                            Save Changes
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
                 <Table striped bordered hover>
                     <thead>
                         <tr>
@@ -57,13 +106,13 @@ class TeamsPage extends React.Component<TeamsPageProps, TeamsPageState> {
                         </tr>
                     </tbody>
                 </Table>
-                <Button onClick={this.AddTeam}>Add Team</Button>
+                <Button onClick={this.showModal}>Add Team</Button>
             </Container>
         )
     }
 
 
-    AddTeam = () => {
+    AddTeamModal = () => {
     
         const handleClose = () => this.setState({show: false});
         const handleShow = () => this.setState({show: true});
