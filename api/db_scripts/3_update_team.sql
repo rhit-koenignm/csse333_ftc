@@ -5,6 +5,7 @@
  * 0 - Operation executed successfully
  * 1 - Team does not exist
  * 2 - Team with team number already exists
+ * 3 - Id is correct but team number is different, which is not allowed
  *
  * Written by: Nick von Bulow
  */
@@ -29,6 +30,11 @@ end if;
 if(select count(*) from team where not id = team_id and team_number = new_team_num) > 0 then
     raise 'Another team with this number already exists';
     return 2;
+end if;
+
+if (select count(*) from team where team.id = team_id and team_number <> new_team_num) > 0 then 
+	raise 'You cannot change team numbers';
+	return 3;
 end if;
 
 -- Update the row

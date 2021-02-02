@@ -12,6 +12,7 @@
  */
 
 create or replace function delete_team (
+	team_id uuid,
     team_num int4
 )
 returns int
@@ -35,13 +36,15 @@ end if;
 
 -- If the matches have already been created, we don't want to delete this team.--
 if(select COUNT(match.id) from match) > 0 then 
-	raise 'Matches have already been created, you cannot delete a team'
+	raise 'Matches have already been created, you cannot delete a team';
 	return 3;
 end if;
 
+-- Mark the team entity as deleted--
+perform delete_entity(team_id);
+
 -- Delete the team
-delete from team
-where id = team_id and team_number = team_num;
+delete from team where id = team_id and team_number = team_num;
 
 return 0;
 

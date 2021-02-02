@@ -16,18 +16,17 @@ create or replace function create_team(
 returns int 
 language 'plpgsql'
 as $$
-begin 
-	
+declare entity_id uuid;
+begin  
 --Check parameters--
 
 --If there is already a team with the given team number, we cannot create a duplicate.--
-	if(select count(*) from team where team.team_number = team_num) > 0 then 
+	if (select count(*) from team where team.team_number = team_num) > 0 then 
 		raise exception 'A team with this team number already exists in the table';
 		return 1;
 	end if;
 	
-	declare entity_id uuid
-	entity_id = createNewEntity(:entity_id);
+	entity_id = create_new_entity();
 
 	insert into team (id, team_number, team_name) 
 	values (entity_id, team_num, new_team_name);
