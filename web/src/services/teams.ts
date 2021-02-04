@@ -10,6 +10,10 @@ export const ACTION_UPDATE_TEAM = 'teams/UPDATE_TEAM';
 export const ACTION_UPDATE_TEAM_SUCCESS = 'teams/UPDATE_TEAM_SUCCESS';
 export const ACTION_UPDATE_TEAM_FAILURE = 'teams/UPDATE_TEAM_FAILURE';
 
+export const ACTION_DELETE_TEAM = 'teams/DELETE_TEAM';
+export const ACTION_DELETE_TEAM_SUCCESS = 'teams/DELETE_TEAM_SUCCESS';
+export const ACTION_DELETE_TEAM_FAILURE = 'teams/DELETE_TEAM_FAILURE';
+
 export const ACTION_SET_STATUS = 'teams/SET_STATUS';
 
 export interface Team {
@@ -49,6 +53,13 @@ interface UpdateTeamAction extends Action {
     }
 }
 
+interface DeleteTeamAction extends Action {
+    type: typeof ACTION_DELETE_TEAM,
+    payload: {
+        teamId: string,
+    }
+}
+
 interface SetStatusAction extends Action {
     type: typeof ACTION_SET_STATUS,
     payload: Partial<TeamsStatus>,
@@ -63,6 +74,12 @@ export const actions = {
         payload: {
             teamId,
             teamToUpdate: team,
+        }
+    }),
+    deleteTeam: (teamId: string): DeleteTeamAction => ({
+        type: ACTION_DELETE_TEAM,
+        payload: {
+            teamId,
         }
     }),
     setStatus: (status: Partial<TeamsStatus>) : SetStatusAction => ({
@@ -108,6 +125,10 @@ export class TeamsService {
     static async updateTeam(teamId: string, teamToUpdate: Partial<Team>): Promise<void> {
         await Axios.put(`${API_BASE}/teams/${teamId}`, teamToUpdate);
     }
+
+    static async deleteTeam(teamId: string): Promise<void> {
+        await Axios.delete(`${API_BASE}/teams/${teamId}`);
+    }
 }
 
 function* fetchAllTeams(action: FetchAllTeamsAction) {
@@ -131,7 +152,15 @@ function* updateTeam(action: UpdateTeamAction) {
     yield put(actions.fetchAllTeams());
 }
 
+function* deleteTeam(action: DeleteTeamAction) {
+    yield put(actions.setStatus({ loading: true }));
+    yield call(() => TeamsService.deleteTeam(action.payload.teamId));
+    yield put(actions.setStatus({ loading: false, success: true }));
+    yield put(actions.fetchAllTeams());
+}
+
 export function* saga() {
     yield takeLatest(ACTION_FETCH_ALL_TEAMS, fetchAllTeams);
     yield takeLatest(ACTION_UPDATE_TEAM, updateTeam);
+    yield takeLatest(ACTION_DELETE_TEAM, deleteTeam);
 }

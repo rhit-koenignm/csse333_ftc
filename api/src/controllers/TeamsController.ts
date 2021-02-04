@@ -3,6 +3,7 @@ import {
     Post,
     Get,
     Put,
+    Delete,
     Route,
     Path,
     Body,
@@ -47,6 +48,12 @@ export class TeamsController extends Controller {
         @Body() body: any,
     ): Promise<{ status: number }> {
         let result = await this._db.teams.update(teamId, body);
+        return { status: result };
+    }
+
+    @Delete("{teamId}")
+    public async deleteTeam(@Path() teamId: string): Promise<{ status: number }> {
+        let result = await this._db.teams.delete(teamId, 0);
         return { status: result };
     }
 }

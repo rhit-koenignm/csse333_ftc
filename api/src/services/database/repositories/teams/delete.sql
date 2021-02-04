@@ -1,0 +1,1 @@
+select delete_team(${team_id}::uuid, ${team_number}::int) as result;

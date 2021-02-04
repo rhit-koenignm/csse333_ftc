@@ -24,6 +24,7 @@ interface StoreProps {
 interface DispatchProps {
     fetchAllTeams: () => void;
     updateTeam: (id: string, team: Partial<Team>) => void;
+    deleteTeam: (id: string) => void;
 }
 
 type Props = OwnProps & StoreProps & DispatchProps;
@@ -179,7 +180,7 @@ class TeamsPage extends React.Component<Props, State> {
                         <Button variant="secondary" onClick={this.hideDeleteModal}>
                             No
                     </Button>
-                        <Button variant="primary" onClick={this.hideDeleteModal}>
+                        <Button variant="primary" onClick={this.deleteTeam}>
                             Yes
                     </Button>
                     </Modal.Footer>
@@ -223,6 +224,12 @@ class TeamsPage extends React.Component<Props, State> {
             });
         }
     }
+
+    deleteTeam() {
+        if(this.state.teamId) {
+            this.props.deleteTeam(this.state.teamId);
+        }
+    }
 }
 
 const mapStateToProps = (state: RootState): StoreProps => ({
@@ -235,7 +242,10 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>): DispatchProps => ({
     },
     updateTeam: (teamId: string, team: Partial<Team>) => {
         dispatch(teamActions.updateTeam(teamId, team));
-    }
+    },
+    deleteTeam: (teamId: string) => {
+        dispatch(teamActions.deleteTeam(teamId));
+    },
 });
 
 export default connect<StoreProps, DispatchProps, OwnProps, RootState>
