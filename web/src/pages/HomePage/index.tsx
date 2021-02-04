@@ -24,8 +24,8 @@ class HomePage extends React.Component<HomePageProps, HomePageState> {
 
         return (
             <Container>
-            <Row className={styles.welcomeMsg}><h1>Welcome, User! </h1></Row>
-            <Row style={{justifyContent: 'center'}}>
+            <Row className={styles.welcomeMsg}><h1>Welcome, User!</h1></Row>
+            <Row className={styles.navRow}>
             
             {/* View Matches Card */}
 

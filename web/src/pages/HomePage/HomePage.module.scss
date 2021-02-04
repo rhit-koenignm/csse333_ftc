@@ -4,7 +4,9 @@
 }
 
 .welcomeMsg{
+    margin-right: 50px;
     padding: 50px;
+    text-align: center;
     justify-content: center;
 }
 
@@ -19,4 +21,9 @@
 
 .buttonText{
     text-align: center;
+}
+
+.navRow{
+    text-align: center;
+    vertical-align: middle;
 }
