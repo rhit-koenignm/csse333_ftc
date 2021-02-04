@@ -37,7 +37,7 @@ class HomePage extends React.Component<HomePageProps, HomePageState> {
                         View current schedule of matches
                     </Card.Text>
                     <div className={styles.buttonText}>
-                    <Button variant="primary">VIEW MATCH LIST</Button>
+                    <Button onClick={event =>  window.location.href='/matches'} variant="primary">VIEW MATCH LIST</Button>
                     </div>
                 </Card.Body>
             </Card>
@@ -54,7 +54,7 @@ class HomePage extends React.Component<HomePageProps, HomePageState> {
                         of competition teams
                     </Card.Text>
                     <div className={styles.buttonText}>
-                    <Button variant="primary">VIEW RANKINGS</Button>
+                    <Button onClick={event =>  window.location.href='/rankings'} variant="primary">VIEW RANKINGS</Button>
                     </div>
                 </Card.Body>
             </Card>
@@ -70,7 +70,7 @@ class HomePage extends React.Component<HomePageProps, HomePageState> {
                         View teams competing in competition
                     </Card.Text>
                     <div className={styles.buttonText}>
-                    <Button variant="primary">VIEW TEAMS</Button>
+                    <Button onClick={event =>  window.location.href='/teams'} variant="primary">VIEW TEAMS</Button>
                     </div>
                 </Card.Body>
             </Card>

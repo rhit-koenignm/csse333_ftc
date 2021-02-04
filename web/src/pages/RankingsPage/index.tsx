@@ -24,6 +24,7 @@ class RankingsPage extends React.Component{
 
             <Container className={styles.tableStyle}>
                 <Row className={styles.welcomeMsg}><h1>Rankings</h1></Row>
+                <Row className={styles.subtitleMsg}><p>You are viewing the current Team Rankings</p></Row>
                 <Table striped bordered hover>
                     <thead>
                         <tr>

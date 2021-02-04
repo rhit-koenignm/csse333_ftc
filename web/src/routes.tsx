@@ -1,9 +1,9 @@
-import * as React from 'react';
 import { RouteConfig } from 'react-router-config';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import TeamsPage from './pages/TeamsPage';
 import RankingsPage from './pages/RankingsPage';
+import MatchesPage from './pages/MatchesPage';
 
 const routes: RouteConfig[] = [
     {
@@ -25,6 +25,11 @@ const routes: RouteConfig[] = [
         path: '/rankings',
         exact: true,
         component: RankingsPage
+    },
+    {
+    path: '/matches',
+    exact: true,
+    component: MatchesPage
     }
     /*
     {
