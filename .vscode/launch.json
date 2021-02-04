@@ -5,6 +5,15 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Attach by Process ID",
+            "processId": "${command:PickProcess}",
+            "request": "attach",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node"
+        },
+        {
             "name": "Attach to Chrome",
             "port": 9222,
             "request": "attach",
@@ -12,5 +21,17 @@
             "webRoot": "${workspaceFolder}/PPOTFS/wwwroot",
             "breakOnLoad": true
         },
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "Launch Program",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/api/dist/src/index.js",
+            "outFiles": [
+                "${workspaceFolder}/**/*.js"
+            ]
+        }
     ]
 }

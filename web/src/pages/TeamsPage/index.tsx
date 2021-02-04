@@ -23,6 +23,7 @@ interface StoreProps {
 
 interface DispatchProps {
     fetchAllTeams: () => void;
+    updateTeam: (id: string, team: Partial<Team>) => void;
 }
 
 type Props = OwnProps & StoreProps & DispatchProps;
@@ -32,7 +33,9 @@ interface State {
     showEdit: boolean;
     showDelete: boolean;
     show: boolean;
+    teamId?: string;
     teamNumber?: string;
+    teamName?: string;
 }
 
 
@@ -62,8 +65,17 @@ class TeamsPage extends React.Component<Props, State> {
         this.setState({ showAdd: false });
     }
 
-    showEditModal = () => {
-        this.setState({ showEdit: true });
+    showEditModal = (teamId: string) => {
+        const team = this.props.teams.find(t => t.id === teamId);
+        if(!team) {
+            return;
+        }
+        this.setState({ 
+            showEdit: true,
+            teamId,
+            teamName: team.team_name,
+            teamNumber: team.team_number.toString(),
+        });
     }
 
     hideEditModal = () => {
@@ -102,7 +114,7 @@ class TeamsPage extends React.Component<Props, State> {
     
                             <Form.Group controlId="formBasicPassword">
                                 <Form.Label>Team Name</Form.Label>
-                                <Form.Control type="text" placeholder="Team Name" />
+                                <Form.Control type="text" placeholder="Team Name" value={this.state.teamName} onChange={(e) => this.setState({ teamName: e.target.value})} />
                                 <Form.Text className="text-muted">
                                     Please enter FTC Team Name! 
                                 </Form.Text>
@@ -137,7 +149,7 @@ class TeamsPage extends React.Component<Props, State> {
     
                             <Form.Group controlId="formBasicPassword">
                                 <Form.Label>Team Name</Form.Label>
-                                <Form.Control type="text" placeholder="Team Name" />
+                                <Form.Control type="text" placeholder="Team Name" value={this.state.teamName} onChange={(e) => this.setState({ teamName: e.target.value})} />
                                 <Form.Text className="text-muted">
                                     Please enter FTC Team Name! 
                                 </Form.Text>
@@ -148,7 +160,7 @@ class TeamsPage extends React.Component<Props, State> {
                         <Button variant="secondary" onClick={this.hideEditModal}>
                             Close
                     </Button>
-                        <Button variant="primary" onClick={this.hideEditModal}>
+                        <Button variant="primary" onClick={this.updateTeam.bind(this)}>
                             Save Changes
                     </Button>
                     </Modal.Footer>
@@ -189,7 +201,7 @@ class TeamsPage extends React.Component<Props, State> {
                                 <td>{team.team_number}</td>
                                 <td>{team.team_name}</td>
                                 <td>
-                                    <Button className={styles.editBtn} onClick={this.showEditModal}><FontAwesomeIcon icon={faEdit} size="sm"/></Button>
+                                    <Button className={styles.editBtn} onClick={() => this.showEditModal(team.id)}><FontAwesomeIcon icon={faEdit} size="sm"/></Button>
                                     <Button className={styles.editBtn} onClick={this.showDeleteModal}><FontAwesomeIcon icon={faTrashAlt} size="sm"/></Button>
                                 </td>
                             </tr>
@@ -202,6 +214,15 @@ class TeamsPage extends React.Component<Props, State> {
             </Container>
         )
     }
+
+    updateTeam() {
+        if(this.state.teamId) {
+            this.props.updateTeam(this.state.teamId, { 
+                team_name: this.state.teamName,
+                team_number: Number(this.state.teamNumber),
+            });
+        }
+    }
 }
 
 const mapStateToProps = (state: RootState): StoreProps => ({
@@ -211,6 +232,9 @@ const mapStateToProps = (state: RootState): StoreProps => ({
 const mapDispatchToProps = (dispatch: Dispatch<Action>): DispatchProps => ({
     fetchAllTeams: () => {
         dispatch(teamActions.fetchAllTeams());
+    },
+    updateTeam: (teamId: string, team: Partial<Team>) => {
+        dispatch(teamActions.updateTeam(teamId, team));
     }
 });
 

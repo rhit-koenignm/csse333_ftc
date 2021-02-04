@@ -6,6 +6,12 @@ export const ACTION_FETCH_ALL_TEAMS = 'teams/FETCH_ALL';
 export const ACTION_FETCH_ALL_TEAMS_SUCCESS = 'teams/FETCH_ALL_SUCCESS';
 export const ACTION_FETCH_ALL_TEAMS_FAILURE = 'teams/FETCH_ALL_FAILURE';
 
+export const ACTION_UPDATE_TEAM = 'teams/UPDATE_TEAM';
+export const ACTION_UPDATE_TEAM_SUCCESS = 'teams/UPDATE_TEAM_SUCCESS';
+export const ACTION_UPDATE_TEAM_FAILURE = 'teams/UPDATE_TEAM_FAILURE';
+
+export const ACTION_SET_STATUS = 'teams/SET_STATUS';
+
 export interface Team {
     id: string;
     team_number: number;
@@ -14,6 +20,13 @@ export interface Team {
 
 export interface TeamsState {
     teams: Team[];
+    status: TeamsStatus;
+}
+
+export interface TeamsStatus {
+    loading: boolean;
+    success: boolean;
+    errorMessage?: string;
 }
 
 interface FetchAllTeamsAction extends Action {
@@ -28,14 +41,42 @@ interface FetchAllTeamsFailureAction extends Action {
 
 }
 
+interface UpdateTeamAction extends Action {
+    type: typeof ACTION_UPDATE_TEAM,
+    payload: {
+        teamId: string,
+        teamToUpdate: Partial<Team>,
+    }
+}
+
+interface SetStatusAction extends Action {
+    type: typeof ACTION_SET_STATUS,
+    payload: Partial<TeamsStatus>,
+}
+
 export const actions = {
     fetchAllTeams: (): FetchAllTeamsAction => ({
         type: ACTION_FETCH_ALL_TEAMS,
+    }),
+    updateTeam: (teamId: string, team: Partial<Team>): UpdateTeamAction => ({
+        type: ACTION_UPDATE_TEAM,
+        payload: {
+            teamId,
+            teamToUpdate: team,
+        }
+    }),
+    setStatus: (status: Partial<TeamsStatus>) : SetStatusAction => ({
+        type: ACTION_SET_STATUS,
+        payload: status,
     }),
 };
 
 const initialState: TeamsState = {
     teams: [],
+    status: {
+        loading: false,
+        success: true,
+    },
 }
 
 export const reducer: Reducer<TeamsState> = (state = initialState, action): TeamsState => {
@@ -44,6 +85,8 @@ export const reducer: Reducer<TeamsState> = (state = initialState, action): Team
             return { ...state, teams: action.payload.teams }
         case ACTION_FETCH_ALL_TEAMS_FAILURE:
             return { ...state };
+        case ACTION_SET_STATUS:
+            return { ...state, status: { ...state.status, ...action.payload }};
         default:
             return state;
     }
@@ -61,12 +104,15 @@ export class TeamsService {
         let teams = await Axios.get<{ teams: Team[] }>(`${API_BASE}/teams`);
         return teams.data.teams;
     }
-}
 
-const context = new TeamsService();
+    static async updateTeam(teamId: string, teamToUpdate: Partial<Team>): Promise<void> {
+        await Axios.put(`${API_BASE}/teams/${teamId}`, teamToUpdate);
+    }
+}
 
 function* fetchAllTeams(action: FetchAllTeamsAction) {
     // todo: error handling
+    yield put(actions.setStatus({ loading: true }));
     const teams: Team[] = yield call(TeamsService.fetchAllTeams);
     yield put<FetchAllTeamsSuccessAction>({
         type: ACTION_FETCH_ALL_TEAMS_SUCCESS,
@@ -74,8 +120,18 @@ function* fetchAllTeams(action: FetchAllTeamsAction) {
             teams
         },
     });
+    yield put(actions.setStatus({ loading: false }));
+}
+
+function* updateTeam(action: UpdateTeamAction) {
+    // todo: error handling
+    yield put(actions.setStatus({ loading: true }));
+    yield call(() => TeamsService.updateTeam(action.payload.teamId, action.payload.teamToUpdate));
+    yield put(actions.setStatus({ loading: false, success: true }));
+    yield put(actions.fetchAllTeams());
 }
 
 export function* saga() {
     yield takeLatest(ACTION_FETCH_ALL_TEAMS, fetchAllTeams);
+    yield takeLatest(ACTION_UPDATE_TEAM, updateTeam);
 }
