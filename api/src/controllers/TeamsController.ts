@@ -13,9 +13,6 @@ import { AppDatabase } from '../services/database/database';
 import { ProvideTransient } from '../decorators';
 import { inject } from 'inversify'
 import { Team } from 'src/models/Team';
-import { ENGINE_METHOD_DIGESTS } from 'constants';
-import { ParameterizedQuery } from 'pg-promise';
-
 
 interface GetAllTeamsResponse {
     teams: Team[];
