@@ -28,15 +28,15 @@ const routes: RouteConfig[] = [
         component: RankingsPage
     },
     {
-    path: '/matches',
-    exact: true,
-    component: MatchesPage
+        path: '/matches',
+        exact: true,
+        component: MatchesPage
     },
     {
-        path: '/matchoverview',
+        path: '/matches/:matchId',
         exact: true,
-        component: MatchOverviewPage
-        }
+        component: MatchOverviewPage,
+    }
     /*
     {
         component: NotFoundPage

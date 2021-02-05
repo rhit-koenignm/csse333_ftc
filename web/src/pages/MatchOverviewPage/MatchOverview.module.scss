@@ -13,7 +13,10 @@
 }
 
 .tableStyle{
-    padding:50px
+    padding: 50px;
+    table {
+        table-layout: fixed;
+    }
 }
 
 .welcomeMsg{
