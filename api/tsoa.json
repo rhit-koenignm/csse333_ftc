@@ -7,5 +7,9 @@
       "routesDir": "./src/controllers/routes",
       "middleware": "express",
       "iocModule": "./src/container.ts"
+  },
+  "spec": {
+    "outputDirectory": "dist",
+    "specVersion": 3
   }
 }

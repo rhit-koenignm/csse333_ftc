@@ -12,17 +12,22 @@ import { AppDatabase } from '../services/database/database';
 
 import { ProvideTransient } from '../decorators';
 import { inject } from 'inversify'
-import { Team } from 'src/models/Team';
+import { Team } from '../models/Team';
+import { Match } from '../models/Match';
 
-interface GetAllTeamsResponse {
-    teams: Team[];
+interface GetAllMatchesResponse {
+    matches: Match[];
+}
+
+interface GetMatchResponse {
+    match: Match,
 }
 
 type UpdateTeamParams = Partial<Team>;
 
-@Route("teams")
-@ProvideTransient(TeamsController)
-export class TeamsController extends Controller {
+@Route("matches")
+@ProvideTransient(MatchesController)
+export class MatchesController extends Controller {
 
     constructor(
         @inject("AppDatabase") private _db: AppDatabase
@@ -32,9 +37,16 @@ export class TeamsController extends Controller {
 
 
     @Get()
-    public async getAllTeams(): Promise<GetAllTeamsResponse> {
+    public async getAllMatches(): Promise<GetAllMatchesResponse> {
         return {
-            teams: await this._db.teams.findAll(),
+            matches: await this._db.matches.findAll(),
+        };
+    }
+
+    @Get("{matchId}")
+    public async getMatch(@Path() matchId: string): Promise<GetMatchResponse> {
+        return {
+            match: await this._db.matches.findOne(matchId),
         };
     }
 

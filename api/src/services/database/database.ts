@@ -3,6 +3,7 @@ import { default as pgPromise } from 'pg-promise';
 import { IInitOptions, IDatabase, IMain, IQueryFileOptions, QueryFile } from 'pg-promise';
 import { UsersRepository } from './repositories/user/UsersRepository';
 import { TeamsRepository } from './repositories/teams/TeamsRepository';
+import { MatchesRepository } from './repositories/matches/MatchesRepository';
 
 export type AppDatabase = IDatabase<DatabaseExtensions> & DatabaseExtensions;
 
@@ -10,6 +11,7 @@ export type AppDatabase = IDatabase<DatabaseExtensions> & DatabaseExtensions;
 interface DatabaseExtensions {
     users: UsersRepository,
     teams: TeamsRepository,
+    matches: MatchesRepository,
 }
 
 const initOptions: IInitOptions<DatabaseExtensions> = {
@@ -18,6 +20,7 @@ const initOptions: IInitOptions<DatabaseExtensions> = {
         // Example: https://github.com/vitaly-t/pg-promise-demo/blob/master/TypeScript/db/index.ts
         db.users = new UsersRepository(db);
         db.teams = new TeamsRepository(db);
+        db.matches = new MatchesRepository(db);
     }
 };
 

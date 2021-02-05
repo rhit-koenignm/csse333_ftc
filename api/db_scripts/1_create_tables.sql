@@ -56,8 +56,8 @@ create table if not exists match (
 	id uuid not null,
 	number int not null check (number > 0),
 	tournament_id uuid not null,
-	red_score int check (red_score > 0),
-	blue_score int check (blue_score > 0),
+	red_score int check (red_score >= 0),
+	blue_score int check (blue_score >= 0),
 	scheduled_time time,
 	primary key (id),
 	constraint fk_match_entity foreign key (id) references entity(id),
@@ -91,8 +91,8 @@ create table if not exists match_competitor (
 create table if not exists tournament_participant (
 	tournament_id uuid not null,
 	team_id uuid not null,
-	qualifying_points int check (qualifying_points > 0),
-	ranking_points int check (ranking_points > 0),
+	qualifying_points int check (qualifying_points >= 0),
+	ranking_points int check (ranking_points >= 0),
 	constraint pk_tournament_participant primary key (tournament_id, team_id),
 	constraint fk_tournament_participant_tournament foreign key (tournament_id) references tournament(id),
 	constraint fk_tournament_participant_team foreign key (team_id) references team(id)
