@@ -13,10 +13,10 @@ create or replace function create_match(
 	tourn_id uuid,
 	match_num int4,
 	match_time time, 
-	red_team_1 int4,
-	red_team_2 int4,
-	blue_team_1 int4,
-	blue_team_2 int4
+	red_team_1 uuid,
+	red_team_2 uuid,
+	blue_team_1 uuid,
+	blue_team_2 uuid
 )
 returns int 
 language 'plpgsql'
@@ -25,8 +25,8 @@ declare entity_id uuid;
 begin  
 --Check parameters--
 --If the teams do not exist in the competition --
-	if (select count(*) from team where (team.team_number = red_team_1) or (team.team_number = red_team_2)
-		or (team.team_number = blue_team_1) or (team.team_number = blue_team_2)) < 4 then 
+	if (select count(*) from team where (team.id = red_team_1) or (team.id = red_team_2)
+		or (team.id = blue_team_1) or (team.id = blue_team_2)) < 4 then 
 		raise exception 'One or more teams are not in the competition';
 		return 1;
 	end if;	
