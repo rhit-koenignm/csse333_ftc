@@ -6,6 +6,7 @@ const findAllQuery = sql('matches/findAll.sql');
 const findOneQuery = sql('matches/findOne.sql');
 const findMatchTeamsQuery = sql('matches/findMatchTeams.sql');
 const updateAttendanceQuery = sql('matches/updateTeamAttendance.sql');
+const updateScoresQuery = sql('matches/updateScores.sql');
 
 export class MatchesRepository {
     constructor(private _db: AppDatabase) {}
@@ -41,6 +42,11 @@ export class MatchesRepository {
                 attendance: teamAttendance.attendance,
             });
         }
+        await this._db.one<{ result: number }>(updateScoresQuery, {
+            matchId: id,
+            redScore,
+            blueScore,
+        });
         return 0;
     }
 }

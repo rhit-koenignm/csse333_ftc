@@ -198,8 +198,8 @@ class MatchOverviewPage extends React.Component<Props, State> {
 
         this.props.saveMatch(
             this.state.match.id,
-            Number(this.state.blueScore),
             Number(this.state.redScore),
+            Number(this.state.blueScore),
             attendance,
         );
     }
