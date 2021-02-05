@@ -4,6 +4,7 @@ import LoginPage from './pages/LoginPage';
 import TeamsPage from './pages/TeamsPage';
 import RankingsPage from './pages/RankingsPage';
 import MatchesPage from './pages/MatchesPage';
+import MatchOverviewPage from './pages/MatchOverviewPage';
 
 const routes: RouteConfig[] = [
     {
@@ -30,7 +31,12 @@ const routes: RouteConfig[] = [
     path: '/matches',
     exact: true,
     component: MatchesPage
-    }
+    },
+    {
+        path: '/matchoverview',
+        exact: true,
+        component: MatchOverviewPage
+        }
     /*
     {
         component: NotFoundPage
