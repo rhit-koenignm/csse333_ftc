@@ -5,6 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import styles from './RankingsPage.module.scss';
@@ -25,39 +26,53 @@ class RankingsPage extends React.Component{
             <Container className={styles.tableStyle}>
                 <Row className={styles.welcomeMsg}><h1>Rankings</h1></Row>
                 <Row className={styles.subtitleMsg}><p>You are viewing the current Team Rankings</p></Row>
-                <Table striped bordered hover>
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>Team#</th>
-                            <th>QP</th>
-                            <th>RP</th>
-                            <th>Plays</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                1
-                            </td>
-                            <td>
-                                7177
-                            </td>
-                            <td>
-                                350
-                            </td>
-                            <td>
-                                360
-                            </td>
-                            <td>
-                                3
-                            </td>
-                        </tr>
-                        
-                    </tbody>
-                </Table>
-                
+                <Row>
+                <Col>
+                    <Table  striped bordered hover >
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Team#</th>
+                                <th>QP</th>
+                                <th>RP</th>
+                                <th>Plays</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                            </tr>  
+                        </tbody>
+                    </Table>
+                </Col>
+                <Col>
+                    <Table striped bordered hover>
+                        <thead>
+                            <tr>
+                                <th>Match</th>
+                                <th>Results</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                            </tr>  
+                        </tbody>
+                    </Table>
+                </Col>
+                </Row>
             </Container>
         )
     };

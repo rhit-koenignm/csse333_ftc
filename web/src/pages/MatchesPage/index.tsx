@@ -33,11 +33,13 @@ interface State {
     showEdit: boolean;
     showDelete: boolean;
     show: boolean;
-    matchID?: string
+    matchNumber?: string
     teamNumber?: string;
     color?: string;
     results?: string;
     time?: string;
+    redAllianceTeams?: string;
+    blueAllianceTeams?: string;
     redScore?: string;
     blueScore?: string;
 
@@ -64,13 +66,13 @@ class MatchesPage extends React.Component<Props, State> {
         // this.props.fetchAllTeams();
     }
 
-    showAddModal = () => {
-        this.setState({ showAdd: true });
-    }
+    // showAddModal = () => {
+    //     this.setState({ showAdd: true });
+    // }
 
-    hideAddModal = () => {
-        this.setState({ showAdd: false });
-    }
+    // hideAddModal = () => {
+    //     this.setState({ showAdd: false });
+    // }
 
     showEditModal = () => {
         // const team = this.props.teams.find(t => t.id === teamId);
@@ -106,17 +108,17 @@ class MatchesPage extends React.Component<Props, State> {
 
                 {/* Submit Modal */}
 
-                <Modal show={this.state.showAdd} onHide={this.hideAddModal}>
+                {/* <Modal show={this.state.showAdd} onHide={this.hideAddModal}>
                     <Modal.Header closeButton>
                         <Modal.Title>Add MatchID</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Form>
                             <Form.Group controlId="formBasicEmail">
-                                <Form.Label>MatchID</Form.Label>
-                                <Form.Control type="text" placeholder="MatchID" value={this.state.matchID} onChange={(e) => this.setState({ matchID: e.target.value})} />
+                                <Form.Label>Match#</Form.Label>
+                                <Form.Control type="text" placeholder="MatchID" value={this.state.matchNumber} onChange={(e) => this.setState({ matchNumber: e.target.value})} />
                                 <Form.Text className="text-muted">
-                                    Please enter MatchID! 
+                                    Please enter Match! 
                                 </Form.Text>
                             </Form.Group>
     
@@ -177,69 +179,28 @@ class MatchesPage extends React.Component<Props, State> {
                             Sumbit
                     </Button>
                     </Modal.Footer>
-                </Modal>
+                </Modal> */}
 
                 {/* Edit Modal */}
 
                 <Modal show={this.state.showEdit} onHide={this.hideEditModal}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Edit Team</Modal.Title>
+                        <Modal.Title>Modify Score</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Form>
                             <Form.Group controlId="formBasicEmail">
-                                <Form.Label>MatchID</Form.Label>
-                                <Form.Control type="text" placeholder="MatchID" value={this.state.matchID} onChange={(e) => this.setState({ matchID: e.target.value})} />
+                                <Form.Label>Modify Red Score</Form.Label>
+                                <Form.Control type="text" placeholder="Enter Red Score" value={this.state.redScore} onChange={(e) => this.setState({ redScore: e.target.value})} />
                                 <Form.Text className="text-muted">
-                                    Please enter MatchID! 
+                                    Update Red Score 
                                 </Form.Text>
                             </Form.Group>
-    
-                            <Form.Group controlId="formBasicPassword">
-                                <Form.Label>Team#</Form.Label>
-                                <Form.Control type="number" placeholder="Team#" value={this.state.teamNumber} onChange={(e) => this.setState({ teamNumber: e.target.value})} />
-                                <Form.Text className="text-muted">
-                                    Please enter FTC Team Number! 
-                                </Form.Text>
-                            </Form.Group>
-
                             <Form.Group controlId="formBasicEmail">
-                                <Form.Label>Color</Form.Label>
-                                <Form.Control type="text" placeholder="MatchID" value={this.state.color} onChange={(e) => this.setState({ color: e.target.value})} />
+                                <Form.Label>Modify Blue Score</Form.Label>
+                                <Form.Control type="text" placeholder="Enter Blue Score" value={this.state.blueScore} onChange={(e) => this.setState({ blueScore: e.target.value})} />
                                 <Form.Text className="text-muted">
-                                    Please enter Match Color! 
-                                </Form.Text>
-                            </Form.Group>
-
-                            <Form.Group controlId="formBasicEmail">
-                                <Form.Label>Results</Form.Label>
-                                <Form.Control type="number" placeholder="results" value={this.state.results} onChange={(e) => this.setState({ results: e.target.value})} />
-                                <Form.Text className="text-muted">
-                                    Please enter Results! 
-                                </Form.Text>
-                            </Form.Group>
-
-                            <Form.Group controlId="formBasicEmail">
-                                <Form.Label>Time</Form.Label>
-                                <Form.Control type="time" placeholder="time" value={this.state.time} onChange={(e) => this.setState({ time: e.target.value})} />
-                                <Form.Text className="text-muted">
-                                    Please enter Time! 
-                                </Form.Text>
-                            </Form.Group>
-
-                            <Form.Group controlId="formBasicEmail">
-                                <Form.Label>Red Score</Form.Label>
-                                <Form.Control type="number" placeholder="redScore" value={this.state.redScore} onChange={(e) => this.setState({ redScore: e.target.value})} />
-                                <Form.Text className="text-muted">
-                                    Please enter Red Score! 
-                                </Form.Text>
-                            </Form.Group>
-
-                            <Form.Group controlId="formBasicEmail">
-                                <Form.Label>Blue Score</Form.Label>
-                                <Form.Control type="number" placeholder="blueScore" value={this.state.blueScore} onChange={(e) => this.setState({ blueScore: e.target.value})} />
-                                <Form.Text className="text-muted">
-                                    Please enter Blue Score! 
+                                    Update Blue Score 
                                 </Form.Text>
                             </Form.Group>
                         </Form>
@@ -277,13 +238,13 @@ class MatchesPage extends React.Component<Props, State> {
                 <Table striped bordered hover>
                     <thead>
                         <tr>
-                            <th>MatchID</th>
-                            <th>Team#</th>
-                            <th>Color</th>
-                            <th>Results</th>
+                            <th>Match#</th>
                             <th>Time</th>
+                            <th className={styles.blueAllianceTitle}>Blue Alliance Teams</th>
+                            <th style={{backgroundColor:'red'}}>Red Alliance Teams</th>
                             <th>Red Score</th>
-                            <th>Blue Sccore</th>
+                            <th>Blue Score</th>
+                            <th>Results</th>
                             <th>Modify</th>
 
                         </tr>
@@ -292,20 +253,20 @@ class MatchesPage extends React.Component<Props, State> {
                         <tr>
                             <td></td>
                             <td></td>
-                            <td></td>
-                            <td></td>
+                            <td style={{backgroundColor:'blue' }}></td>
+                            <td style={{backgroundColor:'red'}}></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td>
-                                <Button className={styles.editBtn} onClick={this.showEditModal}><FontAwesomeIcon icon={faEdit} size="sm"/></Button>
-                                <Button className={styles.editBtn} onClick={this.showDeleteModal}><FontAwesomeIcon icon={faTrashAlt} size="sm"/></Button>
+                                <Button className={styles.editBtn} onClick={this.showEditModal}><FontAwesomeIcon icon={faEdit} size="sm"/>     Edit Score</Button>
+                                {/* <Button className={styles.editBtn} onClick={this.showDeleteModal}><FontAwesomeIcon icon={faTrashAlt} size="sm"/></Button> */}
                             </td>
                         </tr>
                     </tbody>
                 </Table>
                 <div className={styles.addBtn}>
-                    <Button onClick={this.showAddModal}><FontAwesomeIcon icon={faPlusCircle} /></Button> 
+                    <Button>Generate Match</Button> 
                 </div>
             </Container>
         )
