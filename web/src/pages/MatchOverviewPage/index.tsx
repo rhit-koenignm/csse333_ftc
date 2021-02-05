@@ -7,7 +7,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlusCircle, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faSave } from '@fortawesome/free-solid-svg-icons';
 import styles from './MatchOverview.module.scss';
 import { RootState } from 'src/store/modules';
 import { Action, Dispatch } from 'redux';
@@ -88,25 +88,6 @@ class MatchOverviewPage extends React.Component<Props, State> {
         }
     }
 
-    showRedModal = () => {
-        this.setState({ 
-            showRed: true,
-        });
-    }
-    showBlueModal = () => {
-        this.setState({ 
-            showBlue: true,
-        });
-    }
-
-    hideRedModal = () => {
-        this.setState({ showRed: false });
-    }
-
-    hideBlueModal = () => {
-        this.setState({ showBlue: false });
-    }
-
     public render() {
         return (
             <Container className={styles.tableStyle}>
@@ -114,12 +95,11 @@ class MatchOverviewPage extends React.Component<Props, State> {
                 <hr></hr>
                 <Row className={styles.matchNumber}><h4>Match Number: {this.state.match?.number || 'Loading' }</h4></Row>
                 <Row className={styles.subtitleMsg}><h4>Time: {this.state.match?.scheduled_time || 'Loading' }</h4></Row>
-                
                 <Table striped bordered hover>
                     <thead>
                         <tr>
-                            <th colSpan={2} className={styles.blueAllianceTitle}>Blue Team</th> 
-                            <th colSpan={2} className={styles.redAllianceTitle}>Red Team</th> 
+                            <th colSpan={2} className={styles.blueAllianceTitle}>Blue Alliance</th> 
+                            <th colSpan={2} className={styles.redAllianceTitle}>Red Alliance</th> 
                         </tr>
                     </thead>
                     <tbody>
@@ -128,100 +108,50 @@ class MatchOverviewPage extends React.Component<Props, State> {
                                 <Container>
                                     <Row>{this.state.blueTeams[0]?.team_name || 'Loading' }</Row>
                                     <Row>{this.state.blueTeams[0]?.team_number || 'Loading' }</Row>
-                                    <Row><label><input type="checkbox" value="Present"/>  Present</label></Row>
+                                    <Row><Form.Check type="checkbox" inline />Present</Row>
                                 </Container>
                             </td>
                             <td>
                                 <Container>
                                     <Row>{this.state.blueTeams[1]?.team_name || 'Loading' }</Row>
                                     <Row>{this.state.blueTeams[1]?.team_number || 'Loading' }</Row>
-                                    <Row><label><input type="checkbox" value="Present"/>  Present</label></Row>
+                                    <Row><Form.Check type="checkbox" inline />Present</Row>
                                 </Container>
                             </td>
                             <td>
                                 <Container>
                                     <Row>{this.state.redTeams[0]?.team_name || 'Loading' }</Row>
                                     <Row>{this.state.redTeams[0]?.team_number || 'Loading' }</Row>
-                                    <Row><label><input type="checkbox" value="Present"/>  Present</label></Row>
+                                    <Row><Form.Check type="checkbox" inline />Present</Row>
                                 </Container>
                             </td>
                             <td>
                                 <Container>
                                     <Row>{this.state.redTeams[1]?.team_name || 'Loading' }</Row>
                                     <Row>{this.state.redTeams[1]?.team_number || 'Loading' }</Row>
-                                    <Row><label><input type="checkbox" value="Present"/>  Present</label></Row>
+                                    <Row><Form.Check type="checkbox" inline />Present</Row>
                                 </Container>
                             </td>
                         </tr>
                     </tbody>
                 </Table>
-                <div>
-                    <Button className={styles.addRedBtn} onClick={this.showRedModal}><FontAwesomeIcon icon={faPlusCircle} /></Button> 
-                
-                
-                    <Button className={styles.addBlueBtn} onClick={this.showBlueModal}><FontAwesomeIcon icon={faPlusCircle} /></Button> 
-                </div>
-
-                <Modal show={this.state.showBlue} onHide={this.hideBlueModal}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Modify Blue Score</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Form>
-                            <Form.Group controlId="formBasicEmail">
-                                <Form.Label>Modify Blue Score</Form.Label>
-                                <Form.Control type="text" placeholder="Enter Blue Score" value={this.state.blueScore} onChange={(e) => this.setState({ blueScore: e.target.value})} />
-                                <Form.Text className="text-muted">
-                                    Update Blue Score 
-                                </Form.Text>
-                            </Form.Group>
-                        </Form>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={this.hideBlueModal}>
-                            Close
-                    </Button>
-                        <Button variant="primary" onClick={this.updateTeam.bind(this)}>
-                            Save Changes
-                    </Button>
-                    </Modal.Footer>
-                </Modal>
-
-                <Modal show={this.state.showRed} onHide={this.hideRedModal}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Modify Red Score</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Form>
-                            <Form.Group controlId="formBasicEmail">
-                                <Form.Label>Modify Red Score</Form.Label>
-                                <Form.Control type="text" placeholder="Enter Red Score" value={this.state.redScore} onChange={(e) => this.setState({ redScore: e.target.value})} />
-                                <Form.Text className="text-muted">
-                                    Update Red Score 
-                                </Form.Text>
-                            </Form.Group>
-                        </Form>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={this.hideRedModal}>
-                            Close
-                    </Button>
-                        <Button variant="primary" onClick={this.updateTeam.bind(this)}>
-                            Save Changes
-                    </Button>
-                    </Modal.Footer>
-                </Modal>
+                <Form as={Row}>
+                    <Form.Group as={Col}>
+                        <Form.Label>Blue Score</Form.Label>
+                        <Form.Control type="number" />
+                    </Form.Group>
+                    <Form.Group as={Col}>
+                        <Form.Label>Red Score</Form.Label>
+                        <Form.Control type="number" />
+                    </Form.Group>
+                </Form>
+                <Row><Button onClick={this.updateMatch}>Save <FontAwesomeIcon icon={faSave} /></Button></Row>
             </Container>
         )
     }
 
-    updateTeam() {
-        // if(this.state.teamId) {
-        //     this.props.updateTeam(this.state.teamId, { 
-        //         team_name: this.state.teamName,
-        //         team_number: Number(this.state.teamNumber),
-        //     });
-        // }
+    updateMatch() {
+        console.log('update match');
     }
 }
 
