@@ -83,6 +83,7 @@ create table if not exists match_judge (
 create table if not exists match_competitor (
 	team_id uuid not null,
 	match_id uuid not null,
+	alliance_color varchar(4) NOT NULL check(alliance_color == 'Blue' OR alliance_color == 'Red'),
 	constraint pk_match_competitors primary key (team_id, match_id),
 	constraint fk_match_competitor_team foreign key (team_id) references team(id),
 	constraint fk_match_competitor_match foreign key (match_id) references match(id)
@@ -93,6 +94,7 @@ create table if not exists tournament_participant (
 	team_id uuid not null,
 	qualifying_points int check (qualifying_points >= 0),
 	ranking_points int check (ranking_points >= 0),
+	matches_played smallint not null default 0 check (matches_played >= 0), 
 	constraint pk_tournament_participant primary key (tournament_id, team_id),
 	constraint fk_tournament_participant_tournament foreign key (tournament_id) references tournament(id),
 	constraint fk_tournament_participant_team foreign key (team_id) references team(id)
