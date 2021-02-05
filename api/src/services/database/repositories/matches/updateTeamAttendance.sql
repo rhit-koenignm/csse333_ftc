@@ -1,0 +1,1 @@
+select update_team_attendance(${matchId}::uuid, ${teamId}::uuid, ${attendance}) as result;

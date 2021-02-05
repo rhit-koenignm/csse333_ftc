@@ -57,6 +57,17 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "SaveMatchRequest": {
+        "dataType": "refObject",
+        "properties": {
+            "matchId": {"dataType":"string","required":true},
+            "redScore": {"dataType":"double","required":true},
+            "blueScore": {"dataType":"double","required":true},
+            "attendance": {"dataType":"array","array":{"dataType":"nestedObjectLiteral","nestedProperties":{"attendance":{"dataType":"boolean","required":true},"team_id":{"dataType":"string","required":true}}},"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Team": {
         "dataType": "refObject",
         "properties": {
@@ -138,11 +149,11 @@ export function RegisterRoutes(app: express.Router) {
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.put('/matches/:teamId',
+        app.put('/matches/:matchId',
             function (request: any, response: any, next: any) {
             const args = {
-                    teamId: {"in":"path","name":"teamId","required":true,"dataType":"string"},
-                    body: {"in":"body","name":"body","required":true,"dataType":"any"},
+                    matchId: {"in":"path","name":"matchId","required":true,"dataType":"string"},
+                    body: {"in":"body","name":"body","required":true,"ref":"SaveMatchRequest"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -162,7 +173,7 @@ export function RegisterRoutes(app: express.Router) {
             }
 
 
-            const promise = controller.updateTeam.apply(controller, validatedArgs as any);
+            const promise = controller.updateMatchDetails.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

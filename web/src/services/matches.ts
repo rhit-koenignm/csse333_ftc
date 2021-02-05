@@ -10,6 +10,10 @@ export const ACTION_FETCH_ONE_MATCH = 'matches/FETCH_ONE';
 export const ACTION_FETCH_ONE_MATCH_SUCCESS = 'matches/FETCH_ONE_SUCCESS';
 export const ACTION_FETCH_ONE_MATCH_FAILURE = 'matches/FETCH_ONE_FAILURE';
 
+export const ACTION_SAVE_MATCH = 'matches/SAVE_MATCH';
+export const ACTION_SAVE_MATCH_SUCCESS = 'matches/SAVE_MATCH_SUCCESS';
+export const ACTION_SAVE_MATCH_FAILURE = 'matches/SAVE_MATCH_FAILURE';
+
 /*
 export const ACTION_UPDATE_TEAM = 'teams/UPDATE_TEAM';
 export const ACTION_UPDATE_TEAM_SUCCESS = 'teams/UPDATE_TEAM_SUCCESS';
@@ -67,6 +71,16 @@ interface FetchAllMatchesFailureAction extends Action {
 
 }
 
+interface SaveMatchAction extends Action {
+    type: typeof ACTION_SAVE_MATCH,
+    payload: {
+        matchId: string,
+        redScore: number,
+        blueScore: number,
+        attendance: { team_id: string, attendance: boolean }[],
+    },
+}
+
 /*
 interface UpdateTeamAction extends Action {
     type: typeof ACTION_UPDATE_TEAM,
@@ -91,7 +105,16 @@ export const actions = {
         payload: {
             matchId: id,
         },
-    })
+    }),
+    saveMatch: (matchId: string, redScore: number, blueScore: number, attendance: { team_id: string, attendance: boolean }[]): SaveMatchAction => ({
+        type: ACTION_SAVE_MATCH,
+        payload: {
+            matchId,
+            redScore,
+            blueScore,
+            attendance,
+        },
+    }),
     /*
     updateTeam: (teamId: string, team: Partial<Team>): UpdateTeamAction => ({
         type: ACTION_UPDATE_TEAM,
@@ -138,6 +161,12 @@ interface FetchOneMatchResponse {
     match: Match;
 }
 
+interface SaveMatchRequest {
+    redScore: number,
+    blueScore: number,
+    attendance: { team_id: string, attendance: boolean }[],
+}
+
 export class MatchesService {
     static async fetchAllMatches(): Promise<Match[]> {
         let matches = await Axios.get<FetchAllMatchesResponse>(`${API_BASE}/teams`);
@@ -147,6 +176,10 @@ export class MatchesService {
     static async fetchOneMatch(matchId: string): Promise<Match> {
         let match = await Axios.get<FetchOneMatchResponse>(`${API_BASE}/matches/${matchId}`);
         return match.data.match;
+    }
+
+    static async saveMatch(matchId: string, request: SaveMatchRequest): Promise<void> {
+        await Axios.put(`${API_BASE}/matches/${matchId}`, request);
     }
 }
 
@@ -173,8 +206,13 @@ function* fetchOneMatch(action: FetchOneMatchAction) {
     });
 }
 
+function* saveMatch(action: SaveMatchAction) {
+    yield call(() => MatchesService.saveMatch(action.payload.matchId, action.payload));
+    yield put(actions.fetchOneMatch(action.payload.matchId));
+}
 
 export function* saga() {
     yield takeLatest(ACTION_FETCH_ALL_MATCHES, fetchAllMatches);
     yield takeLatest(ACTION_FETCH_ONE_MATCH, fetchOneMatch);
+    yield takeLatest(ACTION_SAVE_MATCH, saveMatch);
 }

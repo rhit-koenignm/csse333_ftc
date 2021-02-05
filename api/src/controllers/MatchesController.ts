@@ -25,6 +25,13 @@ interface GetMatchResponse {
 
 type UpdateTeamParams = Partial<Team>;
 
+interface SaveMatchRequest {
+    matchId: string,
+    redScore: number,
+    blueScore: number,
+    attendance: { team_id: string, attendance: boolean }[],
+}
+
 @Route("matches")
 @ProvideTransient(MatchesController)
 export class MatchesController extends Controller {
@@ -50,12 +57,17 @@ export class MatchesController extends Controller {
         };
     }
 
-    @Put("{teamId}")
-    public async updateTeam(
-        @Path() teamId: string,
-        @Body() body: any,
+    @Put("{matchId}")
+    public async updateMatchDetails(
+        @Path() matchId: string,
+        @Body() body: SaveMatchRequest,
     ): Promise<{ status: number }> {
-        let result = await this._db.teams.update(teamId, body);
-        return { status: result };
+        let result = await this._db.matches.updateDetails(
+            matchId,
+            body.redScore,
+            body.blueScore,
+            body.attendance,
+        );
+        return { status: 0 };
     }
 }

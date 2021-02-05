@@ -2,13 +2,11 @@ import * as React from 'react';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Checkbox from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlusCircle, faSave } from '@fortawesome/free-solid-svg-icons';
+import {  faSave } from '@fortawesome/free-solid-svg-icons';
 import styles from './MatchOverview.module.scss';
 import { RootState } from 'src/store/modules';
 import { Action, Dispatch } from 'redux';
@@ -29,6 +27,12 @@ interface StoreProps {
 
 interface DispatchProps {
     fetchMatch: (matchId: string) => void;
+    saveMatch: (
+        matchId: string,
+        redScore: number,
+        blueScore: number,
+        attendance: { team_id: string, attendance: boolean }[],
+    ) => void;
 }
 
 type Props = OwnProps & StoreProps & DispatchProps;
@@ -103,7 +107,7 @@ class MatchOverviewPage extends React.Component<Props, State> {
     }
 
     public render() {
-        let { match, blueTeams, redTeams, redAttendance, blueAttendance } = this.state;
+        let { blueTeams, redTeams, redAttendance, blueAttendance } = this.state;
         return (
             <Container className={styles.tableStyle}>
                 <Row className={styles.welcomeMsg}><h1>Match Details</h1></Row>
@@ -184,16 +188,20 @@ class MatchOverviewPage extends React.Component<Props, State> {
 
     saveMatchResults() {
         console.log('update match');
+        if(!this.state.match) {
+            return;
+        }
         let { redAttendance, blueAttendance } = this.state;
-        let attendance = [];
+        let attendance: { team_id: string, attendance: boolean }[] = [];
         attendance.push(...this.state.redTeams.map((team, index) => ({ team_id: team.team_id, attendance: redAttendance[index]})));
         attendance.push(...this.state.blueTeams.map((team, index) => ({ team_id: team.team_id, attendance: blueAttendance[index]})));
-        let updateInfo = {
-            blue_score: Number(this.state.blueScore),
-            red_score: Number(this.state.redScore),
+
+        this.props.saveMatch(
+            this.state.match.id,
+            Number(this.state.blueScore),
+            Number(this.state.redScore),
             attendance,
-        };
-        console.log(updateInfo);
+        );
     }
 }
 
@@ -207,11 +215,11 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>): DispatchProps => ({
     // },
     fetchMatch: (matchId: string) => {
         dispatch(matchesActions.fetchOneMatch(matchId));
-    }
+    },
+    saveMatch: (matchId: string, redScore: number, blueScore: number, attendance: { team_id: string, attendance: boolean }[]) => {
+        dispatch(matchesActions.saveMatch(matchId, redScore, blueScore, attendance));
+    },
 });
-
-// export default connect<StoreProps, DispatchProps, OwnProps, RootState>
-//     (mapStateToProps, mapDispatchToProps)(MatchesPage);
 
 export default connect<StoreProps, DispatchProps, OwnProps, RootState>
     (mapStateToProps, mapDispatchToProps)(MatchOverviewPage);
