@@ -6,6 +6,7 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Checkbox from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle, faSave } from '@fortawesome/free-solid-svg-icons';
 import styles from './MatchOverview.module.scss';
@@ -47,6 +48,9 @@ interface State {
     redTeams: MatchTeam[];
     blueTeams: MatchTeam[];
 
+    redAttendance: boolean[];
+    blueAttendance: boolean[];
+
     // teamId?: string;
     // teamName?: string;
 }
@@ -62,6 +66,8 @@ class MatchOverviewPage extends React.Component<Props, State> {
             show: false,
             redTeams: [],
             blueTeams: [],
+            redAttendance: [],
+            blueAttendance: [],
         };
     }
 
@@ -84,11 +90,20 @@ class MatchOverviewPage extends React.Component<Props, State> {
         }
 
         if(this.state.match?.id !== matchId) {
-            this.setState({ match, redTeams, blueTeams });
+            this.setState({
+                match,
+                redTeams,
+                blueTeams,
+                redScore: match.red_score.toString(),
+                blueScore: match.blue_score.toString(),
+                redAttendance: redTeams.map(team => team.attending),
+                blueAttendance: blueTeams.map(team => team.attending),
+            });
         }
     }
 
     public render() {
+        let { match, blueTeams, redTeams, redAttendance, blueAttendance } = this.state;
         return (
             <Container className={styles.tableStyle}>
                 <Row className={styles.welcomeMsg}><h1>Match Details</h1></Row>
@@ -106,30 +121,34 @@ class MatchOverviewPage extends React.Component<Props, State> {
                         <tr>
                             <td>
                                 <Container>
-                                    <Row>{this.state.blueTeams[0]?.team_name || 'Loading' }</Row>
-                                    <Row>{this.state.blueTeams[0]?.team_number || 'Loading' }</Row>
-                                    <Row><Form.Check type="checkbox" inline />Present</Row>
+                                    <Row>{blueTeams[0]?.team_name || 'Loading' }</Row>
+                                    <Row>{blueTeams[0]?.team_number || 'Loading' }</Row>
+                                    <Row><Form.Check type="checkbox" inline checked={blueAttendance[0] || false} 
+                                            onChange={(e) => this.updateAttendance('blue', 0, e)}/>Present</Row>
                                 </Container>
                             </td>
                             <td>
                                 <Container>
-                                    <Row>{this.state.blueTeams[1]?.team_name || 'Loading' }</Row>
-                                    <Row>{this.state.blueTeams[1]?.team_number || 'Loading' }</Row>
-                                    <Row><Form.Check type="checkbox" inline />Present</Row>
+                                    <Row>{blueTeams[1]?.team_name || 'Loading' }</Row>
+                                    <Row>{blueTeams[1]?.team_number || 'Loading' }</Row>
+                                    <Row><Form.Check type="checkbox" inline checked={blueAttendance[1] || false}
+                                            onChange={(e) => this.updateAttendance('blue', 1, e)} />Present</Row>
                                 </Container>
                             </td>
                             <td>
                                 <Container>
-                                    <Row>{this.state.redTeams[0]?.team_name || 'Loading' }</Row>
-                                    <Row>{this.state.redTeams[0]?.team_number || 'Loading' }</Row>
-                                    <Row><Form.Check type="checkbox" inline />Present</Row>
+                                    <Row>{redTeams[0]?.team_name || 'Loading' }</Row>
+                                    <Row>{redTeams[0]?.team_number || 'Loading' }</Row>
+                                    <Row><Form.Check type="checkbox" inline checked={redAttendance[0] || false}
+                                            onChange={(e) => this.updateAttendance('red', 0, e)} />Present</Row>
                                 </Container>
                             </td>
                             <td>
                                 <Container>
-                                    <Row>{this.state.redTeams[1]?.team_name || 'Loading' }</Row>
-                                    <Row>{this.state.redTeams[1]?.team_number || 'Loading' }</Row>
-                                    <Row><Form.Check type="checkbox" inline />Present</Row>
+                                    <Row>{redTeams[1]?.team_name || 'Loading' }</Row>
+                                    <Row>{redTeams[1]?.team_number || 'Loading' }</Row>
+                                    <Row><Form.Check type="checkbox" inline checked={redAttendance[1] || false}
+                                            onChange={(e) => this.updateAttendance('red', 1, e)} />Present</Row>
                                 </Container>
                             </td>
                         </tr>
@@ -138,19 +157,32 @@ class MatchOverviewPage extends React.Component<Props, State> {
                 <Form as={Row}>
                     <Form.Group as={Col}>
                         <Form.Label>Blue Score</Form.Label>
-                        <Form.Control type="number" />
+                        <Form.Control type="number" value={this.state.blueScore} onChange={(e) => this.setState({ blueScore: e.target.value })} />
                     </Form.Group>
                     <Form.Group as={Col}>
                         <Form.Label>Red Score</Form.Label>
-                        <Form.Control type="number" />
+                        <Form.Control type="number" value={this.state.redScore} onChange={(e) => this.setState({ redScore: e.target.value })} />
                     </Form.Group>
                 </Form>
-                <Row><Button onClick={this.updateMatch}>Save <FontAwesomeIcon icon={faSave} /></Button></Row>
+                <Row><Button onClick={this.saveMatchResults}>Save <FontAwesomeIcon icon={faSave} /></Button></Row>
             </Container>
         )
     }
 
-    updateMatch() {
+    updateAttendance(color: string, index: number, e: React.ChangeEvent<HTMLInputElement>) {
+        if(color === 'red') {
+            let redAttendance = this.state.redAttendance;
+            redAttendance[index] = !redAttendance[index];
+            this.setState({ redAttendance });
+        }
+        else if (color === 'blue') {
+            let blueAttendance = this.state.blueAttendance;
+            blueAttendance[index] = !blueAttendance[index];
+            this.setState({ blueAttendance });
+        }
+    }
+
+    saveMatchResults() {
         console.log('update match');
     }
 }
