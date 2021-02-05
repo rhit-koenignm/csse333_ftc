@@ -17,7 +17,8 @@ create or replace function register_team_for_tournament(
 returns int 
 language 'plpgsql'
 as $$
-declare entity_id uuid;
+declare 
+	entity_id uuid;
 begin  
 	
 --Check parameters--
