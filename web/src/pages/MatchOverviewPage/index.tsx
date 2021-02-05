@@ -41,8 +41,8 @@ interface State {
     teamNumber?: string;
     results?: string;
     time?: string;
-    redScore?: string;
-    blueScore?: string;
+    redScore?: number;
+    blueScore?: number;
 
     match?: Match;
     redTeams: MatchTeam[];
@@ -94,8 +94,8 @@ class MatchOverviewPage extends React.Component<Props, State> {
                 match,
                 redTeams,
                 blueTeams,
-                redScore: match.red_score.toString(),
-                blueScore: match.blue_score.toString(),
+                redScore: match.red_score,
+                blueScore: match.blue_score,
                 redAttendance: redTeams.map(team => team.attending),
                 blueAttendance: blueTeams.map(team => team.attending),
             });
@@ -124,7 +124,7 @@ class MatchOverviewPage extends React.Component<Props, State> {
                                     <Row>{blueTeams[0]?.team_name || 'Loading' }</Row>
                                     <Row>{blueTeams[0]?.team_number || 'Loading' }</Row>
                                     <Row><Form.Check type="checkbox" inline checked={blueAttendance[0] || false} 
-                                            onChange={(e) => this.updateAttendance('blue', 0, e)}/>Present</Row>
+                                            onChange={() => this.updateAttendance('blue', 0)}/>Present</Row>
                                 </Container>
                             </td>
                             <td>
@@ -132,7 +132,7 @@ class MatchOverviewPage extends React.Component<Props, State> {
                                     <Row>{blueTeams[1]?.team_name || 'Loading' }</Row>
                                     <Row>{blueTeams[1]?.team_number || 'Loading' }</Row>
                                     <Row><Form.Check type="checkbox" inline checked={blueAttendance[1] || false}
-                                            onChange={(e) => this.updateAttendance('blue', 1, e)} />Present</Row>
+                                            onChange={() => this.updateAttendance('blue', 1)} />Present</Row>
                                 </Container>
                             </td>
                             <td>
@@ -140,7 +140,7 @@ class MatchOverviewPage extends React.Component<Props, State> {
                                     <Row>{redTeams[0]?.team_name || 'Loading' }</Row>
                                     <Row>{redTeams[0]?.team_number || 'Loading' }</Row>
                                     <Row><Form.Check type="checkbox" inline checked={redAttendance[0] || false}
-                                            onChange={(e) => this.updateAttendance('red', 0, e)} />Present</Row>
+                                            onChange={() => this.updateAttendance('red', 0)} />Present</Row>
                                 </Container>
                             </td>
                             <td>
@@ -148,7 +148,7 @@ class MatchOverviewPage extends React.Component<Props, State> {
                                     <Row>{redTeams[1]?.team_name || 'Loading' }</Row>
                                     <Row>{redTeams[1]?.team_number || 'Loading' }</Row>
                                     <Row><Form.Check type="checkbox" inline checked={redAttendance[1] || false}
-                                            onChange={(e) => this.updateAttendance('red', 1, e)} />Present</Row>
+                                            onChange={() => this.updateAttendance('red', 1)} />Present</Row>
                                 </Container>
                             </td>
                         </tr>
@@ -157,19 +157,19 @@ class MatchOverviewPage extends React.Component<Props, State> {
                 <Form as={Row}>
                     <Form.Group as={Col}>
                         <Form.Label>Blue Score</Form.Label>
-                        <Form.Control type="number" value={this.state.blueScore} onChange={(e) => this.setState({ blueScore: e.target.value })} />
+                        <Form.Control type="number" value={this.state.blueScore} onChange={(e) => this.setState({ blueScore: Number(e.target.value) })} />
                     </Form.Group>
                     <Form.Group as={Col}>
                         <Form.Label>Red Score</Form.Label>
-                        <Form.Control type="number" value={this.state.redScore} onChange={(e) => this.setState({ redScore: e.target.value })} />
+                        <Form.Control type="number" value={this.state.redScore} onChange={(e) => this.setState({ redScore: Number(e.target.value) })} />
                     </Form.Group>
                 </Form>
-                <Row><Button onClick={this.saveMatchResults}>Save <FontAwesomeIcon icon={faSave} /></Button></Row>
+                <Row><Button onClick={() => this.saveMatchResults()}>Save <FontAwesomeIcon icon={faSave} /></Button></Row>
             </Container>
         )
     }
 
-    updateAttendance(color: string, index: number, e: React.ChangeEvent<HTMLInputElement>) {
+    updateAttendance(color: string, index: number) {
         if(color === 'red') {
             let redAttendance = this.state.redAttendance;
             redAttendance[index] = !redAttendance[index];
@@ -184,6 +184,16 @@ class MatchOverviewPage extends React.Component<Props, State> {
 
     saveMatchResults() {
         console.log('update match');
+        let { redAttendance, blueAttendance } = this.state;
+        let attendance = [];
+        attendance.push(...this.state.redTeams.map((team, index) => ({ team_id: team.team_id, attendance: redAttendance[index]})));
+        attendance.push(...this.state.blueTeams.map((team, index) => ({ team_id: team.team_id, attendance: blueAttendance[index]})));
+        let updateInfo = {
+            blue_score: Number(this.state.blueScore),
+            red_score: Number(this.state.redScore),
+            attendance,
+        };
+        console.log(updateInfo);
     }
 }
 
