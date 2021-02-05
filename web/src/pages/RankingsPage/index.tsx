@@ -27,52 +27,52 @@ class RankingsPage extends React.Component{
                 <Row className={styles.welcomeMsg}><h1>Rankings</h1></Row>
                 <Row className={styles.subtitleMsg}><p>You are viewing the current Team Rankings</p></Row>
                 <Row>
-                <Col>
-                    <Table  striped bordered hover >
-                        <thead>
-                            <tr>
-                                <th>Rank</th>
-                                <th>Team#</th>
-                                <th>QP</th>
-                                <th>RP</th>
-                                <th>Plays</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                </td>
-                            </tr>  
-                        </tbody>
-                    </Table>
-                </Col>
-                <Col>
-                    <Table striped bordered hover>
-                        <thead>
-                            <tr>
-                                <th>Match</th>
-                                <th>Results</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                </td>
-                                <td>
-                                </td>
-                            </tr>  
-                        </tbody>
-                    </Table>
-                </Col>
-                </Row>
+                    <Col>
+                        <Table  striped bordered hover >
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Team#</th>
+                                    <th>QP</th>
+                                    <th>RP</th>
+                                    <th>Plays</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>  
+                            </tbody>
+                        </Table>
+                    </Col>
+                    <Col>
+                        <Table striped bordered hover>
+                            <thead>
+                                <tr>
+                                    <th>Match</th>
+                                    <th>Results</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>  
+                            </tbody>
+                        </Table>
+                    </Col>
+                    </Row>
             </Container>
         )
     };
