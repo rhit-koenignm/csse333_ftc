@@ -43,6 +43,10 @@ interface State {
     redScore?: string;
     blueScore?: string;
 
+    match?: Match;
+    redTeams: MatchTeam[];
+    blueTeams: MatchTeam[];
+
     // teamId?: string;
     // teamName?: string;
 }
@@ -55,12 +59,33 @@ class MatchOverviewPage extends React.Component<Props, State> {
         this.state = {
             showRed: false,
             showBlue: false,
-            show: false
+            show: false,
+            redTeams: [],
+            blueTeams: [],
         };
     }
 
     componentDidMount() {
-        this.props.fetchMatch(this.props.match.params.matchId);
+        let matchId = this.props.match.params.matchId;
+        this.props.fetchMatch(matchId);
+    }
+
+    componentDidUpdate(prevProps: Props, prevState: State) {
+        let matchId = this.props.match.params.matchId;
+        let match = this.props.matches?.find(match => match.id === matchId);
+        // todo: handle the case where this is a string
+        let teams: MatchTeam[] = (match?.teams || []) as MatchTeam[];
+        let redTeams: MatchTeam[] = teams.filter(team => team.alliance_color === 'Red');
+        let blueTeams: MatchTeam[] = teams.filter(team => team.alliance_color === 'Blue');
+
+        if(!match) {
+            this.props.fetchMatch(matchId);
+            return;
+        }
+
+        if(this.state.match?.id !== matchId) {
+            this.setState({ match, redTeams, blueTeams });
+        }
     }
 
     showRedModal = () => {
@@ -83,17 +108,12 @@ class MatchOverviewPage extends React.Component<Props, State> {
     }
 
     public render() {
-        let match = this.props.matches?.find(match => match.id === this.props.match.params.matchId);
-        // todo: handle the case where this is a string
-        let teams: MatchTeam[] = (match?.teams || []) as MatchTeam[];
-        let redTeams: MatchTeam[] = teams.filter(team => team.alliance_color === 'Red');
-        let blueTeams: MatchTeam[] = teams.filter(team => team.alliance_color === 'Blue');
         return (
             <Container className={styles.tableStyle}>
                 <Row className={styles.welcomeMsg}><h1>Match Details</h1></Row>
                 <hr></hr>
-                <Row className={styles.matchNumber}><h4>Match Number: {match?.number || 'Loading' }</h4></Row>
-                <Row className={styles.subtitleMsg}><h4>Time: {match?.scheduled_time || 'Loading' }</h4></Row>
+                <Row className={styles.matchNumber}><h4>Match Number: {this.state.match?.number || 'Loading' }</h4></Row>
+                <Row className={styles.subtitleMsg}><h4>Time: {this.state.match?.scheduled_time || 'Loading' }</h4></Row>
                 
                 <Table striped bordered hover>
                     <thead>
@@ -106,29 +126,29 @@ class MatchOverviewPage extends React.Component<Props, State> {
                         <tr>
                             <td>
                                 <Container>
-                                    <Row>{blueTeams[0]?.team_name || 'Loading' }</Row>
-                                    <Row>{blueTeams[0]?.team_number || 'Loading' }</Row>
+                                    <Row>{this.state.blueTeams[0]?.team_name || 'Loading' }</Row>
+                                    <Row>{this.state.blueTeams[0]?.team_number || 'Loading' }</Row>
                                     <Row><label><input type="checkbox" value="Present"/>  Present</label></Row>
                                 </Container>
                             </td>
                             <td>
                                 <Container>
-                                    <Row>{blueTeams[1]?.team_name || 'Loading' }</Row>
-                                    <Row>{blueTeams[1]?.team_number || 'Loading' }</Row>
+                                    <Row>{this.state.blueTeams[1]?.team_name || 'Loading' }</Row>
+                                    <Row>{this.state.blueTeams[1]?.team_number || 'Loading' }</Row>
                                     <Row><label><input type="checkbox" value="Present"/>  Present</label></Row>
                                 </Container>
                             </td>
                             <td>
                                 <Container>
-                                    <Row>{redTeams[0]?.team_name || 'Loading' }</Row>
-                                    <Row>{redTeams[0]?.team_number || 'Loading' }</Row>
+                                    <Row>{this.state.redTeams[0]?.team_name || 'Loading' }</Row>
+                                    <Row>{this.state.redTeams[0]?.team_number || 'Loading' }</Row>
                                     <Row><label><input type="checkbox" value="Present"/>  Present</label></Row>
                                 </Container>
                             </td>
                             <td>
                                 <Container>
-                                    <Row>{redTeams[1]?.team_name || 'Loading' }</Row>
-                                    <Row>{redTeams[1]?.team_number || 'Loading' }</Row>
+                                    <Row>{this.state.redTeams[1]?.team_name || 'Loading' }</Row>
+                                    <Row>{this.state.redTeams[1]?.team_number || 'Loading' }</Row>
                                     <Row><label><input type="checkbox" value="Present"/>  Present</label></Row>
                                 </Container>
                             </td>
