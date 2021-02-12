@@ -17,3 +17,12 @@ export interface Match {
     scheduled_time: string,
     teams: string[] | MatchTeam[],
 }
+
+export interface UpcomingMatch {
+    match_name: string;
+    blue_team_num_1: number;
+    blue_team_num_2: number;
+    red_team_num_1: number;
+    red_team_num_2: number;
+    match_time: string;
+}

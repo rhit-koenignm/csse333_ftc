@@ -57,6 +57,28 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "UpcomingMatch": {
+        "dataType": "refObject",
+        "properties": {
+            "match_name": {"dataType":"string","required":true},
+            "blue_team_num_1": {"dataType":"double","required":true},
+            "blue_team_num_2": {"dataType":"double","required":true},
+            "red_team_num_1": {"dataType":"double","required":true},
+            "red_team_num_2": {"dataType":"double","required":true},
+            "match_time": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "GetUpcomingMatchesResponse": {
+        "dataType": "refObject",
+        "properties": {
+            "tournament_id": {"dataType":"string","required":true},
+            "matches": {"dataType":"array","array":{"ref":"UpcomingMatch"},"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "SaveMatchRequest": {
         "dataType": "refObject",
         "properties": {
@@ -82,6 +104,28 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "teams": {"dataType":"array","array":{"ref":"Team"},"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "TeamRanking": {
+        "dataType": "refObject",
+        "properties": {
+            "rank_num": {"dataType":"string","required":true},
+            "participant_id": {"dataType":"string","required":true},
+            "team_num": {"dataType":"double","required":true},
+            "qp": {"dataType":"double","required":true},
+            "rp": {"dataType":"double","required":true},
+            "match_count": {"dataType":"double","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "GetRankingsResponse": {
+        "dataType": "refObject",
+        "properties": {
+            "tournament_id": {"dataType":"string","required":true},
+            "rankings": {"dataType":"array","array":{"ref":"TeamRanking"},"required":true},
         },
         "additionalProperties": false,
     },
@@ -149,6 +193,33 @@ export function RegisterRoutes(app: express.Router) {
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/matches/upcoming/:tournId',
+            function (request: any, response: any, next: any) {
+            const args = {
+                    tournId: {"in":"path","name":"tournId","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const container: IocContainer = typeof iocContainer === 'function' ? (iocContainer as IocContainerFactory)(request) : iocContainer;
+
+            const controller: any = container.get<MatchesController>(MatchesController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.getUpcomingMatches.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.put('/matches/:matchId',
             function (request: any, response: any, next: any) {
             const args = {
@@ -200,6 +271,33 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.getAllTeams.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/teams/rankings/:tournId',
+            function (request: any, response: any, next: any) {
+            const args = {
+                    tournId: {"in":"path","name":"tournId","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const container: IocContainer = typeof iocContainer === 'function' ? (iocContainer as IocContainerFactory)(request) : iocContainer;
+
+            const controller: any = container.get<TeamsController>(TeamsController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.getTournamentRankings.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

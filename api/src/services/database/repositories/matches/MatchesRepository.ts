@@ -1,10 +1,11 @@
 import { AppDatabase } from '../../database';
 import { sql } from '../../util';
-import { Match, MatchTeam } from '../../../../models/Match';
+import { Match, MatchTeam, UpcomingMatch } from '../../../../models/Match';
 
 const findAllQuery = sql('matches/findAll.sql');
 const findOneQuery = sql('matches/findOne.sql');
 const findMatchTeamsQuery = sql('matches/findMatchTeams.sql');
+const findUpcoming = sql('matches/findUpcoming.sql')
 const updateAttendanceQuery = sql('matches/updateTeamAttendance.sql');
 const updateScoresQuery = sql('matches/updateScores.sql');
 
@@ -48,5 +49,11 @@ export class MatchesRepository {
             blueScore,
         });
         return 0;
+    }
+
+    public async findUpcomingMatches(tournId: string): Promise<UpcomingMatch[]> {
+        return await this._db.any<UpcomingMatch>(findUpcoming, {
+            tournId,
+        });
     }
 }
