@@ -13,6 +13,9 @@ import { actions as teamActions, Team, TeamRanking } from 'src/services/teams';
 import { RootState } from 'src/store/modules';
 import { Action, Dispatch } from 'redux';
 import { connect } from 'react-redux';
+import { render } from 'react-dom';
+import * as Scroll from 'react-scroll';
+import { animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 interface OwnProps {
 
@@ -34,6 +37,13 @@ interface State {
 }
 
 class RankingsPage extends React.Component<Props, State> {
+    scrollTo = () => {
+        scroller.scrollTo('scroll-to-element', {
+            duration: 800,
+            delay: 0,
+            smooth: 'easeInOutQuart'
+        });
+    }
     componentDidMount() {
         let tournamentId = '00000000-0000-0000-0000-000000000000';
         this.props.fetchTeamRankings(tournamentId);
@@ -45,7 +55,7 @@ class RankingsPage extends React.Component<Props, State> {
                 <Row className={styles.welcomeMsg}><h1>Rankings</h1></Row>
                 <Row className={styles.subtitleMsg}><p>You are viewing the current Team Rankings</p></Row>
                 <Row>
-                    <Col>
+                    <Col className={styles.tbodyScroll}>
                         <Table  striped bordered hover >
                             <thead>
                                 <tr>
@@ -56,7 +66,7 @@ class RankingsPage extends React.Component<Props, State> {
                                     <th>Plays</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody className={styles.tbody}>
                                 { rankings.map(ranking => (
                                     <tr key={ranking.participant_id}>
                                         <td>{ranking.rank_num}</td>
@@ -67,23 +77,45 @@ class RankingsPage extends React.Component<Props, State> {
                                     </tr>
                                 ))}
                             </tbody>
+                           
                         </Table>
                     </Col>
-                    <Col>
-                        <Table striped bordered hover>
+                    <Col className={styles.tbodyScroll}>
+                        <Table striped bordered hover >
                             <thead>
                                 <tr>
                                     <th>Match</th>
                                     <th>Results</th>
+                                    <th>Upcoming Matches</th>
                                 </tr>
                             </thead>
+                            
                             <tbody>
                                 <tr>
                                     <td>
                                     </td>
                                     <td>
                                     </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
                                 </tr>  
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>      
+
                             </tbody>
                         </Table>
                     </Col>
