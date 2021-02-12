@@ -13,21 +13,34 @@ import { actions as teamActions, Team } from 'src/services/teams';
 import { RootState } from 'src/store/modules';
 import { Action, Dispatch } from 'redux';
 import { connect } from 'react-redux';
+import { render } from 'react-dom';
+import * as Scroll from 'react-scroll';
+import { animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 
 
 class RankingsPage extends React.Component{
+
+    scrollTo = () => {
+        scroller.scrollTo('scroll-to-element', {
+          duration: 800,
+          delay: 0,
+          smooth: 'easeInOutQuart'
+    });
+    }
+    
 
 
 
     public render() {
         return (
 
+            
             <Container className={styles.tableStyle}>
                 <Row className={styles.welcomeMsg}><h1>Rankings</h1></Row>
                 <Row className={styles.subtitleMsg}><p>You are viewing the current Team Rankings</p></Row>
                 <Row>
-                    <Col>
+                    <Col className={styles.tbodyScroll}>
                         <Table  striped bordered hover >
                             <thead>
                                 <tr>
@@ -38,7 +51,8 @@ class RankingsPage extends React.Component{
                                     <th>Plays</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                         
+                            <tbody className={styles.tbody}>
                                 <tr>
                                     <td>
                                     </td>
@@ -50,25 +64,71 @@ class RankingsPage extends React.Component{
                                     </td>
                                     <td>
                                     </td>
-                                </tr>  
+                                </tr>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
                             </tbody>
+                           
                         </Table>
                     </Col>
-                    <Col>
-                        <Table striped bordered hover>
+                    <Col className={styles.tbodyScroll}>
+                        <Table striped bordered hover >
                             <thead>
                                 <tr>
                                     <th>Match</th>
                                     <th>Results</th>
+                                    <th>Upcoming Matches</th>
                                 </tr>
                             </thead>
+                            
                             <tbody>
                                 <tr>
                                     <td>
                                     </td>
                                     <td>
                                     </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
                                 </tr>  
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>      
+
                             </tbody>
                         </Table>
                     </Col>
@@ -79,6 +139,11 @@ class RankingsPage extends React.Component{
 
    
 }
+
+
+
+
+  
 
 
 export default RankingsPage;
