@@ -14,7 +14,7 @@ create or replace function get_rankings(
 	tourn_id uuid default uuid_nil()
 )
 returns table (
-	rank_num int4,
+	rank_num int8,
 	participant_id uuid,
 	team_num int4,
 	qp int4,
@@ -23,17 +23,12 @@ returns table (
 )
 language 'plpgsql'
 as $$
-declare 
-	temp_team team;
-	temp_rank int4 := 0;
-	temp_num int4;
 begin 
 	return query 
-	select count(*) as rank_number, team.id, team.team_number, tp.qualifying_points, tp.ranking_points, tp.matches_played 
+	select row_number() Over(order by qualifying_points desc, ranking_points desc) as rank_number, team.id, team.team_number, tp.qualifying_points, tp.ranking_points, tp.matches_played 
 	from tournament_participant tp 
-	join team on tp.team_id = team.id 
-	group by team.id 
-	order by qualifying_points desc, ranking_points desc;
+	join team on tp.team_id = team.id;
+	
 /*	for temp_team in
 		select tp.team_id, tp.qualifying_points, tp.ranking_points, tp.matches_played 
 		from tournament_participant as tp

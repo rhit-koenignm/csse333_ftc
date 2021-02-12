@@ -19,7 +19,10 @@ select * from create_team(9999, 'The ninety-niners');*/
 --select * from register_team_for_tournament(select team.id from team where team_number = 6969);
 --select * from register_team_for_tournament(select team.id from team where team_number = 9999);
 
-drop function get_rankings;
+--drop function get_rankings;
+drop function get_upcoming_matches;
+
+select * from get_upcoming_matches();
 
 select * from get_rankings();
 
