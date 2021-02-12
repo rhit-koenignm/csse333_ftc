@@ -20,11 +20,23 @@ select * from create_team(9999, 'The ninety-niners');*/
 --select * from register_team_for_tournament(select team.id from team where team_number = 9999);
 
 --drop function get_rankings;
-drop function get_upcoming_matches;
+--drop function get_upcoming_matches;
+
+select * from match;
+
+select * from team;
+
+select * from tournament_participant;
+
+select * from update_match_score('cfbabcd2-b44c-4dcc-b583-6b6a4c7d8d7f', uuid_nil(), 230, 250) 
 
 select * from get_upcoming_matches();
 
 select * from get_rankings();
+
+select * from update_team_score('d6b0e2ab-97ca-47f5-b25c-d1967c9dbb63'::uuid, -2::int4, -1::int4, 1::int2);
+
+select * from update_team_score('d6b0e2ab-97ca-47f5-b25c-d1967c9dbb63'::uuid, 2::int4, 40::int4, 1::int2);
 
 select * from register_team_for_tournament('0eb9cd62-d17b-428d-8a60-8c21f96c7b3a');
 select * from register_team_for_tournament('b2af4dbf-561f-4b18-b799-eaafb9811ca7');

@@ -12,15 +12,15 @@ create or replace function update_team_score(
 	given_team uuid,
 	added_qp int4 default 0, 
 	added_rp int4 default 0,
-	added_match_count int4 default 0
+	added_match_count int2 default 0
 )
 returns int 
 language 'plpgsql'
 as $$
 declare 
-	new_qp int4,
-	new_rp int4,
-	new_match_count  int4;
+	new_qp int4;
+	new_rp int4;
+	new_match_count  int2;
 begin
 --Checking parameters--
 	if(select count(*) from tournament_participant where team_id = given_team) < 1 then 
@@ -28,7 +28,7 @@ begin
 		return 1;
 	end if;
 	
-	set new_qp = select qualifying_points from tournament_participant where team_id = given_team;
+	select qualifying_points into new_qp from tournament_participant where team_id = given_team;
 	set new_rp = select ranking_points from tournament_participant where team_id = given_team;
 	set new_match_count = select matches_played from tournament_participant where team_id = given_team;
 
