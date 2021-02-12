@@ -92,9 +92,9 @@ create table if not exists match_competitor (
 create table if not exists tournament_participant (
 	tournament_id uuid not null,
 	team_id uuid not null,
-	qualifying_points int check (qualifying_points > 0),
-	ranking_points int check (ranking_points > 0),
-	matches_played SMALLINT NOT NULL DEFAULT 0 CHECK (matches_played > 0), 
+	qualifying_points int check (qualifying_points >= 0),
+	ranking_points int check (ranking_points >= 0),
+	matches_played SMALLINT NOT NULL DEFAULT 0 CHECK (matches_played >= 0), 
 	constraint pk_tournament_participant primary key (tournament_id, team_id),
 	constraint fk_tournament_participant_tournament foreign key (tournament_id) references tournament(id),
 	constraint fk_tournament_participant_team foreign key (team_id) references team(id)

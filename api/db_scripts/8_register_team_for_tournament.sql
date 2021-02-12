@@ -39,6 +39,8 @@ begin
 	insert into tournament_participant (tournament_id, team_id, qualifying_points, ranking_points, matches_played)
 	values (tourn_id, added_team_id, 0, 0, 0);
 
+	
+
 	return 0;
 
 end
