@@ -10,16 +10,13 @@ export const ACTION_FETCH_ONE_MATCH = 'matches/FETCH_ONE';
 export const ACTION_FETCH_ONE_MATCH_SUCCESS = 'matches/FETCH_ONE_SUCCESS';
 export const ACTION_FETCH_ONE_MATCH_FAILURE = 'matches/FETCH_ONE_FAILURE';
 
+export const ACTION_FETCH_UPCOMING_MATCHES = 'matches/FETCH_UPCOMING';
+export const ACTION_FETCH_UPCOMING_MATCHES_SUCCESS = 'matches/FETCH_UPCOMING_SUCCESS';
+export const ACTION_FETCH_UPCOMING_MATCHES_FAILURE = 'matches/FETCH_UPCOMING_FAILURE';
+
 export const ACTION_SAVE_MATCH = 'matches/SAVE_MATCH';
 export const ACTION_SAVE_MATCH_SUCCESS = 'matches/SAVE_MATCH_SUCCESS';
 export const ACTION_SAVE_MATCH_FAILURE = 'matches/SAVE_MATCH_FAILURE';
-
-/*
-export const ACTION_UPDATE_TEAM = 'teams/UPDATE_TEAM';
-export const ACTION_UPDATE_TEAM_SUCCESS = 'teams/UPDATE_TEAM_SUCCESS';
-export const ACTION_UPDATE_TEAM_FAILURE = 'teams/UPDATE_TEAM_FAILURE';
-export const ACTION_SET_STATUS = 'teams/SET_STATUS';
-*/
 
 export interface MatchTeam {
     team_id: string,
@@ -39,8 +36,18 @@ export interface Match {
     teams: string[] | MatchTeam[],
 }
 
+export interface UpcomingMatch {
+    match_name: string;
+    blue_team_num_1: number;
+    blue_team_num_2: number;
+    red_team_num_1: number;
+    red_team_num_2: number;
+    match_time: string;
+}
+
 export interface MatchesState {
     matches: Match[];
+    upcomingMatches: UpcomingMatch[];
 }
 
 interface FetchAllMatchesAction extends Action {
@@ -132,6 +139,7 @@ export const actions = {
 
 const initialState: MatchesState = {
     matches: [],
+    upcomingMatches: [],
 }
 
 export const reducer: Reducer<MatchesState> = (state = initialState, action): MatchesState => {
@@ -143,6 +151,8 @@ export const reducer: Reducer<MatchesState> = (state = initialState, action): Ma
             let matches = state.matches.filter(match => match.id != action.payload.match.id);
             matches.push(action.payload.match);
             return { ...state, matches };
+        case ACTION_FETCH_UPCOMING_MATCHES_SUCCESS:
+            return {...state, upcomingMatches: action.payload.upcomingMatches };
         case ACTION_FETCH_ALL_MATCHES_FAILURE:
             return { ...state };
         default:
@@ -161,6 +171,11 @@ interface FetchOneMatchResponse {
     match: Match;
 }
 
+interface GetUpcomingMatchesResponse {
+    tournament_id: string;
+    matches: UpcomingMatch[];
+}
+
 interface SaveMatchRequest {
     redScore: number,
     blueScore: number,
@@ -176,6 +191,11 @@ export class MatchesService {
     static async fetchOneMatch(matchId: string): Promise<Match> {
         let match = await Axios.get<FetchOneMatchResponse>(`${API_BASE}/matches/${matchId}`);
         return match.data.match;
+    }
+
+    static async fetchUpcomingMatches(tournId: string): Promise<UpcomingMatch[]> {
+        let matches = await Axios.get<GetUpcomingMatchesResponse>(`${API_BASE}/matches/upcoming/${tournId}`);
+        return matches.data.matches;
     }
 
     static async saveMatch(matchId: string, request: SaveMatchRequest): Promise<void> {

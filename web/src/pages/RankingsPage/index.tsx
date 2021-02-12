@@ -9,20 +9,38 @@ import Col from 'react-bootstrap/Col';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import styles from './RankingsPage.module.scss';
-import { actions as teamActions, Team } from 'src/services/teams';
+import { actions as teamActions, Team, TeamRanking } from 'src/services/teams';
 import { RootState } from 'src/store/modules';
 import { Action, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 
+interface OwnProps {
 
+}
 
-class RankingsPage extends React.Component{
+interface StoreProps {
+    rankings: TeamRanking[];
+}
 
+interface DispatchProps {
+    fetchTeamRankings: (tournamentId: string) => void;
+    fetchUpcomingMatches: (tournamentId: string) => void;
+}
 
+type Props = OwnProps & StoreProps & DispatchProps;
 
+interface State {
+
+}
+
+class RankingsPage extends React.Component<Props, State> {
+    componentDidMount() {
+        let tournamentId = '00000000-0000-0000-0000-000000000000';
+        this.props.fetchTeamRankings(tournamentId);
+    }
     public render() {
+        let rankings = this.props.rankings;
         return (
-
             <Container className={styles.tableStyle}>
                 <Row className={styles.welcomeMsg}><h1>Rankings</h1></Row>
                 <Row className={styles.subtitleMsg}><p>You are viewing the current Team Rankings</p></Row>
@@ -39,18 +57,15 @@ class RankingsPage extends React.Component{
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td>
-                                    </td>
-                                </tr>  
+                                { rankings.map(ranking => (
+                                    <tr key={ranking.participant_id}>
+                                        <td>{ranking.rank_num}</td>
+                                        <td>{ranking.team_num}</td>
+                                        <td>{ranking.qp}</td>
+                                        <td>{ranking.rp}</td>
+                                        <td>{ranking.match_count}</td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </Table>
                     </Col>
@@ -76,9 +91,21 @@ class RankingsPage extends React.Component{
             </Container>
         )
     };
-
-   
 }
 
+const mapStateToProps = (state: RootState): StoreProps => ({
+    rankings: state.teams.rankings,
+});
 
-export default RankingsPage;
+const mapDispatchToProps = (dispatch: Dispatch<Action>): DispatchProps => ({
+    fetchTeamRankings: (tournamentId: string) => {
+        dispatch(teamActions.fetchTeamRankings(tournamentId));
+    },
+    fetchUpcomingMatches: (tournament: string) => {
+        // not yet implemented
+    },
+});
+
+
+export default connect<StoreProps, DispatchProps, OwnProps, RootState>
+    (mapStateToProps, mapDispatchToProps)(RankingsPage);
