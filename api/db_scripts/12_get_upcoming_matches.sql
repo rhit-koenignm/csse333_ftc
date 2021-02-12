@@ -33,8 +33,8 @@ declare
 begin  
 
 	for temp_match in(
-		select match.id, match."number" match.scheduled_time, from "match" m2 
-		where Time(match.scheduled_time) >= givenTime
+		select match.id, match.number, match.scheduled_time from "match" ASm2
+		where Time(m2.scheduled_time) >= givenTime
 		limit num_upcoming
 	)
 	loop 

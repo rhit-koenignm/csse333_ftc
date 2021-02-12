@@ -21,7 +21,7 @@ select * from create_team(9999, 'The ninety-niners');*/
 
 drop function get_rankings;
 
-select * from get_rankings()
+select * from get_rankings();
 
 select * from register_team_for_tournament('0eb9cd62-d17b-428d-8a60-8c21f96c7b3a');
 select * from register_team_for_tournament('b2af4dbf-561f-4b18-b799-eaafb9811ca7');

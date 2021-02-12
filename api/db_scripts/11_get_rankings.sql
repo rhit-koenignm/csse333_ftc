@@ -14,8 +14,8 @@ create or replace function get_rankings(
 	tourn_id uuid default uuid_nil()
 )
 returns table (
-	rank_num int,
-	id uuid,
+	rank_num int4,
+	participant_id uuid,
 	team_num int4,
 	qp int4,
 	rp int4,
@@ -26,26 +26,35 @@ as $$
 declare 
 	temp_team team;
 	temp_rank int4 := 0;
-begin  
-
-	for temp_team in(
-		select team_id, qualifying_points, ranking_points, matches_played from tournament_participant
+	temp_num int4;
+begin 
+	return query 
+	select count(*) as rank_number, team.id, team.team_number, tp.qualifying_points, tp.ranking_points, tp.matches_played 
+	from tournament_participant tp 
+	join team on tp.team_id = team.id 
+	group by team.id 
+	order by qualifying_points desc, ranking_points desc;
+/*	for temp_team in
+		select tp.team_id, tp.qualifying_points, tp.ranking_points, tp.matches_played 
+		from tournament_participant as tp
 		order by qualifying_points desc, ranking_points desc 
-	)
-	loop 
+	
+	loop
 		temp_rank := temp_rank + 1;
-		id := temp_team.team_id;
+		
+		participant_id := temp_team.team_id;
 		
 		select team.team_number 
 		into team_num
-		from team as t1
-		where t1.id = temp_team.team_id;
+		from team
+		where team.id = temp_team.team_id;
 	
 		qp := temp_team.qualifying_points;
 		rp := temp_team.ranking_points;
 		match_count := temp_team.matches_played;
 		return next;
-	end loop;
+	end loop;*/
+	
 
 end
 $$;
