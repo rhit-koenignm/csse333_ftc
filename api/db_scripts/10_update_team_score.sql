@@ -29,12 +29,12 @@ begin
 	end if;
 	
 	select qualifying_points into new_qp from tournament_participant where team_id = given_team;
-	set new_rp = select ranking_points from tournament_participant where team_id = given_team;
-	set new_match_count = select matches_played from tournament_participant where team_id = given_team;
+	select ranking_points into new_rp from tournament_participant where team_id = given_team;
+	select matches_played into new_match_count from tournament_participant where team_id = given_team;
 
-	set new_qp = new_qp + added_qp;
-	set new_rp = new_rp + added_rp;
-	set new_match_count = new_match_count + added_match_count;
+	select new_qp = new_qp + added_qp;
+	select new_rp = new_rp + added_rp;
+	select new_match_count = new_match_count + added_match_count;
 
 	update tournament_participant 
 	set qualifying_points = new_qp,
