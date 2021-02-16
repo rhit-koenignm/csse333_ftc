@@ -35,7 +35,9 @@ begin
 	--Distribution of points is based off of who is the winner of the match--
 	if(redScore > blueScore) then
 		--Giving winners 2 qp points--
-		update tournament_participant
+		
+	
+	update tournament_participant
 		set qualifying_points = qualifying_points + 2
 		where team_id = (
 			select team_id 
