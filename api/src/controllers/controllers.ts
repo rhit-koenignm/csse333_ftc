@@ -1,4 +1,5 @@
-// import all controllers here so paths can be generates
+// import all controllers here so paths can be generated
 import './UserController';
 import './TeamsController';
-import './MatchesController'
+import './MatchesController';
+import './TournamentsController';

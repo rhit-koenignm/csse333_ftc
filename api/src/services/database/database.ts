@@ -4,6 +4,7 @@ import { IInitOptions, IDatabase, IMain, IQueryFileOptions, QueryFile } from 'pg
 import { UsersRepository } from './repositories/user/UsersRepository';
 import { TeamsRepository } from './repositories/teams/TeamsRepository';
 import { MatchesRepository } from './repositories/matches/MatchesRepository';
+import { TournamentsRepository } from './repositories/tournaments/TournamentsRepository';
 
 export type AppDatabase = IDatabase<DatabaseExtensions> & DatabaseExtensions;
 
@@ -12,6 +13,7 @@ interface DatabaseExtensions {
     users: UsersRepository,
     teams: TeamsRepository,
     matches: MatchesRepository,
+    tournaments: TournamentsRepository,
 }
 
 const initOptions: IInitOptions<DatabaseExtensions> = {
@@ -21,6 +23,7 @@ const initOptions: IInitOptions<DatabaseExtensions> = {
         db.users = new UsersRepository(db);
         db.teams = new TeamsRepository(db);
         db.matches = new MatchesRepository(db);
+        db.tournaments = new TournamentsRepository(db);
     }
 };
 
