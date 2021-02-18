@@ -13,6 +13,7 @@ import { RootState } from 'src/store/modules';
 import { Action, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Tournament, actions } from 'src/services/tournaments';
+import { setTimeout } from 'timers';
 
 interface OwnProps {
     
@@ -86,6 +87,9 @@ class SelectTournamentPage extends React.Component<Props, State> {
     selectedTournament(tournId: string) {
         // set the selected ID
         this.props.setCurrentTournament(tournId);
+        setTimeout(() => {
+            window.location.assign('/');
+        }, 500);
     }
 }
 

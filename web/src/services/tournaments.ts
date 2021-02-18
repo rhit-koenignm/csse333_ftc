@@ -6,6 +6,10 @@ export const ACTION_FETCH_ALL_TOURNAMENTS = 'tournaments/FETCH_ALL';
 export const ACTION_FETCH_ALL_TOURNAMENTS_SUCCESS = 'tournaments/FETCH_ALL_SUCCESS';
 export const ACTION_FETCH_ALL_TOURNAMENTS_FAILURE = 'tournaments/FETCH_ALL_FAILURE';
 
+export const ACTION_FETCH_ONE_TOURNAMENT = 'tournaments/FETCH_ONE';
+export const ACTION_FETCH_ONE_TOURNAMENT_SUCCESS = 'tournaments/FETCH_ONE_SUCCESS';
+export const ACTION_FETCH_ONE_TOURNAMENT_FAILURE = 'tournaments/FETCH_ONE_FAILURE';
+
 export const ACTION_UPDATE_CURRENT_TOURNAMENT = 'tournaments/UPDATE_CURRENT';
 
 export interface MatchTeam {
@@ -38,6 +42,20 @@ interface FetchAllTournamentsSuccessAction extends Action {
     };
 }
 
+interface FetchTournamentAction extends Action {
+    type: typeof ACTION_FETCH_ONE_TOURNAMENT;
+    payload: {
+        tournamentId: string;
+    };
+}
+
+interface FetchTournamentSuccessAction extends Action {
+    type: typeof ACTION_FETCH_ONE_TOURNAMENT_SUCCESS;
+    payload: {
+        tournament: Tournament;
+    }
+}
+
 interface UpdateSelectedTournamentAction extends Action {
     type: typeof ACTION_UPDATE_CURRENT_TOURNAMENT,
     payload: {
@@ -48,6 +66,12 @@ interface UpdateSelectedTournamentAction extends Action {
 export const actions = {
     fetchAllTournaments: (): FetchAllTournamentsAction => ({
         type: ACTION_FETCH_ALL_TOURNAMENTS,
+    }),
+    fetchTournament: (tournId: string): FetchTournamentAction => ({
+        type: ACTION_FETCH_ONE_TOURNAMENT,
+        payload: {
+            tournamentId: tournId,
+        },
     }),
     setCurrentTournament: (tournamentId: string): UpdateSelectedTournamentAction => ({
         type: ACTION_UPDATE_CURRENT_TOURNAMENT,
@@ -82,12 +106,24 @@ interface FetchAllTournamentsResponse {
     tournaments: Tournament[];
 }
 
+interface GetOneTournamentResponse {
+    tournament: Tournament;
+}
+
 export class TournamentsService {
     static async fetchAllTournaments(): Promise<Tournament[]> {
         let matches = await Axios.get<FetchAllTournamentsResponse>(`${API_BASE}/tournaments`);
         return matches.data.tournaments;
     }
 
+    static async fetchTournament(tournId: string): Promise<Tournament> {
+        let tournament = await Axios.get<GetOneTournamentResponse>(`${API_BASE}/tournaments/${tournId}`)
+        return tournament.data.tournament;
+    }
+
+    static getSelectedTournament(): string | null {
+        return sessionStorage.getItem('currentTournamentId');
+    }
 }
 
 function* fetchAllTournaments(action: FetchAllTournamentsAction) {
