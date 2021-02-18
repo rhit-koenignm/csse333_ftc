@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import { Action, Reducer } from 'redux';
 import { takeLatest, call, put } from 'redux-saga/effects';
+import { FetchAllMatchesResponse, Match } from './matches';
 
 export const ACTION_FETCH_ALL_TOURNAMENTS = 'tournaments/FETCH_ALL';
 export const ACTION_FETCH_ALL_TOURNAMENTS_SUCCESS = 'tournaments/FETCH_ALL_SUCCESS';
@@ -119,6 +120,11 @@ export class TournamentsService {
     static async fetchTournament(tournId: string): Promise<Tournament> {
         let tournament = await Axios.get<GetOneTournamentResponse>(`${API_BASE}/tournaments/${tournId}`)
         return tournament.data.tournament;
+    }
+
+    static async fetchTournamentMatches(tournId: string): Promise<Match[]> {
+        let matches = await Axios.get<FetchAllMatchesResponse>(`${API_BASE}/matches/tournament/${tournId}`);
+        return matches.data.matches;
     }
 
     static getSelectedTournament(): string | null {

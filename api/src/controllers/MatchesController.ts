@@ -70,6 +70,13 @@ export class MatchesController extends Controller {
         };
     }
 
+    @Get("tournament/{tournId}")
+    public async getMatches(@Path() tournId: string): Promise<GetAllMatchesResponse> {
+        return {
+            matches: await this._db.matches.findTournamentMatches(tournId),
+        };
+    }
+
     @Put("{matchId}")
     public async updateMatchDetails(
         @Path() matchId: string,

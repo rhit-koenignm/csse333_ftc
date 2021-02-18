@@ -34,6 +34,8 @@ export interface Match {
     blue_score: number,
     scheduled_time: string,
     teams: string[] | MatchTeam[],
+    red_teams?: number[],
+    blue_teams?: number[],
 }
 
 export interface UpcomingMatch {
@@ -163,7 +165,7 @@ export const reducer: Reducer<MatchesState> = (state = initialState, action): Ma
 // TODO: make this a define
 const API_BASE = `http://localhost:3001`;
 
-interface FetchAllMatchesResponse {
+export interface FetchAllMatchesResponse {
     matches: Match[];
 }
 

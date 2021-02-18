@@ -5,9 +5,10 @@ import { Match, MatchTeam, UpcomingMatch } from '../../../../models/Match';
 const findAllQuery = sql('matches/findAll.sql');
 const findOneQuery = sql('matches/findOne.sql');
 const findMatchTeamsQuery = sql('matches/findMatchTeams.sql');
-const findUpcoming = sql('matches/findUpcoming.sql')
+const findUpcoming = sql('matches/findUpcoming.sql');
 const updateAttendanceQuery = sql('matches/updateTeamAttendance.sql');
 const updateScoresQuery = sql('matches/updateScores.sql');
+const findForTournamentQuery = sql('matches/findForTournament.sql');
 
 export class MatchesRepository {
     constructor(private _db: AppDatabase) {}
@@ -28,6 +29,10 @@ export class MatchesRepository {
         matchInfo.teams = matchTeams;
 
         return matchInfo;
+    }
+
+    public async findTournamentMatches(tournId: string): Promise<Match[]> {
+        return this._db.any(findForTournamentQuery, { tournId });
     }
 
     public async updateDetails(
