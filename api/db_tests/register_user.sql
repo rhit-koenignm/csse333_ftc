@@ -1,2 +1,3 @@
-select * from register_user('testuser@gmail.com', 'yes@123', 'test', 'user');
-select * from person
+do $$ begin
+perform register_user('testuser@gmail.com', 'yes@123', 'test', 'user');
+end $$;

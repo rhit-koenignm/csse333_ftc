@@ -4,7 +4,6 @@
  * Returns:
  * 0 - Insertion executed correctly
  * 1 - User with email already exists
- * 2 - 
  * 
  * Written by: Thomas Nandola
  */
@@ -27,14 +26,14 @@ declare
 begin
 	
 	-- checking if email already exists for user--
-	if(select count(*) from person p where email = user_email) > 0 then
+	if(select count(*) from person where person.email = user_email) > 0 then
 		raise exception 'Email already exists!';
 		return 1;
 	end if;
 
 	--creating new user account in person table--
 	
-	select pwd_hash = crypt(user_password, gen_salt('md5'));
+	pwd_hash = crypt(user_password, gen_salt('md5'));
 	entity_id = create_new_entity();
 
 	insert into person(id, email, password_hash, first_name, last_name)
