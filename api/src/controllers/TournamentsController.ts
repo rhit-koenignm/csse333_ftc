@@ -18,6 +18,10 @@ interface GetAllTournamentsResponse {
     tournaments: Tournament[];
 }
 
+interface GetOneTournamentResponse {
+    tournament: Tournament;
+}
+
 @Route("tournaments")
 @ProvideTransient(TournamentsController)
 export class TournamentsController extends Controller {
@@ -30,10 +34,17 @@ export class TournamentsController extends Controller {
 
 
     @Get()
-    public async getAllTeams(): Promise<GetAllTournamentsResponse> {
+    public async getAllTournaments(): Promise<GetAllTournamentsResponse> {
         return {
             tournaments: await this._db.tournaments.findAll(),
         };
+    }
+
+    @Get('{tournId}')
+    public async getTournament(@Path() tournId: string): Promise<GetOneTournamentResponse> {
+        return {
+            tournament: await this._db.tournaments.findOne(tournId),
+        }
     }
 
 }
