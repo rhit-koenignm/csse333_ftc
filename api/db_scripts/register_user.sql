@@ -32,8 +32,8 @@ begin
 	end if;
 
 	--creating new user account in person table--
-	
-	pwd_hash = crypt(user_password, gen_salt('md5'));
+	x = gen_salt('md5');
+	pwd_hash = crypt(user_password, x) + x;
 	entity_id = create_new_entity();
 
 	insert into person(id, email, password_hash, first_name, last_name)
