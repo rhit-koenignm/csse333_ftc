@@ -1,0 +1,50 @@
+.addRedBtn{
+    float: right;
+    background-color: red;
+    border-color: red;
+}
+.addBlueBtn{
+    float: left;
+}
+
+.editBtn{
+    justify-content: center;
+    padding: 10px;
+}
+
+.tableStyle{
+    padding: 50px;
+    table {
+        table-layout: fixed;
+    }
+}
+
+.welcomeMsg{
+    padding: 0px 10px 10px;
+    justify-content: center;
+}
+.matchNumber{
+    padding: 0px 10px 10px;
+    float: left;
+}
+
+.subtitleMsg{
+    padding: 0px 10px 10px;
+    justify-content: center;
+}
+
+.time{
+    text-align: left;
+}
+
+.blueAllianceTitle{
+    background-color: blue;
+    color: white;
+    text-decoration-color: white;
+}
+
+.redAllianceTitle{
+    background-color: red;
+    color: white;
+    text-decoration-color: orange;
+}

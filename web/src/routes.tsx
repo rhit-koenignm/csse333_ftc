@@ -5,6 +5,7 @@ import TeamsPage from './pages/TeamsPage';
 import RankingsPage from './pages/RankingsPage';
 import MatchesPage from './pages/MatchesPage';
 import MatchOverviewPage from './pages/MatchOverviewPage';
+import SelectTournamentPage from './pages/SelectTounamentPage';
 
 const routes: RouteConfig[] = [
     {
@@ -36,6 +37,11 @@ const routes: RouteConfig[] = [
         path: '/matches/:matchId',
         exact: true,
         component: MatchOverviewPage,
+    },
+    {
+        path: '/selectTournament',
+        exact: true,
+        component: SelectTournamentPage,
     }
     /*
     {
