@@ -13,10 +13,9 @@ create table if not exists entity (
 create table if not exists person (
 	id uuid not null,
 	email varchar(64) unique not null,
-	password_hash varchar(64) not null,
+	password_hash varchar(64) not null, /* hashed password */
 	first_name varchar(32) not null,
 	last_name varchar(32) not null,
-	birthdate date not null check (birthdate > '1900-01-01'::date and birthdate <= current_date),
 	primary key (id),
 	constraint fk_person_entity foreign key (id) references entity(id)
 );
@@ -94,7 +93,7 @@ create table if not exists tournament_participant (
 	team_id uuid not null,
 	qualifying_points int check (qualifying_points >= 0),
 	ranking_points int check (ranking_points >= 0),
-	matches_played smallint not null default 0 check (matches_played >= 0), 
+	matches_played SMALLINT NOT NULL DEFAULT 0 CHECK (matches_played >= 0), 
 	constraint pk_tournament_participant primary key (tournament_id, team_id),
 	constraint fk_tournament_participant_tournament foreign key (tournament_id) references tournament(id),
 	constraint fk_tournament_participant_team foreign key (team_id) references team(id)
