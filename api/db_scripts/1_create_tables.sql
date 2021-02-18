@@ -16,7 +16,6 @@ create table if not exists person (
 	password_hash varchar(64) not null,
 	first_name varchar(32) not null,
 	last_name varchar(32) not null,
-	birthdate date not null check (birthdate > '1900-01-01'::date and birthdate <= current_date),
 	primary key (id),
 	constraint fk_person_entity foreign key (id) references entity(id)
 );
