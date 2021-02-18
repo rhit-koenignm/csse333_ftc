@@ -13,7 +13,7 @@ create table if not exists entity (
 create table if not exists person (
 	id uuid not null,
 	email varchar(64) unique not null,
-	password_hash varchar(64) not null,
+	password_hash varchar(64) not null, /* hashed password */
 	first_name varchar(32) not null,
 	last_name varchar(32) not null,
 	primary key (id),
