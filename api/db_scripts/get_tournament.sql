@@ -1,6 +1,5 @@
 /*
- * A function for getting a table of the teams participating, their ranks, qp, rp, and matches played
- * the returned function will be ordered by qp and then rp in descending order
+ * Returns a single tournament with id matching the parameter
  * 
  * Returns:
  * table - Single row containing the tournament
