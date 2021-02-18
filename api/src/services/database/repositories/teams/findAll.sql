@@ -1,2 +1,2 @@
 /* Finds all teams */
-select * from team
+select * from team;

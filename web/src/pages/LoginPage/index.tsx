@@ -17,15 +17,15 @@ interface DispatchProps {
     onLogin: (email: string, password: string) => boolean;
 }
 
-interface StateProps {
+interface StoreProps {
     token?: string,
 }
 
-interface ComponentProps {
+interface OwnProps {
 
 }
 
-type Props = ComponentProps & DispatchProps & StateProps;
+type Props = OwnProps & DispatchProps & StoreProps;
 
 interface State {
     email: string,
@@ -109,4 +109,4 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
     }
 });
 
-export default connect<StateProps, DispatchProps, ComponentProps, RootState>(mapStateToProps, mapDispatchToProps)(LoginPage);
+export default connect<StoreProps, DispatchProps, OwnProps, RootState>(mapStateToProps, mapDispatchToProps)(LoginPage);

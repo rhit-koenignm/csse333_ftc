@@ -18,7 +18,7 @@ create or replace function create_match(
 	blue_team_1 uuid,
 	blue_team_2 uuid
 )
-returns int 
+returns uuid 
 language 'plpgsql'
 as $$
 declare entity_id uuid;
@@ -56,7 +56,7 @@ begin
 	insert into match_competitor (team_id, match_id, alliance_color, attending)
 	values (blue_team_2, entity_id, 'Blue', false);
 	
-	return 0;
+	return entity_id;
 
 end
 $$;

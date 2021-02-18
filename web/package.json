@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@brianmcallister/react-auto-scroll": "^1.1.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
     "@fortawesome/react-fontawesome": "^0.1.14",
@@ -32,11 +33,12 @@
     "react-router": "^5.2.0",
     "react-router-config": "^5.1.1",
     "react-scripts": "4.0.1",
+    "react-scroll": "^1.8.1",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-saga": "^1.1.3",
     "seamless-immutable": "^7.1.3",
-    "typescript": "^4.1.3",
+    "typescript": "^4.1.5",
     "web-vitals": "^0.2.4",
     "yarn": "^1.22.10"
   },
@@ -67,6 +69,7 @@
   "devDependencies": {
     "@types/react-bootstrap": "^0.32.25",
     "@types/react-redux": "^7.1.16",
+    "@types/react-scroll": "^1.8.2",
     "typescript-plugin-css-modules": "^3.1.0"
   }
 }

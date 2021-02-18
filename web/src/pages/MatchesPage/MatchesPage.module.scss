@@ -1,0 +1,31 @@
+.addBtn{
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    z-index: 999;
+}
+
+.editBtn{
+    justify-content: center;
+    padding: 10px;
+}
+
+.tableStyle{
+    padding:50px
+}
+
+.welcomeMsg{
+    padding: 50px 10px 5px;
+    justify-content: center;
+}
+
+.subtitleMsg{
+    padding-bottom: 10px;
+    justify-content: center;
+}
+
+.blueAllianceTitle{
+    background-color: blue;
+    color: white;
+    text-decoration-color: white;
+}

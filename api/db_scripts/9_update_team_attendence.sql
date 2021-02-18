@@ -9,24 +9,24 @@
  * Written by: Natalie Koenig
  */
 
-create or replace function update_team_attendence(
-	attending_match_id uuid,
-	team_attending uuid,
-	attendence_bool boolean default false
+create or replace function update_team_attendance(
+	match_id_param uuid,
+	team_id_param uuid,
+	is_attending boolean default false
 	)
 returns int 
 language 'plpgsql'
 as $$
 begin
 --Checking parameters--
-	if(select count(*) from match where match.id = attending_match_id) < 1 then 
+	if(select count(*) from match where match.id = match_id_param) < 1 then 
 		raise exception 'Match with the given id does not exist.';
 		return 1;
 	end if;
 	
 	update match_competitor 
-	set attending = attendence_bool
-	where (match_id = attending_match_id) and (team_id = team_attending);
+	set attending = is_attending
+	where (match_id = match_id_param) and (team_id = team_id_param);
 
 	return 0;
 

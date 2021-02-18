@@ -8,23 +8,40 @@ import Row from 'react-bootstrap/Row';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import styles from './TeamsPage.module.scss';
+import { actions as teamActions, Team } from 'src/services/teams';
+import { RootState } from 'src/store/modules';
+import { Action, Dispatch } from 'redux';
+import { connect } from 'react-redux';
 
-interface TeamsPageProps {
-
+interface OwnProps {
+    
 }
 
-interface TeamsPageState {
+interface StoreProps {
+    teams: Team[];
+}
+
+interface DispatchProps {
+    fetchAllTeams: () => void;
+    updateTeam: (id: string, team: Partial<Team>) => void;
+}
+
+type Props = OwnProps & StoreProps & DispatchProps;
+
+interface State {
     showAdd: boolean;
     showEdit: boolean;
     showDelete: boolean;
     show: boolean;
+    teamId?: string;
     teamNumber?: string;
+    teamName?: string;
 }
 
 
-class TeamsPage extends React.Component<TeamsPageProps, TeamsPageState> {
+class TeamsPage extends React.Component<Props, State> {
 
-    public constructor(props: TeamsPageProps) {
+    public constructor(props: Props) {
         super(props);
         this.state = {
             showAdd: false,
@@ -32,6 +49,12 @@ class TeamsPage extends React.Component<TeamsPageProps, TeamsPageState> {
             showDelete: false,
             show: false
         };
+    }
+
+    componentDidMount() {
+        console.log('mounted');
+        console.log(this.props.teams);
+        this.props.fetchAllTeams();
     }
 
     showAddModal = () => {
@@ -42,8 +65,17 @@ class TeamsPage extends React.Component<TeamsPageProps, TeamsPageState> {
         this.setState({ showAdd: false });
     }
 
-    showEditModal = () => {
-        this.setState({ showEdit: true });
+    showEditModal = (teamId: string) => {
+        const team = this.props.teams.find(t => t.id === teamId);
+        if(!team) {
+            return;
+        }
+        this.setState({ 
+            showEdit: true,
+            teamId,
+            teamName: team.team_name,
+            teamNumber: team.team_number.toString(),
+        });
     }
 
     hideEditModal = () => {
@@ -82,7 +114,7 @@ class TeamsPage extends React.Component<TeamsPageProps, TeamsPageState> {
     
                             <Form.Group controlId="formBasicPassword">
                                 <Form.Label>Team Name</Form.Label>
-                                <Form.Control type="text" placeholder="Team Name" />
+                                <Form.Control type="text" placeholder="Team Name" value={this.state.teamName} onChange={(e) => this.setState({ teamName: e.target.value})} />
                                 <Form.Text className="text-muted">
                                     Please enter FTC Team Name! 
                                 </Form.Text>
@@ -117,7 +149,7 @@ class TeamsPage extends React.Component<TeamsPageProps, TeamsPageState> {
     
                             <Form.Group controlId="formBasicPassword">
                                 <Form.Label>Team Name</Form.Label>
-                                <Form.Control type="text" placeholder="Team Name" />
+                                <Form.Control type="text" placeholder="Team Name" value={this.state.teamName} onChange={(e) => this.setState({ teamName: e.target.value})} />
                                 <Form.Text className="text-muted">
                                     Please enter FTC Team Name! 
                                 </Form.Text>
@@ -128,7 +160,7 @@ class TeamsPage extends React.Component<TeamsPageProps, TeamsPageState> {
                         <Button variant="secondary" onClick={this.hideEditModal}>
                             Close
                     </Button>
-                        <Button variant="primary" onClick={this.hideEditModal}>
+                        <Button variant="primary" onClick={this.updateTeam.bind(this)}>
                             Save Changes
                     </Button>
                     </Modal.Footer>
@@ -164,14 +196,16 @@ class TeamsPage extends React.Component<TeamsPageProps, TeamsPageState> {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Test Team Name</td>
-                            <td>
-                                <Button className={styles.editBtn}><Button onClick={this.showEditModal}><FontAwesomeIcon icon={faEdit} size="sm"/></Button> </Button>
-                                <Button className={styles.editBtn}><Button onClick={this.showDeleteModal}><FontAwesomeIcon icon={faTrashAlt} size="sm"/></Button> </Button>
-                            </td>
-                        </tr>
+                        {this.props.teams && this.props.teams.map(team => (
+                            <tr>
+                                <td>{team.team_number}</td>
+                                <td>{team.team_name}</td>
+                                <td>
+                                    <Button className={styles.editBtn} onClick={() => this.showEditModal(team.id)}><FontAwesomeIcon icon={faEdit} size="sm"/></Button>
+                                    <Button className={styles.editBtn} onClick={this.showDeleteModal}><FontAwesomeIcon icon={faTrashAlt} size="sm"/></Button>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </Table>
                 <div className={styles.addBtn}>
@@ -181,58 +215,28 @@ class TeamsPage extends React.Component<TeamsPageProps, TeamsPageState> {
         )
     }
 
-
-    AddTeamModal = () => {
-    
-        const handleClose = () => this.setState({showAdd: false});
-        const handleShow = () => this.setState({showAdd: true});
-    
-        return (
-            <>
-                <Button variant="primary" onClick={handleShow}>
-                    Launch demo modal
-            </Button>
-    
-                <Modal showAdd={this.state.showAdd} onHide={handleClose}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Add New Team</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Form>
-                            <Form.Group controlId="formBasicEmail">
-                                <Form.Label>Team Number</Form.Label>
-                                <Form.Control type="text" placeholder="Team Number" />
-                                <Form.Text className="text-muted">
-                                    Please enter FTC Team Number! 
-                                </Form.Text>
-                            </Form.Group>
-    
-                            <Form.Group controlId="formBasicPassword">
-                                <Form.Label>Team Name</Form.Label>
-                                <Form.Control type="text" placeholder="Team Name" />
-                                <Form.Text className="text-muted">
-                                    Please enter FTC Team Name! 
-                                </Form.Text>
-                            </Form.Group>
-                            <Form.Group controlId="formBasicCheckbox">
-                                <Form.Check type="checkbox" label="Check me out" />
-                            </Form.Group>
-                            <Button variant="primary" type="submit">
-                                Submit
-                            </Button>
-                        </Form>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
-                            Close
-                    </Button>
-                        <Button variant="primary" onClick={handleClose}>
-                            Save Changes
-                    </Button>
-                    </Modal.Footer>
-                </Modal>
-            </>
-        );
+    updateTeam() {
+        if(this.state.teamId) {
+            this.props.updateTeam(this.state.teamId, { 
+                team_name: this.state.teamName,
+                team_number: Number(this.state.teamNumber),
+            });
+        }
     }
 }
-export default TeamsPage;
+
+const mapStateToProps = (state: RootState): StoreProps => ({
+    teams: state.teams.teams,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<Action>): DispatchProps => ({
+    fetchAllTeams: () => {
+        dispatch(teamActions.fetchAllTeams());
+    },
+    updateTeam: (teamId: string, team: Partial<Team>) => {
+        dispatch(teamActions.updateTeam(teamId, team));
+    }
+});
+
+export default connect<StoreProps, DispatchProps, OwnProps, RootState>
+    (mapStateToProps, mapDispatchToProps)(TeamsPage);
