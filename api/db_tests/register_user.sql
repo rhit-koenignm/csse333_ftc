@@ -1,7 +1,3 @@
-do $$ begin
-perform register_user('user@gmail.com', 'yes@123', 'test', 'user');
-end $$;
+select register_user('dummy@gmail.com', 'yes@12345', 'dummy', 'user');
 
-do $$ begin
-perform login_user('user@gmail.com', 'yes@123');
-end $$;
+select login_user('dummy@gmail.com', 'yes@12345');
