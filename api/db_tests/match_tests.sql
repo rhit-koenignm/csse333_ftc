@@ -30,11 +30,9 @@ select * from tournament_participant;
 
 select * from update_match_score('5eaeb0a7-1e0b-4a0b-942e-f2c75ebf9d89', 230, 250) 
 
-select * from get_upcoming_matches(uuid_nil(), 5, cast('10:00:00' as time));
+select * from get_upcoming_matches(uuid_nil(), 5, cast('8:00:00' as time));
 
 select * from get_rankings();
-
-perform (select * from update_team_score('d6b0e2ab-97ca-47f5-b25c-d1967c9dbb63'::uuid, -2::int4, -1::int4, 1::int2));
 
 
 select * from register_team_for_tournament('0eb9cd62-d17b-428d-8a60-8c21f96c7b3a');

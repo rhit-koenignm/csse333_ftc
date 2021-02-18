@@ -28,7 +28,7 @@ begin
 		return 1;
 	end if;
 
-	select new_qp = tp.qualifying_points + added_qp,
+	perform new_qp = tp.qualifying_points + added_qp,
 			new_rp = tp.ranking_points + added_rp,
 			new_match_count = tp.matches_played + added_match_count
 	from tournament_participant tp 
