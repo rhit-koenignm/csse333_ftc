@@ -104,7 +104,6 @@ class MatchesPage extends React.Component<Props, State> {
                             <th style={{backgroundColor:'red', color: 'white'}}>Red Alliance Teams</th>
                             <th>Red Score</th>
                             <th>Blue Score</th>
-                            <th>Results</th>
                             <th>Modify</th>
 
                         </tr>
@@ -121,7 +120,6 @@ class MatchesPage extends React.Component<Props, State> {
                                     <td style={{backgroundColor:'red', color: 'white'}}>{redTeams[0]}<br />{redTeams[1]}</td>
                                     <td>{match.red_score}</td>
                                     <td>{match.blue_score}</td>
-                                    <td></td>
                                     <td>
                                         <Button className={styles.editBtn} onClick={this.showDeleteModal}><FontAwesomeIcon icon={faEdit} size="sm"/>     Delete Match</Button>
                                         <Button className={styles.editBtn} onClick={() => this.editMatch(match.id)}><FontAwesomeIcon icon={faEdit} size="sm" />     Edit Details</Button>

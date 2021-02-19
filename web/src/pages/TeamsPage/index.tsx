@@ -58,7 +58,6 @@ class TeamsPage extends React.Component<Props, State> {
         if(tournId) {
             TeamsService.fetchTournamentTeams(tournId)
                 .then(res => {
-                    console.log(res);
                     this.setState({ teams: res });
                 });
         }
@@ -205,7 +204,7 @@ class TeamsPage extends React.Component<Props, State> {
                     </thead>
                     <tbody>
                         {this.state.teams && this.state.teams.map(team => (
-                            <tr>
+                            <tr key={team.id}>
                                 <td>{team.team_number}</td>
                                 <td>{team.team_name}</td>
                                 <td>

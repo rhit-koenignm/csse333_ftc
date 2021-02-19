@@ -9,34 +9,38 @@ import Col from 'react-bootstrap/Col';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import styles from './RankingsPage.module.scss';
-import { actions as teamActions, Team, TeamRanking } from 'src/services/teams';
+import { actions as teamActions, Team, TeamRanking, TeamsService } from 'src/services/teams';
 import { RootState } from 'src/store/modules';
 import { Action, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { render } from 'react-dom';
 import * as Scroll from 'react-scroll';
 import { animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+import { TournamentsService } from 'src/services/tournaments';
 
 interface OwnProps {
 
 }
 
 interface StoreProps {
-    rankings: TeamRanking[];
 }
 
 interface DispatchProps {
-    fetchTeamRankings: (tournamentId: string) => void;
-    fetchUpcomingMatches: (tournamentId: string) => void;
 }
 
 type Props = OwnProps & StoreProps & DispatchProps;
 
 interface State {
-
+    rankings: TeamRanking[];
 }
 
 class RankingsPage extends React.Component<Props, State> {
+    constructor(props: Props) {
+        super(props);
+        this.state = {
+            rankings: [],
+        };
+    }
     scrollTo = () => {
         scroller.scrollTo('scroll-to-element', {
             duration: 800,
@@ -45,11 +49,14 @@ class RankingsPage extends React.Component<Props, State> {
         });
     }
     componentDidMount() {
-        let tournamentId = '00000000-0000-0000-0000-000000000000';
-        this.props.fetchTeamRankings(tournamentId);
+        let tournamentId = TournamentsService.getSelectedTournament();
+        if(tournamentId) {
+            TeamsService.fetchTeamRankings(tournamentId)
+                .then(rankings => this.setState({rankings}));
+        }
     }
     public render() {
-        let rankings = this.props.rankings;
+        let rankings = this.state.rankings;
         return (
             <Container className={styles.tableStyle}>
                 <Row className={styles.welcomeMsg}><h1>Rankings</h1></Row>
@@ -138,6 +145,4 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>): DispatchProps => ({
     },
 });
 
-
-export default connect<StoreProps, DispatchProps, OwnProps, RootState>
-    (mapStateToProps, mapDispatchToProps)(RankingsPage);
+export default RankingsPage;

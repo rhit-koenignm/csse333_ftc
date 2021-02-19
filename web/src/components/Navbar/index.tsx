@@ -59,7 +59,8 @@ class NavbarComponent extends React.Component<Props, State> {
             <Nav.Item style={{marginRight: '2em'}}>
               Current Tournament: {currTourn.name}<br />
               Location: {currTourn.location}<br />
-              Date: {new Date(currTourn.date).toLocaleDateString() }
+              Date: {new Date(currTourn.date).toLocaleDateString() }<br />
+              <Button style={{marginTop: '1em'}} onClick={this.switchTournament}>Switch</Button>
             </Nav.Item>
           }
           { loggedInEmail &&
@@ -72,6 +73,13 @@ class NavbarComponent extends React.Component<Props, State> {
           </Nav>
       </Navbar>
     );
+  }
+
+  switchTournament = () => {
+    sessionStorage.removeItem('currentTournamentId');
+    setTimeout(() => {
+      window.location.assign('/selectTournament');
+    }, 500);
   }
 
   signOut = () => {
