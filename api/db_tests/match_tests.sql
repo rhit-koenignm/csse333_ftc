@@ -36,11 +36,14 @@ select * from get_rankings();
 
 perform (select * from update_team_score('d6b0e2ab-97ca-47f5-b25c-d1967c9dbb63'::uuid, -2::int4, -1::int4, 1::int2));
 
+select * from get_teams_for_tourn(uuid_nil()) 
 
 select * from register_team_for_tournament('0eb9cd62-d17b-428d-8a60-8c21f96c7b3a');
 select * from register_team_for_tournament('b2af4dbf-561f-4b18-b799-eaafb9811ca7');
 select * from register_team_for_tournament('d6b0e2ab-97ca-47f5-b25c-d1967c9dbb63');
 select * from register_team_for_tournament('0de08b9d-a1e3-42b8-b384-099fb310a3c0');
+
+drop function get_upcoming_matches;
 
 /*select * from create_match(uuid_nil(), 1, '10:00AM'::time, 'b2af4dbf-561f-4b18-b799-eaafb9811ca7'::uuid, '0de08b9d-a1e3-42b8-b384-099fb310a3c0'::uuid, 'd6b0e2ab-97ca-47f5-b25c-d1967c9dbb63'::uuid, '60e08bc7-d09e-46ff-9c03-cd1992b0f1f6'::uuid);
 
