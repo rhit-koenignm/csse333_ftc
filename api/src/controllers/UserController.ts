@@ -21,11 +21,10 @@ interface RegisterUserResponse {
     success : boolean;
 }
 interface UserLoginResponse {
+    email?: string;
     errorMessage?: string;
     success : boolean;
 }
-
-
 
 @Route("user")
 @ProvideTransient(UserController)
@@ -37,21 +36,18 @@ export class UserController extends Controller {
         super();
     }
 
-    // @Get("")
-    // public async getAuth(): Promise<string> {
-    //     this._userService.findUser();
-    //     return "It works!";
-    // }
-
     @Post("login")
     public async userLogin(
         @Body() body: any
     ): Promise<UserLoginResponse> {
         let result = await this._db.users.userLogin(body.email, body.password);
         if(result==0){
-            return {success: true};
+            return {
+                success: true,
+                email: body.email,
+            };
         } else  {
-            return {success:false, errorMessage: "Invalid Login, please try again."};
+            return {success: false, errorMessage: "Invalid Login, please try again."};
         }
     }
 
@@ -64,7 +60,7 @@ export class UserController extends Controller {
         if(result==1){
             return {success: false, errorMessage: "Email already exists. Try again."};
         } else {
-            return {success: true};
+            return {success: true, email: body.email};
         }
     }
 }

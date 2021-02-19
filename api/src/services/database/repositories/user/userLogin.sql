@@ -1,1 +1,1 @@
-select login_user({$email}::text, ${password}::text);
+select login_user(${email}::text, ${password}::text);

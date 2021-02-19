@@ -10,8 +10,12 @@ const loginUserQuery = sql('user/userLogin.sql');
 export class UsersRepository {
     constructor(private _db: AppDatabase) {}
 
-        public async registerUser(user_email: string, user_password: 
-            string, user_first_name: string, user_last_name: string) : Promise<number> {
+        public async registerUser(
+            user_email: string,
+            user_password: string,
+            user_first_name: string,
+            user_last_name: string
+        ) : Promise<number> {
                 let { result } = await this._db.one<{ result:number }>(registerUserQuery, {
                     email: user_email,
                     password: user_password,
@@ -22,10 +26,10 @@ export class UsersRepository {
         }
 
         public async userLogin(user_email: string, user_password: string) : Promise<number> {
-                let { result } = await this._db.one<{ result:number }>(loginUserQuery, {
+                let result = await this._db.one<{ login_user :number }>(loginUserQuery, {
                     email: user_email,
                     password: user_password,
                 });
-            return result;
+            return result.login_user;
         }
 }

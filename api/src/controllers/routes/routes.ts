@@ -162,6 +162,7 @@ const models: TsoaRoute.Models = {
     "UserLoginResponse": {
         "dataType": "refObject",
         "properties": {
+            "email": {"dataType":"string"},
             "errorMessage": {"dataType":"string"},
             "success": {"dataType":"boolean","required":true},
         },
