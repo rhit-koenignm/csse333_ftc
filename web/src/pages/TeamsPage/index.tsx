@@ -198,7 +198,7 @@ class TeamsPage extends React.Component<Props, State> {
                         <tr>
                             <th>Team Number</th>
                             <th>Team Name</th>
-                            <th>Modify</th>
+                            {/*<th>Modify</th>*/}
 
                         </tr>
                     </thead>
@@ -207,10 +207,12 @@ class TeamsPage extends React.Component<Props, State> {
                             <tr key={team.id}>
                                 <td>{team.team_number}</td>
                                 <td>{team.team_name}</td>
+                                {/*
                                 <td>
                                     <Button className={styles.editBtn} onClick={() => this.showEditModal(team.id)}><FontAwesomeIcon icon={faEdit} size="sm"/></Button>
                                     <Button className={styles.editBtn} onClick={this.showDeleteModal}><FontAwesomeIcon icon={faTrashAlt} size="sm"/></Button>
                                 </td>
+                                */}
                             </tr>
                         ))}
                     </tbody>
