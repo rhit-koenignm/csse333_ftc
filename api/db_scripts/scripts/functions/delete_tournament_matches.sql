@@ -19,7 +19,8 @@ begin
     where tournament_id = tourn_id;
 
     update tournament_participant tp
-    set 
+    set matches_played = 0
+    where tournament_id = tourn_id;
    
     return 0;
 end

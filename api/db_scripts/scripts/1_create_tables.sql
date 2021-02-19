@@ -82,7 +82,8 @@ create table if not exists match_judge (
 create table if not exists match_competitor (
 	team_id uuid not null,
 	match_id uuid not null,
-	alliance_color varchar(4) NOT NULL check(alliance_color == 'Blue' OR alliance_color == 'Red'),
+	alliance_color varchar(4) NOT NULL check(alliance_color = 'Blue' OR alliance_color = 'Red'),
+	attending boolean not null default false,
 	constraint pk_match_competitors primary key (team_id, match_id),
 	constraint fk_match_competitor_team foreign key (team_id) references team(id),
 	constraint fk_match_competitor_match foreign key (match_id) references match(id)

@@ -8,7 +8,7 @@
  * Written by: Natalie Koenig
  */
 
-drop function get_upcoming_matches;
+drop function if exists get_upcoming_matches;
 create or replace function get_upcoming_matches(
 	tourn_id uuid default uuid_nil(),
 	num_upcoming int4 default 5,
