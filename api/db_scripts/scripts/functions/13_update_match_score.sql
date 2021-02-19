@@ -43,7 +43,8 @@ begin
 	if(redScore > blueScore) then
 		--Giving winners 2 qp points--
 		update tournament_participant
-		set qualifying_points = qualifying_points + 2
+		set qualifying_points = qualifying_points + 2,
+			matches_played = matches_played + 1
 		where team_id in (
 			select team_id 
 			from match_competitor mc 
@@ -52,16 +53,19 @@ begin
 		
 		--Giving all teams blue score--
 		update tournament_participant
-		set ranking_points = ranking_points + blueScore
+		set ranking_points = ranking_points + blueScore,
+			matches_played = matches_played + 1			
 		where team_id in (
 			select team_id 
 			from match_competitor mc 
-			where mc.match_id = given_match
+			where mc.match_id = given_match AND mc.alliance_color = 'Blue'
 		);
 	elsif (blueScore > redScore) then
 		--Giving winners 2 qp points--
 		update tournament_participant
-		set qualifying_points = qualifying_points + 2
+		set qualifying_points = qualifying_points + 2,
+			ranking_points = ranking_points + redScore,
+			matches_played = matches_played + 1
 		where team_id in (
 			select team_id 
 			from match_competitor mc 
@@ -70,26 +74,20 @@ begin
 		
 		--Giving all teams red score--
 		update tournament_participant
-		set ranking_points = ranking_points + redScore
+		set ranking_points = ranking_points + redScore,
+			matches_played = matches_played + 1
 		where team_id in (
 			select team_id 
 			from match_competitor mc 
-			where mc.match_id = given_match
+			where mc.match_id = given_match AND mc.alliance_color = 'Red'
 		);
 	
 	else
-		--Giving all teams 1 qp point--
-		update tournament_participant
-		set qualifying_points = qualifying_points + 1
-		where team_id in (
-			select team_id 
-			from match_competitor mc 
-			where mc.match_id = given_match
-		);
-		
 		--Giving all teams tied score--
 		update tournament_participant
-		set ranking_points = ranking_points + redScore
+		set ranking_points = ranking_points + redScore,
+			qualifying_points = qualifying_points + 1,
+			matches_played = matches_played + 1
 		where team_id in (
 			select team_id 
 			from match_competitor mc 
