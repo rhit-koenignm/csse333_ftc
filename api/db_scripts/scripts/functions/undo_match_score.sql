@@ -85,7 +85,15 @@ begin
 		);
 	end if;
 
-		
+	--Taking one match out of the total since we are undoing the match score--
+		update tournament_participant
+		set matches_played = matches_played - 1
+		where team_id in (
+			select team_id 
+			from match_competitor mc 
+			where mc.match_id = given_match
+		);		
+
 	return 0;
 
 end
