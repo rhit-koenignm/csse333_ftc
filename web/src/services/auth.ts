@@ -1,5 +1,6 @@
 import { Action, Reducer } from "redux";
 import { takeLatest, call, put } from "redux-saga/effects";
+import Axios from 'axios';
 
 export const ACTION_AUTH_LOGIN_REQUEST = 'auth/LOGIN_REQUEST';
 export const ACTION_AUTH_LOGIN_SUCCESS = 'auth/LOGIN_SUCCESS';
@@ -46,10 +47,19 @@ export const reducer: Reducer<AuthState> = (state = {}, action): AuthState => {
     }
 };
 
+const API_BASE = `http://localhost:3001`;
+
 export class AuthService {
-    static async login(data: LoginData): Promise<string> {
-        // Do API call here
-        return 'token123';
+    static async login(data: LoginData): Promise<string | null> {
+        let response = await Axios.post(`${API_BASE}/user/login`, data);
+        if(!response.data.success) {
+            return null;
+        }
+        return response.data.email;
+    }
+
+    static isUserLoggedIn(): boolean {
+        return !!localStorage.getItem('loggedInEmail');
     }
 }
 

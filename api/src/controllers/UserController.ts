@@ -23,7 +23,7 @@ interface RegisterUserResponse {
 interface UserLoginResponse {
     email?: string;
     errorMessage?: string;
-    success : boolean;
+    success: boolean;
 }
 
 @Route("user")

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch, Action } from 'redux';
 
-import { actions as authActions } from '../../services/auth';
+import { actions as authActions, AuthService } from '../../services/auth';
 import { RootState } from '../../store/modules';
 
 import Container from 'react-bootstrap/Container';
@@ -14,11 +14,9 @@ import Jumbotron from 'react-bootstrap/Jumbotron';
 import Form from 'react-bootstrap/Form';
 
 interface DispatchProps {
-    onLogin: (email: string, password: string) => boolean;
 }
 
 interface StoreProps {
-    token?: string,
 }
 
 interface OwnProps {
@@ -30,9 +28,10 @@ type Props = OwnProps & DispatchProps & StoreProps;
 interface State {
     email: string,
     password: string,
+    errorMsg?: string,
 }
 
-class LoginPage extends React.Component<Props, State> {
+export default class LoginPage extends React.Component<Props, State> {
 
     constructor(props: Props) {
         super(props);
@@ -40,7 +39,6 @@ class LoginPage extends React.Component<Props, State> {
             email: '',
             password: '',
         };
-
     }
 
     render() {
@@ -67,6 +65,11 @@ class LoginPage extends React.Component<Props, State> {
                                         <Button onClick={this.onLoginButtonPressed}>Log in</Button>
                                     </Form>
                                 </Row>
+                                {this.state.errorMsg &&
+                                    <Row>
+                                        {this.state.errorMsg}
+                                    </Row>
+                                }
                             </Container>
                         </Jumbotron>
                     </Col>
@@ -90,23 +93,21 @@ class LoginPage extends React.Component<Props, State> {
 
     onLoginButtonPressed = (event: React.MouseEvent<HTMLButtonElement>) => {
         // Launch the login saga!
-        console.log(`Login ${this.state.email} ${this.state.password}`);
-        this.props.onLogin(this.state.email, this.state.password);
+        AuthService.login(this.state)
+            .then(res => {
+                if(res === null) {
+                    // Error handling here
+                    this.setState({ errorMsg: 'Invalid login' });
+                }
+                else {
+                    localStorage.setItem('loggedInEmail', res);
+                    setTimeout(() => {
+                        window.location.assign('/selectTournament');
+                    }, 500);
+                }
+            })
+            .catch(err => {
+                this.setState({ errorMsg: 'Error occurred'});
+            });
     }
 }
-
-const mapStateToProps = (state: RootState) => ({
-    token: state.auth.token,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
-    onLogin: (email: string, password: string): boolean => {
-        if(!email || !password) {
-            return false;
-        }
-        dispatch(authActions.login({ email, password }));
-        return true;
-    }
-});
-
-export default connect<StoreProps, DispatchProps, OwnProps, RootState>(mapStateToProps, mapDispatchToProps)(LoginPage);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row } from 'react-bootstrap';
+import { Button, Container, Row } from 'react-bootstrap';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Tournament, TournamentsService } from 'src/services/tournaments';
@@ -38,6 +38,7 @@ class NavbarComponent extends React.Component<Props, State> {
 
   render() {
     let currTourn = this.state.currentTournament;
+    let loggedInEmail = localStorage.getItem('loggedInEmail');
     return (
       <Navbar bg="light" expand="lg">
         <div className={styles.parent}>
@@ -53,17 +54,32 @@ class NavbarComponent extends React.Component<Props, State> {
           <Nav.Link href='/rankings'>Rankings</Nav.Link>
           <Nav.Link href="/matches">Matches</Nav.Link>
         </Nav>
-        { currTourn != null && 
           <Nav className="mr-right">
-            <Nav.Item>
+          { currTourn != null && 
+            <Nav.Item style={{marginRight: '2em'}}>
               Current Tournament: {currTourn.name}<br />
               Location: {currTourn.location}<br />
               Date: {new Date(currTourn.date).toLocaleDateString() }
-              </Nav.Item>
+            </Nav.Item>
+          }
+          { loggedInEmail &&
+            <Nav.Item>
+              Logged in as<br />
+              {loggedInEmail}
+              <br />
+              <Button style={{marginTop: '1em'}} onClick={this.signOut}>Sign Out</Button>
+            </Nav.Item>}
           </Nav>
-        }
       </Navbar>
     );
+  }
+
+  signOut = () => {
+    localStorage.clear();
+    setTimeout(() => {
+      window.location.assign('/login');
+    }, 500);
+    this.setState({ currentTournament: undefined });
   }
 }
 

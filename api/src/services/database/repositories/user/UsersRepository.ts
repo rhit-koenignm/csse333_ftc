@@ -16,12 +16,12 @@ export class UsersRepository {
             user_first_name: string,
             user_last_name: string
         ) : Promise<number> {
-                let { result } = await this._db.one<{ result:number }>(registerUserQuery, {
-                    email: user_email,
-                    password: user_password,
-                    first_name: user_first_name,
-                    last_name: user_last_name
-                });
+            let { result } = await this._db.one<{ result:number }>(registerUserQuery, {
+                email: user_email,
+                password: user_password,
+                first_name: user_first_name,
+                last_name: user_last_name
+            });
             return result;
         }
 
