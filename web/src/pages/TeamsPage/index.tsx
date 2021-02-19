@@ -8,10 +8,11 @@ import Row from 'react-bootstrap/Row';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import styles from './TeamsPage.module.scss';
-import { actions as teamActions, Team } from 'src/services/teams';
+import { actions as teamActions, Team, TeamsService } from 'src/services/teams';
 import { RootState } from 'src/store/modules';
 import { Action, Dispatch } from 'redux';
 import { connect } from 'react-redux';
+import { TournamentsService } from 'src/services/tournaments';
 
 interface OwnProps {
     
@@ -36,6 +37,7 @@ interface State {
     teamId?: string;
     teamNumber?: string;
     teamName?: string;
+    teams?: Team[];
 }
 
 
@@ -52,9 +54,15 @@ class TeamsPage extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-        console.log('mounted');
-        console.log(this.props.teams);
-        this.props.fetchAllTeams();
+        let tournId = TournamentsService.getSelectedTournament();
+        if(tournId) {
+            TeamsService.fetchTournamentTeams(tournId)
+                .then(res => {
+                    console.log(res);
+                    this.setState({ teams: res });
+                });
+        }
+
     }
 
     showAddModal = () => {
@@ -196,7 +204,7 @@ class TeamsPage extends React.Component<Props, State> {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.props.teams && this.props.teams.map(team => (
+                        {this.state.teams && this.state.teams.map(team => (
                             <tr>
                                 <td>{team.team_number}</td>
                                 <td>{team.team_name}</td>

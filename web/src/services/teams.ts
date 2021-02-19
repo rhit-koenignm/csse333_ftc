@@ -144,6 +144,11 @@ export class TeamsService {
         return teams.data.teams;
     }
 
+    static async fetchTournamentTeams(tournId: string): Promise<Team[]> {
+        let teams = await Axios.get<{teams: Team[]}>(`${API_BASE}/tournaments/${tournId}/teams`);
+        return teams.data.teams;
+    }
+
     static async fetchTeamRankings(tournamentId: string): Promise<TeamRanking[]> {
         let rankings = await Axios.get<FetchTeamRankingsResponse>(`${API_BASE}/teams/rankings/${tournamentId}`);
         return rankings.data.rankings;

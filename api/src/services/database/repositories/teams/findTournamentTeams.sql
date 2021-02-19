@@ -1,0 +1,1 @@
+select * from get_teams_for_tourn(${tournId});

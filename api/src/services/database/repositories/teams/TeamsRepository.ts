@@ -6,6 +6,7 @@ const findAllQuery = sql('teams/findAll.sql');
 const updateQuery = sql('teams/update.sql');
 const getRankingsQuery = sql('teams/getRankings.sql');
 const createQuery = sql('teams/create.sql');
+const findTournTeamsQuery = sql('teams/findTournamentTeams.sql');
 export class TeamsRepository {
     constructor(private _db: AppDatabase) {}
 
@@ -33,5 +34,9 @@ export class TeamsRepository {
             team_name,
         });
         return result.create_team;
+    }
+
+    public async findTournamentTeams(tournId: string): Promise<Team[]> {
+        return this._db.any<Team>(findTournTeamsQuery, { tournId });
     }
 }
