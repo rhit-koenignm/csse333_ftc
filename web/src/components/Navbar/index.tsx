@@ -49,10 +49,14 @@ class NavbarComponent extends React.Component<Props, State> {
         </div>
         
         <Nav className="mr-auto">
-          <Nav.Link href='/'>Home</Nav.Link>
-          <Nav.Link href='/teams'>Teams</Nav.Link>
-          <Nav.Link href='/rankings'>Rankings</Nav.Link>
-          <Nav.Link href="/matches">Matches</Nav.Link>
+          { loggedInEmail &&
+            [
+            <Nav.Link href='/'>Home</Nav.Link>,
+            <Nav.Link href='/teams'>Teams</Nav.Link>,
+            <Nav.Link href='/rankings'>Rankings</Nav.Link>,
+            <Nav.Link href="/matches">Matches</Nav.Link>,
+            ]
+          }
         </Nav>
           <Nav className="mr-right">
           { currTourn != null && 
@@ -84,6 +88,7 @@ class NavbarComponent extends React.Component<Props, State> {
 
   signOut = () => {
     localStorage.clear();
+    sessionStorage.clear();
     setTimeout(() => {
       window.location.assign('/login');
     }, 500);

@@ -53,12 +53,10 @@ const routes: RouteConfig[] = [
         path: '/selectTournament',
         exact: true,
         render: protectRoute(SelectTournamentPage),
-    }
-    /*
+    },
     {
-        component: NotFoundPage
+        render: props => <Redirect to="/" />,
     }
-    */
 ];
 
 export default routes;
