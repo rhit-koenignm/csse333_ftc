@@ -34,12 +34,10 @@ begin
 
 	--Distribution of points is based off of who is the winner of the match--
 	if(redScore > blueScore) then
-		--Giving winners 2 qp points--
-		
-	
-	update tournament_participant
+		--Giving winners 2 qp points--	
+		update tournament_participant
 		set qualifying_points = qualifying_points + 2
-		where team_id = (
+		where team_id in (
 			select team_id 
 			from match_competitor mc 
 			where mc.match_id = given_match and mc.alliance_color = 'Red'
@@ -48,7 +46,7 @@ begin
 		--Giving all teams blue score--
 		update tournament_participant
 		set ranking_points = ranking_points + blueScore
-		where team_id = (
+		where team_id in (
 			select team_id 
 			from match_competitor mc 
 			where mc.match_id = given_match
@@ -57,7 +55,7 @@ begin
 		--Giving winners 2 qp points--
 		update tournament_participant
 		set qualifying_points = qualifying_points + 2
-		where team_id = (
+		where team_id in (
 			select team_id 
 			from match_competitor mc 
 			where mc.match_id = given_match and mc.alliance_color = 'Blue'
@@ -66,7 +64,7 @@ begin
 		--Giving all teams red score--
 		update tournament_participant
 		set ranking_points = ranking_points + redScore
-		where team_id = (
+		where team_id in (
 			select team_id 
 			from match_competitor mc 
 			where mc.match_id = given_match
@@ -76,7 +74,7 @@ begin
 		--Giving all teams 1 qp point--
 		update tournament_participant
 		set qualifying_points = qualifying_points + 2
-		where team_id = (
+		where team_id in (
 			select team_id 
 			from match_competitor mc 
 			where mc.match_id = given_match
@@ -85,7 +83,7 @@ begin
 		--Giving all teams tied score--
 		update tournament_participant
 		set ranking_points = ranking_points + redScore
-		where team_id = (
+		where team_id in (
 			select team_id 
 			from match_competitor mc 
 			where mc.match_id = given_match
