@@ -6,6 +6,7 @@ import {
     Route,
     Path,
     Body,
+    Delete,
 } from 'tsoa';
 
 import { AppDatabase } from '../services/database/database';

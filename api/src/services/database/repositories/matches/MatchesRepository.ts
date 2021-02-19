@@ -10,6 +10,7 @@ const updateAttendanceQuery = sql('matches/updateTeamAttendance.sql');
 const updateScoresQuery = sql('matches/updateScores.sql');
 const findForTournamentQuery = sql('matches/findForTournament.sql');
 const createMatchQuery = sql('matches/createMatch.sql');
+const deleteTournamentMatchesQuery = sql('matches/deleteTournamentMatches.sql');
 
 export class MatchesRepository {
     constructor(private _db: AppDatabase) {}
@@ -79,5 +80,10 @@ export class MatchesRepository {
             blueTeam1: blueTeams[0],
             blueTeam2: blueTeams[1],
         });
+    }
+
+    public async deleteTournamentMatches(tournId: string): Promise<number> {
+        await this._db.query(deleteTournamentMatchesQuery, { tournId });
+        return 0;
     }
 }

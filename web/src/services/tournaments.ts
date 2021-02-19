@@ -111,6 +111,19 @@ interface GetOneTournamentResponse {
     tournament: Tournament;
 }
 
+interface GenMatch {
+    matchNum: number,
+    matchTime: string,
+    blueTeams: string[],
+    redTeams: string[],
+}
+
+interface GenMatchesResponse {
+    success: boolean,
+    errorMessage?: string,
+    matches?: GenMatch[],
+}
+
 export class TournamentsService {
     static async fetchAllTournaments(): Promise<Tournament[]> {
         let matches = await Axios.get<FetchAllTournamentsResponse>(`${API_BASE}/tournaments`);
@@ -129,6 +142,14 @@ export class TournamentsService {
 
     static getSelectedTournament(): string | null {
         return sessionStorage.getItem('currentTournamentId');
+    }
+
+    static generateTournamentMatches(tournId: string): Promise<GenMatchesResponse> {
+        return Axios.post(`${API_BASE}/tournaments/${tournId}/genMatches`);
+    }
+
+    static deleteTournamentMatches(tournId: string): Promise<number> {
+        return Axios.delete(`${API_BASE}/tournaments/${tournId}/delMatches`);
     }
 }
 

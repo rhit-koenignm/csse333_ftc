@@ -1,0 +1,1 @@
+select * from delete_tournament_matches(${tournId}::uuid);

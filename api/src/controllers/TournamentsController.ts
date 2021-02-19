@@ -6,6 +6,7 @@ import {
     Route,
     Path,
     Body,
+    Delete,
 } from 'tsoa';
 
 import { AppDatabase } from '../services/database/database';
@@ -25,6 +26,19 @@ interface GetAllTournamentsResponse {
 
 interface GetOneTournamentResponse {
     tournament: Tournament;
+}
+
+interface GenMatch {
+    matchNum: number,
+    matchTime: string,
+    blueTeams: string[],
+    redTeams: string[],
+}
+
+interface GenMatchesResponse {
+    success: boolean,
+    errorMessage?: string,
+    matches?: GenMatch[],
 }
 
 @Route("tournaments")
@@ -60,21 +74,29 @@ export class TournamentsController extends Controller {
     }
 
     @Post('{tournId}/genMatches')
-    public async generateTournamentMatches(@Path() tournId: string): Promise<any> {
+    public async generateTournamentMatches(@Path() tournId: string): Promise<GenMatchesResponse> {
+        let existingMatches = await this._db.matches.findTournamentMatches(tournId);
         let teams = await this._db.teams.findTournamentTeams(tournId);
 
-        let matches: {
-            matchNum: number,
-            matchTime: string,
-            blueTeams: string[],
-            redTeams: string[],
-        }[] = [];
+        if(teams.length <= 25) {
+            return {
+                success: false,
+                errorMessage: "tournament doesn't exist or doesn't have enough teams",
+            }
+        }
+        else if (existingMatches.length > 0) {
+            return {
+                success: false,
+                errorMessage: 'tournament already has matches',
+            }
+        }
+
+        let matches: GenMatch[] = [];
         let matchNum = 1;
         let matchTime = moment('8:00:00', 'HH:mm:ss');
         // generate 3 rounds of matches
         for(let i = 0; i < 3; i++) {
             let shuffledTeams = faker.helpers.shuffle(teams.map(t => t));
-            console.log(shuffledTeams.length);
             while(shuffledTeams.length >= 4) {
                 let redTeams = shuffledTeams.splice(0, 2);
                 let blueTeams = shuffledTeams.splice(0, 2);
@@ -97,6 +119,14 @@ export class TournamentsController extends Controller {
 
         await Promise.all(promises);
 
-        return matches;
+        return {
+            success: true,
+            matches,
+        };
+    }
+
+    @Delete("{tournId}/delMatches")
+    public async deleteTournamentMatches(@Path() tournId: string): Promise<any> {
+        return await this._db.matches.deleteTournamentMatches(tournId);
     }
 }
