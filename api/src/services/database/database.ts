@@ -25,7 +25,7 @@ const initOptions: IInitOptions<DatabaseExtensions> = {
         db.matches = new MatchesRepository(db);
         db.tournaments = new TournamentsRepository(db);
     },
-    pgNative: true,
+    pgNative: false,
 };
 
 const pgp: IMain<DatabaseExtensions> = pgPromise(initOptions);

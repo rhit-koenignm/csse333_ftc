@@ -51,7 +51,7 @@ class SelectTournamentPage extends React.Component<Props, State> {
         let tournaments = this.props.tournaments;
         return (
             <Container className={styles.tableStyle}>
-                <Row className={styles.welcomeMsg}><h1>Tounaments</h1></Row>
+                <Row className={styles.welcomeMsg}><h1>Tournaments</h1></Row>
                 <Row className={styles.subtitleMsg}><p>Please select a tournament for this session</p></Row>
                 
                 <Table striped bordered hover>
