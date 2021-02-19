@@ -28,6 +28,10 @@ select * from team;
 
 select * from tournament_participant;
 
+update tournament_participant set ranking_points = 0 where tournament_id = uuid_nil()
+
+update "match" set blue_score = 0, red_score = 0 where id = '5eaeb0a7-1e0b-4a0b-942e-f2c75ebf9d89';
+
 select * from update_match_score('5eaeb0a7-1e0b-4a0b-942e-f2c75ebf9d89', 230, 250) 
 
 select * from get_upcoming_matches(uuid_nil(), 5, cast('10:00:00' as time));
