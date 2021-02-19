@@ -1,0 +1,1 @@
+select register_user(${email}::text, ${password}::text, ${first_name}::text, ${last_name}::text);

@@ -1,0 +1,1 @@
+select login_user({$email}::text, ${password}::text);

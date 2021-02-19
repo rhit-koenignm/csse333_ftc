@@ -25,7 +25,6 @@ declare
 begin
 	
 	if(select count(*) from person where person.email = user_email) = 0 then 
-		raise exception 'Email is invalid';
 		return 1;
 	end if;
 
@@ -33,7 +32,6 @@ begin
 	
 	
 	if(crypt(user_password, pwd_hash) <> pwd_hash) then
-		raise exception 'Password is incorrect. Please retry!';
 		return 2;
 	end if;
 

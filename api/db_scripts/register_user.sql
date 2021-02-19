@@ -27,7 +27,6 @@ begin
 	
 	-- checking if email already exists for user--
 	if(select count(*) from person where person.email = user_email) > 0 then
-		raise exception 'Email already exists!';
 		return 1;
 	end if;
 
