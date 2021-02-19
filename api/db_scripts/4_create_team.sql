@@ -13,7 +13,7 @@ create or replace function create_team(
 	team_num int4,
 	new_team_name varchar(32)
 )
-returns int 
+returns uuid
 language 'plpgsql'
 as $$
 declare entity_id uuid;
@@ -23,7 +23,7 @@ begin
 --If there is already a team with the given team number, we cannot create a duplicate.--
 	if (select count(*) from team where team.team_number = team_num) > 0 then 
 		raise exception 'A team with this team number already exists in the table';
-		return 1;
+		return uuid_nil();
 	end if;
 	
 	entity_id = create_new_entity();
@@ -31,7 +31,7 @@ begin
 	insert into team (id, team_number, team_name) 
 	values (entity_id, team_num, new_team_name);
 
-	return 0;
+	return entity_id;
 
 end
 $$;

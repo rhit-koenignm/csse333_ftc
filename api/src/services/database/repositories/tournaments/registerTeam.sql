@@ -1,0 +1,1 @@
+select * from register_team_for_tournament(${teamId}, ${tournId});

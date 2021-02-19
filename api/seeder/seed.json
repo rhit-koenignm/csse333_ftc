@@ -1,0 +1,864 @@
+{
+    "teams": [
+        {
+            "team_name": "back-end matrixs",
+            "team_number": 2074
+        },
+        {
+            "team_name": "primary capacitors",
+            "team_number": 2
+        },
+        {
+            "team_name": "solid state sensors",
+            "team_number": 9025
+        },
+        {
+            "team_name": "mobile firewalls",
+            "team_number": 2018
+        },
+        {
+            "team_name": "cross-platform buss",
+            "team_number": 7979
+        },
+        {
+            "team_name": "online bandwidths",
+            "team_number": 8144
+        },
+        {
+            "team_name": "haptic microchips",
+            "team_number": 7637
+        },
+        {
+            "team_name": "primary firewalls",
+            "team_number": 3461
+        },
+        {
+            "team_name": "bluetooth bandwidths",
+            "team_number": 8084
+        },
+        {
+            "team_name": "haptic systems",
+            "team_number": 1023
+        },
+        {
+            "team_name": "virtual buss",
+            "team_number": 8722
+        },
+        {
+            "team_name": "haptic firewalls",
+            "team_number": 9782
+        },
+        {
+            "team_name": "bluetooth transmitters",
+            "team_number": 1187
+        },
+        {
+            "team_name": "back-end sensors",
+            "team_number": 7732
+        },
+        {
+            "team_name": "virtual feeds",
+            "team_number": 827
+        },
+        {
+            "team_name": "back-end applications",
+            "team_number": 8023
+        },
+        {
+            "team_name": "primary pixels",
+            "team_number": 4412
+        },
+        {
+            "team_name": "wireless cards",
+            "team_number": 4459
+        },
+        {
+            "team_name": "back-end systems",
+            "team_number": 3270
+        },
+        {
+            "team_name": "solid state drivers",
+            "team_number": 5467
+        },
+        {
+            "team_name": "cross-platform firewalls",
+            "team_number": 2991
+        },
+        {
+            "team_name": "multi-byte capacitors",
+            "team_number": 8098
+        },
+        {
+            "team_name": "open-source arrays",
+            "team_number": 4929
+        },
+        {
+            "team_name": "auxiliary hard drives",
+            "team_number": 8055
+        },
+        {
+            "team_name": "redundant cards",
+            "team_number": 9101
+        },
+        {
+            "team_name": "primary buss",
+            "team_number": 6060
+        },
+        {
+            "team_name": "1080p interfaces",
+            "team_number": 4860
+        },
+        {
+            "team_name": "auxiliary capacitors",
+            "team_number": 8162
+        },
+        {
+            "team_name": "mobile arrays",
+            "team_number": 9865
+        },
+        {
+            "team_name": "1080p cards",
+            "team_number": 3326
+        },
+        {
+            "team_name": "solid state panels",
+            "team_number": 4062
+        },
+        {
+            "team_name": "virtual panels",
+            "team_number": 8468
+        },
+        {
+            "team_name": "digital applications",
+            "team_number": 1605
+        },
+        {
+            "team_name": "back-end hard drives",
+            "team_number": 6288
+        },
+        {
+            "team_name": "mobile ports",
+            "team_number": 2926
+        },
+        {
+            "team_name": "multi-byte panels",
+            "team_number": 4447
+        },
+        {
+            "team_name": "back-end sensors",
+            "team_number": 3297
+        },
+        {
+            "team_name": "back-end pixels",
+            "team_number": 3353
+        },
+        {
+            "team_name": "optical alarms",
+            "team_number": 3518
+        },
+        {
+            "team_name": "solid state cards",
+            "team_number": 8883
+        },
+        {
+            "team_name": "online applications",
+            "team_number": 6674
+        },
+        {
+            "team_name": "back-end panels",
+            "team_number": 5478
+        },
+        {
+            "team_name": "online alarms",
+            "team_number": 5045
+        },
+        {
+            "team_name": "wireless applications",
+            "team_number": 539
+        },
+        {
+            "team_name": "bluetooth monitors",
+            "team_number": 9264
+        },
+        {
+            "team_name": "online hard drives",
+            "team_number": 9185
+        },
+        {
+            "team_name": "neural ports",
+            "team_number": 5246
+        },
+        {
+            "team_name": "open-source alarms",
+            "team_number": 2869
+        },
+        {
+            "team_name": "multi-byte firewalls",
+            "team_number": 9449
+        },
+        {
+            "team_name": "digital protocols",
+            "team_number": 3133
+        },
+        {
+            "team_name": "1080p arrays",
+            "team_number": 4847
+        },
+        {
+            "team_name": "wireless circuits",
+            "team_number": 9099
+        },
+        {
+            "team_name": "primary panels",
+            "team_number": 8901
+        },
+        {
+            "team_name": "cross-platform matrixs",
+            "team_number": 2756
+        },
+        {
+            "team_name": "primary buss",
+            "team_number": 7684
+        },
+        {
+            "team_name": "bluetooth ports",
+            "team_number": 9595
+        },
+        {
+            "team_name": "haptic transmitters",
+            "team_number": 8991
+        },
+        {
+            "team_name": "digital sensors",
+            "team_number": 3116
+        },
+        {
+            "team_name": "online microchips",
+            "team_number": 9851
+        },
+        {
+            "team_name": "auxiliary feeds",
+            "team_number": 9309
+        },
+        {
+            "team_name": "digital interfaces",
+            "team_number": 4555
+        },
+        {
+            "team_name": "virtual buss",
+            "team_number": 8006
+        },
+        {
+            "team_name": "optical pixels",
+            "team_number": 7137
+        },
+        {
+            "team_name": "open-source interfaces",
+            "team_number": 5183
+        },
+        {
+            "team_name": "cross-platform bandwidths",
+            "team_number": 3601
+        },
+        {
+            "team_name": "multi-byte protocols",
+            "team_number": 2179
+        },
+        {
+            "team_name": "solid state protocols",
+            "team_number": 1643
+        },
+        {
+            "team_name": "wireless ports",
+            "team_number": 7275
+        },
+        {
+            "team_name": "auxiliary circuits",
+            "team_number": 1180
+        },
+        {
+            "team_name": "auxiliary protocols",
+            "team_number": 4396
+        },
+        {
+            "team_name": "neural sensors",
+            "team_number": 9881
+        },
+        {
+            "team_name": "haptic bandwidths",
+            "team_number": 3044
+        },
+        {
+            "team_name": "haptic circuits",
+            "team_number": 8642
+        },
+        {
+            "team_name": "digital panels",
+            "team_number": 6410
+        },
+        {
+            "team_name": "multi-byte systems",
+            "team_number": 101
+        },
+        {
+            "team_name": "multi-byte monitors",
+            "team_number": 1179
+        },
+        {
+            "team_name": "back-end pixels",
+            "team_number": 8890
+        },
+        {
+            "team_name": "back-end drivers",
+            "team_number": 2693
+        },
+        {
+            "team_name": "haptic feeds",
+            "team_number": 2309
+        },
+        {
+            "team_name": "neural microchips",
+            "team_number": 232
+        },
+        {
+            "team_name": "primary microchips",
+            "team_number": 7795
+        },
+        {
+            "team_name": "digital matrixs",
+            "team_number": 4471
+        },
+        {
+            "team_name": "wireless interfaces",
+            "team_number": 8611
+        },
+        {
+            "team_name": "virtual arrays",
+            "team_number": 4941
+        },
+        {
+            "team_name": "wireless applications",
+            "team_number": 9520
+        },
+        {
+            "team_name": "solid state applications",
+            "team_number": 6008
+        },
+        {
+            "team_name": "optical hard drives",
+            "team_number": 7251
+        },
+        {
+            "team_name": "primary capacitors",
+            "team_number": 4571
+        },
+        {
+            "team_name": "redundant microchips",
+            "team_number": 3939
+        },
+        {
+            "team_name": "redundant ports",
+            "team_number": 3879
+        },
+        {
+            "team_name": "digital pixels",
+            "team_number": 4391
+        },
+        {
+            "team_name": "optical microchips",
+            "team_number": 8794
+        },
+        {
+            "team_name": "haptic monitors",
+            "team_number": 8177
+        },
+        {
+            "team_name": "virtual buss",
+            "team_number": 3177
+        },
+        {
+            "team_name": "1080p feeds",
+            "team_number": 2336
+        },
+        {
+            "team_name": "multi-byte protocols",
+            "team_number": 4643
+        },
+        {
+            "team_name": "back-end drivers",
+            "team_number": 4897
+        },
+        {
+            "team_name": "1080p monitors",
+            "team_number": 8758
+        },
+        {
+            "team_name": "wireless systems",
+            "team_number": 1144
+        },
+        {
+            "team_name": "online applications",
+            "team_number": 1112
+        },
+        {
+            "team_name": "digital systems",
+            "team_number": 8765
+        },
+        {
+            "team_name": "mobile hard drives",
+            "team_number": 7398
+        },
+        {
+            "team_name": "primary interfaces",
+            "team_number": 9873
+        },
+        {
+            "team_name": "bluetooth arrays",
+            "team_number": 7350
+        },
+        {
+            "team_name": "back-end applications",
+            "team_number": 1436
+        },
+        {
+            "team_name": "optical alarms",
+            "team_number": 9137
+        },
+        {
+            "team_name": "solid state arrays",
+            "team_number": 8366
+        },
+        {
+            "team_name": "mobile matrixs",
+            "team_number": 9184
+        },
+        {
+            "team_name": "mobile feeds",
+            "team_number": 9246
+        },
+        {
+            "team_name": "mobile applications",
+            "team_number": 1377
+        },
+        {
+            "team_name": "open-source interfaces",
+            "team_number": 3324
+        },
+        {
+            "team_name": "1080p capacitors",
+            "team_number": 3309
+        },
+        {
+            "team_name": "multi-byte pixels",
+            "team_number": 9311
+        },
+        {
+            "team_name": "redundant arrays",
+            "team_number": 9320
+        },
+        {
+            "team_name": "cross-platform protocols",
+            "team_number": 4569
+        },
+        {
+            "team_name": "digital transmitters",
+            "team_number": 2780
+        },
+        {
+            "team_name": "neural monitors",
+            "team_number": 8068
+        },
+        {
+            "team_name": "mobile bandwidths",
+            "team_number": 3621
+        },
+        {
+            "team_name": "neural systems",
+            "team_number": 4997
+        },
+        {
+            "team_name": "multi-byte pixels",
+            "team_number": 758
+        },
+        {
+            "team_name": "auxiliary interfaces",
+            "team_number": 2741
+        },
+        {
+            "team_name": "haptic circuits",
+            "team_number": 3206
+        },
+        {
+            "team_name": "back-end hard drives",
+            "team_number": 3375
+        },
+        {
+            "team_name": "digital monitors",
+            "team_number": 8004
+        },
+        {
+            "team_name": "online hard drives",
+            "team_number": 8704
+        },
+        {
+            "team_name": "redundant applications",
+            "team_number": 39
+        },
+        {
+            "team_name": "mobile cards",
+            "team_number": 4180
+        },
+        {
+            "team_name": "bluetooth alarms",
+            "team_number": 8824
+        },
+        {
+            "team_name": "mobile cards",
+            "team_number": 2940
+        },
+        {
+            "team_name": "open-source arrays",
+            "team_number": 7885
+        },
+        {
+            "team_name": "1080p matrixs",
+            "team_number": 5921
+        },
+        {
+            "team_name": "haptic circuits",
+            "team_number": 9135
+        },
+        {
+            "team_name": "optical applications",
+            "team_number": 9001
+        },
+        {
+            "team_name": "online bandwidths",
+            "team_number": 4541
+        },
+        {
+            "team_name": "redundant interfaces",
+            "team_number": 183
+        },
+        {
+            "team_name": "1080p programs",
+            "team_number": 8737
+        },
+        {
+            "team_name": "solid state monitors",
+            "team_number": 7290
+        },
+        {
+            "team_name": "solid state firewalls",
+            "team_number": 6223
+        },
+        {
+            "team_name": "multi-byte alarms",
+            "team_number": 8423
+        },
+        {
+            "team_name": "neural arrays",
+            "team_number": 636
+        },
+        {
+            "team_name": "online cards",
+            "team_number": 3471
+        },
+        {
+            "team_name": "multi-byte alarms",
+            "team_number": 3956
+        },
+        {
+            "team_name": "redundant matrixs",
+            "team_number": 329
+        },
+        {
+            "team_name": "haptic microchips",
+            "team_number": 247
+        },
+        {
+            "team_name": "cross-platform pixels",
+            "team_number": 7318
+        },
+        {
+            "team_name": "primary buss",
+            "team_number": 5733
+        },
+        {
+            "team_name": "mobile buss",
+            "team_number": 7366
+        },
+        {
+            "team_name": "solid state firewalls",
+            "team_number": 1136
+        },
+        {
+            "team_name": "1080p buss",
+            "team_number": 779
+        },
+        {
+            "team_name": "back-end programs",
+            "team_number": 5713
+        }
+    ],
+    "tournaments": [
+        {
+            "id": 1,
+            "name": "Indy Tech Rush Challenge",
+            "date": "2021-02-11T00:00:00.000Z",
+            "location": "Indianapolis",
+            "participatingTeams": [
+                4062,
+                8704,
+                3956,
+                2869,
+                3461,
+                8991,
+                3116,
+                4941,
+                7732,
+                8794,
+                758,
+                5478,
+                636,
+                232,
+                5713,
+                8824,
+                3353,
+                6674,
+                9099,
+                3518,
+                2693,
+                8890,
+                5921,
+                4391,
+                4569,
+                3324,
+                8737,
+                1112,
+                3621,
+                539,
+                9449,
+                2741,
+                1179,
+                3206,
+                7795,
+                1136,
+                2926,
+                329,
+                7290,
+                9873,
+                9184,
+                3270,
+                8642,
+                7885,
+                247,
+                9025,
+                4897,
+                8006,
+                9309,
+                3297
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Big River Tech Bash",
+            "date": "2021-02-12T00:00:00.000Z",
+            "location": "Chicago",
+            "participatingTeams": [
+                758,
+                8824,
+                8901,
+                3326,
+                9025,
+                8144,
+                8162,
+                8737,
+                101,
+                3133,
+                39,
+                232,
+                1144,
+                4062,
+                2336,
+                3297,
+                7684,
+                539,
+                8004,
+                2991,
+                6223,
+                8084,
+                9001,
+                3471,
+                8177,
+                3879,
+                7318,
+                4997,
+                9311,
+                5045,
+                779,
+                9264,
+                4471,
+                8704,
+                827,
+                2074,
+                3270,
+                9246,
+                4569,
+                329,
+                5183,
+                4412,
+                1187,
+                1605,
+                3461,
+                9320,
+                9135,
+                7366,
+                1436,
+                3177
+            ]
+        },
+        {
+            "id": 3,
+            "name": "Wabash Valley Tech Challenge",
+            "date": "2021-02-13T00:00:00.000Z",
+            "location": "Terre Haute",
+            "participatingTeams": [
+                2741,
+                8004,
+                1643,
+                2693,
+                3518,
+                3044,
+                2780,
+                9309,
+                2336,
+                2991,
+                5733,
+                1187,
+                4860,
+                3879,
+                1605,
+                9101,
+                5921,
+                1023,
+                7979,
+                4541,
+                8765,
+                3621,
+                5246,
+                7637,
+                9025,
+                4396,
+                9184,
+                4180,
+                4555,
+                3309,
+                7350,
+                8704,
+                247,
+                5478,
+                8023,
+                8055,
+                4391,
+                9137,
+                8144,
+                3471,
+                8068,
+                8890,
+                7684,
+                8722,
+                4447,
+                8468,
+                9865,
+                8824,
+                3326,
+                2309
+            ]
+        },
+        {
+            "id": 4,
+            "name": "Null Tournament",
+            "date": "2021-02-19T00:00:00.000Z",
+            "location": "The Void",
+            "participatingTeams": [
+                7318,
+                827,
+                4569,
+                8023,
+                6410,
+                4571,
+                4396,
+                8098,
+                5183,
+                3324,
+                3326,
+                8883,
+                8006,
+                6223,
+                9099,
+                7795,
+                2179,
+                3116,
+                7637,
+                8366,
+                9264,
+                758,
+                1187,
+                2741,
+                7137,
+                4471,
+                8642,
+                8991,
+                5467,
+                183,
+                4062,
+                39,
+                4847,
+                8758,
+                7366,
+                7732,
+                3375,
+                3270,
+                9309,
+                8423,
+                4929,
+                9865,
+                7251,
+                3177,
+                3353,
+                5478,
+                3601,
+                636,
+                9595,
+                9449
+            ]
+        }
+    ],
+    "judges": [
+        {
+            "firstName": "Mike",
+            "lastName": "Dummy",
+            "email": "mike@example.com",
+            "password": "password123"
+        },
+        {
+            "firstName": "Dike",
+            "lastName": "Mummy",
+            "email": "dike@example.com",
+            "password": "mikeyoudummy"
+        },
+        {
+            "firstName": "Zike",
+            "lastName": "Crummy",
+            "email": "zike@example.com",
+            "password": "zikerocks234"
+        },
+        {
+            "firstName": "Judge",
+            "lastName": "Judy",
+            "email": "judge@example.com",
+            "password": "immasueyou"
+        }
+    ]
+}

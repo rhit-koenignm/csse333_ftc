@@ -1,1 +1,1 @@
-select update_match_scores(${matchId}::uuid, ${redScore}, ${blueScore}) as result;
+select update_match_score(${matchId}::uuid, ${redScore}, ${blueScore}) as result;

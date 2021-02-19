@@ -5,7 +5,7 @@ import { Team, TeamRanking } from '../../../../models/Team';
 const findAllQuery = sql('teams/findAll.sql');
 const updateQuery = sql('teams/update.sql');
 const getRankingsQuery = sql('teams/getRankings.sql');
-
+const createQuery = sql('teams/create.sql');
 export class TeamsRepository {
     constructor(private _db: AppDatabase) {}
 
@@ -25,5 +25,13 @@ export class TeamsRepository {
         });
 
         return result;
+    }
+
+    public async create(team_number: number, team_name: string): Promise<string> {
+        let result = await this._db.one<{create_team: string}>(createQuery, {
+            team_number,
+            team_name,
+        });
+        return result.create_team;
     }
 }

@@ -29,7 +29,7 @@ begin
 	end if;
 	
 --If the team is already in the tournament_particpant table then there is no need to add it--	
-	if (select count(*) from tournament_participant where tournament_participant.team_id = added_team_id) > 0 then 
+	if (select count(*) from tournament_participant tp where tp.team_id = added_team_id and tp.tournament_id = tourn_id) > 0 then 
 		raise exception 'Team is already participating';
 		return 2;
 	end if;
