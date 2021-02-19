@@ -63,8 +63,11 @@ class RankingsPage extends React.Component<Props, State> {
         let { rankings, upcomingMatches } = this.state;
         return (
             <Container className={styles.tableStyle}>
-                <Row className={styles.welcomeMsg}><h1>Rankings</h1></Row>
-                <Row className={styles.subtitleMsg}><p>You are viewing the current Team Rankings</p></Row>
+                <Row className={styles.welcomeMsg}><h1>Competition Overview</h1></Row>
+                <Row>
+                    <Col><h3 style={{textAlign: 'center'}}>Current Team Rankings</h3></Col>
+                    <Col><h3 style={{textAlign: 'center'}}>Upcoming Matches</h3></Col>
+                </Row>
                 <Row>
                     <Col className={styles.tbodyScroll}>
                         <Table  striped bordered hover >
