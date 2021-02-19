@@ -39,6 +39,7 @@ export interface Match {
 }
 
 export interface UpcomingMatch {
+    upcoming_match_id: string;
     match_name: string;
     blue_team_num_1: number;
     blue_team_num_2: number;

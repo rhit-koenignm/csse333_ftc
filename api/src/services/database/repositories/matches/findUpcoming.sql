@@ -1,1 +1,1 @@
-select * from get_upcoming_matches(${tournId}::uuid, 5, current_time::time);
+select * from get_upcoming_matches(${tournId}::uuid, 5, now()::time);

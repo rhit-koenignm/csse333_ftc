@@ -16,7 +16,7 @@ import { connect } from 'react-redux';
 import { render } from 'react-dom';
 import * as Scroll from 'react-scroll';
 import { animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
-import { TournamentsService } from 'src/services/tournaments';
+import { TournamentsService, UpcomingMatch } from 'src/services/tournaments';
 
 interface OwnProps {
 
@@ -32,6 +32,7 @@ type Props = OwnProps & StoreProps & DispatchProps;
 
 interface State {
     rankings: TeamRanking[];
+    upcomingMatches: UpcomingMatch[];
 }
 
 class RankingsPage extends React.Component<Props, State> {
@@ -39,6 +40,7 @@ class RankingsPage extends React.Component<Props, State> {
         super(props);
         this.state = {
             rankings: [],
+            upcomingMatches: [],
         };
     }
     scrollTo = () => {
@@ -53,10 +55,12 @@ class RankingsPage extends React.Component<Props, State> {
         if(tournamentId) {
             TeamsService.fetchTeamRankings(tournamentId)
                 .then(rankings => this.setState({rankings}));
+            TournamentsService.fetchUpcomingTournaments(tournamentId)
+                .then(matches => this.setState({ upcomingMatches: matches }));
         }
     }
     public render() {
-        let rankings = this.state.rankings;
+        let { rankings, upcomingMatches } = this.state;
         return (
             <Container className={styles.tableStyle}>
                 <Row className={styles.welcomeMsg}><h1>Rankings</h1></Row>
@@ -91,38 +95,26 @@ class RankingsPage extends React.Component<Props, State> {
                         <Table striped bordered hover >
                             <thead>
                                 <tr>
-                                    <th>Match</th>
-                                    <th>Results</th>
-                                    <th>Upcoming Matches</th>
+                                    <th>Time</th>
+                                    <th style={{backgroundColor: 'blue', color: 'white'}}>Blue Teams</th>
+                                    <th style={{backgroundColor: 'red', color: 'white'}}>Red Teams</th>
                                 </tr>
                             </thead>
                             
                             <tbody>
-                                <tr>
-                                    <td>
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td>
-                                    </td>
-                                </tr>  
-                                <tr>
-                                    <td>
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td>
-                                    </td>
-                                </tr>      
-
+                                {upcomingMatches && upcomingMatches.map(m => (
+                                    <tr key={m.upcoming_match_id}>
+                                        <td>{m.match_time}</td>
+                                        <td>
+                                            {m.blue_team_1}<br/>
+                                            {m.blue_team_2}
+                                        </td>
+                                        <td>
+                                            {m.red_team_1}<br/>
+                                            {m.red_team_2}
+                                        </td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </Table>
                     </Col>

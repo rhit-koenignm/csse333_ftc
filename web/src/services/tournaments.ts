@@ -33,6 +33,16 @@ export interface TournamentsState {
     currentTournamentId?: string;
 }
 
+export interface UpcomingMatch {
+    upcoming_match_id: string;
+    match_name: string;
+    blue_team_1: number;
+    blue_team_2: number;
+    red_team_1: number;
+    red_team_2: number;
+    match_time: string;
+}
+
 interface FetchAllTournamentsAction extends Action {
     type: typeof ACTION_FETCH_ALL_TOURNAMENTS;
 }
@@ -124,6 +134,11 @@ interface GenMatchesResponse {
     matches?: GenMatch[],
 }
 
+interface GetUpcomingMatchesResponse {
+    tournament_id: string;
+    matches: UpcomingMatch[];
+}
+
 export class TournamentsService {
     static async fetchAllTournaments(): Promise<Tournament[]> {
         let matches = await Axios.get<FetchAllTournamentsResponse>(`${API_BASE}/tournaments`);
@@ -150,6 +165,11 @@ export class TournamentsService {
 
     static deleteTournamentMatches(tournId: string): Promise<number> {
         return Axios.delete(`${API_BASE}/tournaments/${tournId}/delMatches`);
+    }
+
+    static async fetchUpcomingTournaments(tournId: string): Promise<UpcomingMatch[]> {
+        let result = await Axios.get<GetUpcomingMatchesResponse>(`${API_BASE}/matches/upcoming/${tournId}`);
+        return result.data.matches;
     }
 }
 
