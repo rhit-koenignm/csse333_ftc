@@ -17,6 +17,9 @@ begin
 
     delete from match m
     where tournament_id = tourn_id;
+
+    update tournament_participant tp
+    set 
    
     return 0;
 end
