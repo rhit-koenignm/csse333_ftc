@@ -61,6 +61,7 @@ class RankingsPage extends React.Component<Props, State> {
     }
     public render() {
         let { rankings, upcomingMatches } = this.state;
+        console.log(rankings);
         return (
             <Container className={styles.tableStyle}>
                 <Row className={styles.welcomeMsg}><h1>Competition Overview</h1></Row>
