@@ -60,9 +60,6 @@ export class MatchesRepository {
 
     public async findUpcomingMatches(tournId: string): Promise<UpcomingMatch[]> {
         let result = await this._db.any<UpcomingMatch>(findUpcomingQuery, { tournId });
-        console.log(findUpcomingQuery.toString());
-        console.log(tournId);
-        console.log(result);
         return result;
     }
 

@@ -93,7 +93,7 @@ export class TournamentsController extends Controller {
 
         let matches: GenMatch[] = [];
         let matchNum = 1;
-        let matchTime = moment('15:00:00', 'HH:mm:ss');
+        let matchTime = moment('18:00:00', 'HH:mm:ss');
         // generate 3 rounds of matches
         for(let i = 0; i < 3; i++) {
             let shuffledTeams = faker.helpers.shuffle(teams.map(t => t));
