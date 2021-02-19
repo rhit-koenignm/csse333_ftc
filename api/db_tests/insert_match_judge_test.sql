@@ -1,0 +1,1 @@
+select insert_match_judge('4dfc3084-6268-4f89-ba40-5a1d85b26218', 'eb98eec3-e954-47c7-a96a-ec0ee535ee06')

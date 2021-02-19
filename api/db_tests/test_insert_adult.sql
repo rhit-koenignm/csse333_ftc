@@ -1,0 +1,1 @@
+select insert_adult('fe41974f-b477-4e19-9ac1-3c081037f22f', '1234567123')
