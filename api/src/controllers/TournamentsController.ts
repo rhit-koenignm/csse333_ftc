@@ -14,6 +14,10 @@ import { ProvideTransient } from '../decorators';
 import { inject } from 'inversify'
 import { Tournament } from 'src/models/Tournament';
 import { Team } from 'src/models/Team';
+import { Match } from 'src/models/Match';
+import faker from 'faker';
+
+import moment from 'moment';
 
 interface GetAllTournamentsResponse {
     tournaments: Tournament[];
@@ -42,7 +46,7 @@ export class TournamentsController extends Controller {
     }
 
     @Get('{tournId}/teams')
-    public async getTounamentTeams(@Path() tournId: string): Promise<{teams: Team[]}> {
+    public async getTournamentTeams(@Path() tournId: string): Promise<{teams: Team[]}> {
         return {
             teams: await this._db.teams.findTournamentTeams(tournId),
         }
@@ -55,4 +59,44 @@ export class TournamentsController extends Controller {
         }
     }
 
+    @Post('{tournId}/genMatches')
+    public async generateTournamentMatches(@Path() tournId: string): Promise<any> {
+        let teams = await this._db.teams.findTournamentTeams(tournId);
+
+        let matches: {
+            matchNum: number,
+            matchTime: string,
+            blueTeams: string[],
+            redTeams: string[],
+        }[] = [];
+        let matchNum = 1;
+        let matchTime = moment('8:00:00', 'HH:mm:ss');
+        // generate 3 rounds of matches
+        for(let i = 0; i < 3; i++) {
+            let shuffledTeams = faker.helpers.shuffle(teams.map(t => t));
+            console.log(shuffledTeams.length);
+            while(shuffledTeams.length >= 4) {
+                let redTeams = shuffledTeams.splice(0, 2);
+                let blueTeams = shuffledTeams.splice(0, 2);
+                matches.push({
+                    matchNum: matchNum++,
+                    matchTime: matchTime.format('HH:mm'),
+                    blueTeams: blueTeams.map(x => x.id),
+                    redTeams: redTeams.map(x => x.id),
+                });
+                matchTime.add(10, 'minutes');
+            }
+        }
+
+        let promises: Promise<any>[] = [];
+        for(let match of matches) {
+            let { matchNum, matchTime, blueTeams, redTeams } = match;
+            let promise = this._db.matches.createMatch(tournId, matchNum, matchTime, redTeams, blueTeams);
+            promises.push(promise);
+        }
+
+        await Promise.all(promises);
+
+        return matches;
+    }
 }

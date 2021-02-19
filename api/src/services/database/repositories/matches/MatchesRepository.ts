@@ -9,6 +9,7 @@ const findUpcoming = sql('matches/findUpcoming.sql');
 const updateAttendanceQuery = sql('matches/updateTeamAttendance.sql');
 const updateScoresQuery = sql('matches/updateScores.sql');
 const findForTournamentQuery = sql('matches/findForTournament.sql');
+const createMatchQuery = sql('matches/createMatch.sql');
 
 export class MatchesRepository {
     constructor(private _db: AppDatabase) {}
@@ -59,6 +60,24 @@ export class MatchesRepository {
     public async findUpcomingMatches(tournId: string): Promise<UpcomingMatch[]> {
         return await this._db.any<UpcomingMatch>(findUpcoming, {
             tournId,
+        });
+    }
+
+    public async createMatch(
+        tournId: string,
+        matchNum: number,
+        matchTime: string,
+        redTeams: string[],
+        blueTeams: string[],
+    ): Promise<any> {
+        await this._db.one(createMatchQuery, {
+            tournId,
+            matchNum,
+            matchTime,
+            redTeam1: redTeams[0],
+            redTeam2: redTeams[1],
+            blueTeam1: blueTeams[0],
+            blueTeam2: blueTeams[1],
         });
     }
 }

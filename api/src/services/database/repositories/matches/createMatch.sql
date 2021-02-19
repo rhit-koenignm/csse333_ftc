@@ -1,0 +1,1 @@
+select * from create_match(${tournId}::uuid, ${matchNum}, ${matchTime}::time, ${redTeam1}::uuid, ${redTeam2}::uuid, ${blueTeam1}::uuid, ${blueTeam2}::uuid);
