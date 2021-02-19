@@ -1,4 +1,4 @@
-create or replace view if not exists match_info as select * from match m
+create or replace view match_info as select * from match m
 left join lateral (
 	select array (
 		select team_id from match_competitor mc where match_id = m.id

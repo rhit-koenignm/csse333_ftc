@@ -6,6 +6,7 @@ let seedData: MockSchema = data as any;
 
 (async () => {
     let { tournaments, judges, teams } = seedData;
+    let promises: Promise<any>[] = [];
 
     // Insert every team
     for(let t of teams) {
@@ -21,15 +22,18 @@ let seedData: MockSchema = data as any;
         t.id = tid;
         for(let teamNum of t.participatingTeams) {
             let team = teams.find(t => t.team_number === teamNum);
-            await db.tournaments.registerTeam(team.id, tid);
+            promises.push(db.tournaments.registerTeam(team.id, tid));
         }
     }
+
 
     // insert all the judges
     for(let j of judges) {
         let { email, firstName, lastName, password } = j;
-        await db.users.registerUser(email, password, firstName, lastName);
+        promises.push(db.users.registerUser(email, password, firstName, lastName));
     }
+
+    await Promise.all(promises);
 })()
     .catch(e => {
         console.error(e);

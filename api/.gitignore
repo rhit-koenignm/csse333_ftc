@@ -6,6 +6,8 @@
 .pnp.js
 dist/
 
+./db_scripts/create_script.sql
+
 # testing
 /coverage
 
