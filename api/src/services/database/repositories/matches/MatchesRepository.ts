@@ -5,7 +5,7 @@ import { Match, MatchTeam, UpcomingMatch } from '../../../../models/Match';
 const findAllQuery = sql('matches/findAll.sql');
 const findOneQuery = sql('matches/findOne.sql');
 const findMatchTeamsQuery = sql('matches/findMatchTeams.sql');
-const findUpcoming = sql('matches/findUpcoming.sql');
+const findUpcomingQuery = sql('matches/findUpcoming.sql');
 const updateAttendanceQuery = sql('matches/updateTeamAttendance.sql');
 const updateScoresQuery = sql('matches/updateScores.sql');
 const findForTournamentQuery = sql('matches/findForTournament.sql');
@@ -59,9 +59,11 @@ export class MatchesRepository {
     }
 
     public async findUpcomingMatches(tournId: string): Promise<UpcomingMatch[]> {
-        return await this._db.any<UpcomingMatch>(findUpcoming, {
-            tournId,
-        });
+        let result = await this._db.any<UpcomingMatch>(findUpcomingQuery, { tournId });
+        console.log(findUpcomingQuery.toString());
+        console.log(tournId);
+        console.log(result);
+        return result;
     }
 
     public async createMatch(

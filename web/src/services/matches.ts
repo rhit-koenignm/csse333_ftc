@@ -179,6 +179,7 @@ interface GetUpcomingMatchesResponse {
 }
 
 interface SaveMatchRequest {
+    matchId: string,
     redScore: number,
     blueScore: number,
     attendance: { team_id: string, attendance: boolean }[],

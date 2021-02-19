@@ -11,7 +11,7 @@ import styles from './MatchOverview.module.scss';
 import { RootState } from 'src/store/modules';
 import { Action, Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { actions as matchesActions, Match, MatchTeam } from '../../services/matches';
+import { actions as matchesActions, Match, MatchesService, MatchTeam } from '../../services/matches';
 
 interface OwnProps {
     match: {
@@ -196,12 +196,15 @@ class MatchOverviewPage extends React.Component<Props, State> {
         attendance.push(...this.state.redTeams.map((team, index) => ({ team_id: team.team_id, attendance: redAttendance[index]})));
         attendance.push(...this.state.blueTeams.map((team, index) => ({ team_id: team.team_id, attendance: blueAttendance[index]})));
 
-        this.props.saveMatch(
-            this.state.match.id,
-            Number(this.state.redScore),
-            Number(this.state.blueScore),
+        MatchesService.saveMatch(this.state.match.id, {
+            matchId: this.state.match.id,
             attendance,
-        );
+            redScore: Number(this.state.redScore),
+            blueScore: Number(this.state.blueScore),
+        })
+        .then(response => {
+            window.location.assign('/matches');
+        });
     }
 }
 

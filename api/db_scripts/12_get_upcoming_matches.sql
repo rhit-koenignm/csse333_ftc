@@ -8,6 +8,7 @@
  * Written by: Natalie Koenig
  */
 
+drop function get_upcoming_matches;
 create or replace function get_upcoming_matches(
 	tourn_id uuid default uuid_nil(),
 	num_upcoming int4 default 5,
@@ -23,16 +24,11 @@ returns table (
 )
 language 'plpgsql'
 as $$
-declare 
-	temp_match_id uuid;
-	temp_match match;
-	blue_teams uuid;
-	red_teams uuid;
 begin  
 		--This is the original which lets us select the times with --
 	return query (
-		select distinct m.id as matchID, m1.team_id as BlueTeam1, m2.team_id as BlueTeam2, m3.team_id as RedTeam1,
-		m4.team_id as RedTeam2, m.scheduled_time as MatchTime
+		select distinct m.id as upcoming_match_id, m1.team_id as blue_team_1, m2.team_id as blue_team_2, m3.team_id as red_team_1,
+		m4.team_id as red_team_2, m.scheduled_time as match_time
 		from match m
 		join match_competitor m1 
 		on m.id = m1.match_id and m1.alliance_color = 'Blue'
@@ -43,9 +39,9 @@ begin
 		join match_competitor m4
 		on m.id = m4.match_id and m3.team_id < m4.team_id and m4.alliance_color = 'Red'
 		where m.tournament_id = tourn_id and m.scheduled_time >= givenTime
+		order by m.scheduled_time asc
 		limit num_upcoming
 	);
-	
 
 end
 $$;	
